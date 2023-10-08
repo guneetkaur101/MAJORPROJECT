@@ -1,21 +1,49 @@
 import pandas as pd
 
-# Read data from Excel files
-df1 = pd.read_excel('2ND YEAR.xlsx')
-df2 = pd.read_excel('3RD YEAR.xlsx')
-df3 = pd.read_excel('4TH YEAR.xlsx')
+year1 = ['subject1', 'subject2', 'subject3', 'none']
+year2 = ['subject4', 'subject5', 'subject6', 'none']
+year3 = ['subject7', 'subject8', 'subject9', 'none']
 
-# Extract lists of roll numbers from DataFrames
-roll_no_list1 = df1['URN'].tolist()
-roll_no_list2 = df2['URN'].tolist()
-roll_no_list3 = df3['URN'].tolist()
+year1_file = None
+year2_file = None
+year3_file = None
 
-# Determine the sizes of the lists
+while year1_file is None:
+    print('Select a subject from year 1:')
+    for i, subject in enumerate(year1):
+        print(f'{i+1}. {subject}')
+    choice = int(input())
+    if choice == 4:
+        break
+    year1_file = pd.read_excel(f'2ND YEAR.xlsx')
+
+while year2_file is None:
+    print('Select a subject from year 2:')
+    for i, subject in enumerate(year2):
+        print(f'{i+1}. {subject}')
+    choice = int(input())
+    if choice == 4:
+        break
+    year2_file = pd.read_excel(f'3RD YEAR.xlsx')
+
+while year3_file is None:
+    print('Select a subject from year 3:')
+    for i, subject in enumerate(year3):
+        print(f'{i+1}. {subject}')
+    choice = int(input())
+    if choice == 4:
+        break
+    year3_file = pd.read_excel(f'4TH YEAR.xlsx')
+
+roll_no_list1 = year1_file['URN'].tolist() if year1_file is not None else []
+roll_no_list2 = year2_file['URN'].tolist() if year2_file is not None else []
+roll_no_list3 = year3_file['URN'].tolist() if year3_file is not None else []
+
 size1 = len(roll_no_list1)
 size2 = len(roll_no_list2)
 size3 = len(roll_no_list3)
 print(size1,size2,size3)
-# Combine the two smallest lists and keep the largest list as it is
+
 if size1 <= size2 and size2 <= size3:
     combined_list = roll_no_list1 + roll_no_list2
     largest_list = roll_no_list3
@@ -26,7 +54,6 @@ else:
     combined_list = roll_no_list1 + roll_no_list3
     largest_list = roll_no_list2
 
-# Prompt the user to input the maximum number of rows and columns for each room
 max_row = int(input("Enter the maximum number of columns: "))
 max_col = int(input("Enter the maximum number of rows: "))
 max_capacity = max_row * max_col
