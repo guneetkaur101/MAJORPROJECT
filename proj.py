@@ -134,7 +134,6 @@ def edit(id):
         seat = None
 
     return render_template("editroom.html", room_no=room_no, col=col, row=row, seat=seat, message=message)
-
 @app.route('/upload_form', methods=['GET', 'POST'])
 def upload_form():
     total_strengths = {}  # Initialize as an empty dictionary
@@ -178,6 +177,7 @@ def upload_form():
         return render_template('upload_form.html', total_strengths=total_strengths)
 
     return render_template('upload_form.html', total_strengths=total_strengths)
+
 
 if __name__ == "__main__":
     app.run()
