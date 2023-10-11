@@ -142,8 +142,8 @@ input[type=submit]:hover {
   </a>
 </div>
 <div class="container">
-  <h2>Add Room</h2>
-  <form action="" method="POST">
+      <h2>Add Room</h2>
+  <form action="/edit/{{ room_no }}" method="POST">
     {% if error %}
     <pre>{{error}}</pre>
     {% endif %}
@@ -152,7 +152,7 @@ input[type=submit]:hover {
        <label for="fname">Enter Room Number:</label>
       </div>
       <div class="col-75">
-        <input  type="text" id="fname" name="room_no" placeholder="Enter Room No." value="{{room}}">
+        <input  type="text" id="fname" name="room_no" placeholder="Enter Room No." value="{{room_no}}">
       </div>
     </div>
     <div class="row">
@@ -171,7 +171,14 @@ input[type=submit]:hover {
         <input type="number" id="quantity" name="col" min="0" max="30" step="1" value="{{col}}">
       </div>
     </div>
-    
+    <div class="row">
+      <div class="col-25">
+        <label for="quantity">Total Number of Seats:</label>
+      </div>
+      <div class="col-75">
+        <input type="number" id="quantity" name="seat" min="0" max="500" step="1" value="{{seat}}">
+      </div>
+    </div> 
 <br>
   <input type="submit" value="Submit">
   </form>
