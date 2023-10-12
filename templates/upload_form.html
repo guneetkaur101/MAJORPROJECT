@@ -4,6 +4,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Uploading data</title>
 	<link rel="stylesheet" type="text/css" href="homee.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 body {
   margin: 0;
@@ -33,6 +34,11 @@ body {
   background-color: #4CAF50;
   color: white;
 }
+/* resposivness */
+.topnav .icon {
+  display: none;
+}
+
 .container {
   border-radius: 5px;
   background-color: #f2f2f2;
@@ -45,9 +51,9 @@ input[type=text], select, textarea {
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box;
+  /* box-sizing: border-box;
   margin-top: 6px;
-  margin-bottom: 16px;
+  margin-bottom: 16px; */
   resize: vertical;
 }
 input[type=number], select, textarea {
@@ -55,9 +61,9 @@ input[type=number], select, textarea {
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box;
+  /* box-sizing: border-box;
   margin-top: 6px;
-  margin-bottom: 16px;
+  margin-bottom: 16px; */
   resize: vertical;
 
 }
@@ -74,7 +80,11 @@ input[type=submit]:hover {
   background-color: #45a049;
 }
 
+.hidden {
+            display: none;
+        }
 
+/*why needed this? */
 .dropbtn {
   background-color: #4CAF50;
   color: white;
@@ -84,11 +94,118 @@ input[type=submit]:hover {
 }
 
 
+/* responsive navigation */
+  @media screen and (max-width: 650px) {
+  .topnav a:not(.active) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  } 
+ }
 
+@media screen and (max-width: 650px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive a.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
+
+/* Apply a background color and padding to the body */
+body {
+    background-color: #f2f2f2;
+}
+
+
+/* Style the form container */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Style the labels
+label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+} */
+
+/* Style the file input fields */
+input[type="file"] {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+/* Style the date and time input fields */
+input[type="date"],
+input[type="time"] {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+/* Style the checkboxes */
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* Style the error messages */
+/* .error {
+    color: #ff0000;
+    font-weight: bold;
+} */
+
+/* Style the heading for selected years */
+#strengthHeading {
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
+}
+
+/* Style the list of selected years' strengths */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    color: #555;
+    margin-bottom: 5px;
+}
+
+/* Style the upload errors */
+.upload-errors {
+    color: #ff0000;
+    font-weight: bold;
+    list-style-type: none;
+    padding: 0;
+}
 
 </style>
 <script>
- 
+  // responsive
+  function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";
+    }
+  
+  }
     function validateForm() {
         var selectedYears = document.querySelectorAll('input[name="select_year"]:checked');
         if (selectedYears.length === 0) {
@@ -99,12 +216,16 @@ input[type=submit]:hover {
     function showUploadMessage() {
             alert("File uploaded successfully.");
         }
-        function displayUploadErrors() {
-            var uploadErrors = document.getElementById('uploadErrors').value;
-            if (uploadErrors) {
-                alert("Upload Errors:\n" + uploadErrors);
-                return false;
-            }
+        function showHeading() {
+            var heading = document.getElementById("strengthHeading");
+            var fileInputs = document.querySelectorAll('input[type="file"]');
+
+        // Check if at least one file input has a file selected
+        var filesSelected = Array.from(fileInputs).some(input => input.files.length > 0);
+
+        if (filesSelected) {
+            heading.classList.remove("hidden");
+        }
         }
 </script>
 
@@ -118,6 +239,8 @@ input[type=submit]:hover {
   <a href="/Generate">Generate</a>
   <a  href="/result">Show Result</a>
   <a href="/login">Logout</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
 </div>
 <!-- <div class="container">
   <form action="" method="POST" enctype="multipart/form-data">
@@ -162,16 +285,19 @@ input[type=submit]:hover {
   {% endif %}
 
 </div>  --> 
-<h1>Upload CSV Files</h1>
-    
+
 <form action="/upload_form" method="POST" enctype="multipart/form-data" onsubmit="return validateForm();">
+  <!-- <h2>Upload CSV Files</h2> -->
         
-  <input type="hidden" id="uploadErrors" value="{{ upload_errors|join('\n') }}">
+  <!-- <input type="hidden" id="uploadErrors" value="{{ upload_errors|join('\n') }}"> -->
         <!-- we can use either error display method using js -->
         <!-- Display general error message if it exists
     {% if error %}
     <p class="error">{{ error }}</p>
     {% endif %} -->
+    <fieldset style="width: 100%; margin-left: 20px;margin-right: 20px;background-color: #d9eee1;">
+      <legend style="font-size: 25px; font-family: 'Times New Roman', Times, 
+      serif;">Upload CSV Files(year wise):-</legend>
         <label for="2nd_year_csv">2nd Year:</label>
         <input type="file" name="2nd_year_csv" id="2nd_year_csv" accept=".csv" onload="showUploadMessage()"><br>
         
@@ -180,15 +306,21 @@ input[type=submit]:hover {
         
         <label for="4th_year_csv">4th Year:</label>
         <input type="file" name="4th_year_csv" id="4th_year_csv" accept=".csv"onload="showUploadMessage()" ><br>
-
-        <h2>Enter Date and Time:</h2>
+    </fieldset>
+    <fieldset style="width: 100%; margin-left: 20px;margin-right: 20px; background-color:#d9eee1;">
+      <legend style="font-size: 25px; font-family: 'Times New Roman', Times, 
+      serif;">Enter Date and Time:-</legend>
+        <!-- <h2>Enter Date and Time:</h2> -->
         <label for="date">Date:</label>
         <input type="date" name="date" id="date" ><br>
         
         <label for="time">Time:</label>
         <input type="time" name="time" id="time"><br>
-        
-        <h2>Select Year(s):</h2>
+      </fieldset>
+      <fieldset style="width: 100%; margin-left: 20px; margin-left: 20px;background-color:  #d9eee1;">
+        <legend style="font-size: 25px; font-family: 'Times New Roman', Times, 
+        serif;">Select Year(s):</legend>
+        <!-- <h2>Select Year(s):</h2> -->
         <label for="select_2nd_year">2nd Year</label>
         <input type="checkbox" name="select_year" value="2nd" id="select_2nd_year"><br>
         
@@ -197,22 +329,23 @@ input[type=submit]:hover {
         
         <label for="select_4th_year">4th Year</label>
         <input type="checkbox" name="select_year" value="4th" id="select_4th_year"><br>
-
-        <h2>Total Strength of Selected years</h2>
+</fieldset>
+        <h2 id="strengthHeading" class="hidden">Total Strength of Selected years</h2>
+        
         <ul>
             {% for year, strength in total_strengths.items() %}
-                <li>{{ year }} Total Strength: {{ strength }}</li>
+            <li>{{ year }} Year Total Strength: {{ strength }} students</li>
             {% endfor %}
         </ul>
-        <!-- Display uploading error messages if they exist
+        <!-- Display uploading error messages if they exist -->
         {% if upload_errors %}
         <ul class="upload-errors">
             {% for upload_error in upload_errors %}
             <li>{{ upload_error }}</li>
             {% endfor %}
         </ul>
-        {% endif %} -->
-        <input type="submit" value="Upload and Process" onclick="displayUploadErrors();">
+        {% endif %}
+        <input type="submit" value="Upload and Process" onclick="showHeading();">
 
     </form>
     

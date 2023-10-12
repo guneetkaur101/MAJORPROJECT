@@ -32,7 +32,7 @@ def admin():
 	myconn = sqlite3.connect("room_details.db")
 	with myconn:
 		cursor = myconn.cursor()
-		cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row integer(10),seat integer(10))")
+		cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row_c1 integer(10),row_c2 integer(10),row_c3 integer(10),row_c4 integer(10),row_c5 integer(10),row_c6 integer(10),u_row_c1 integer(10),u_row_c2 integer(10),u_row_c3 integer(10),u_row_c4 integer(10),u_row_c5 integer(10),u_row_c6 integer(10),seat integer(10))")
 		data = cursor.execute("SELECT * FROM room")
 		data = cursor.fetchall()
 	return render_template("admin.html",data=data)
@@ -40,39 +40,36 @@ def admin():
 
 def addroom():
     error = None
-    capacity = None  # Initialize capacity variable
-
+    
     if request.method == 'POST':
         room_no = request.form['room_no']
 
-        # Calculate the row and column capacities
-        try:
-            row = int(request.form['row'])
-            col = int(request.form['col'])
-            seat = row * col
-
-            # Set the capacity variable to the calculated value
-            capacity = seat
-        except ValueError:
-            return "Invalid input for row or column."
-
+        # Read the rows per column values from the form
+        rows_per_columns = [request.form[f'row_c{i}'] for i in range(1, 7)]
+        
+        # Calculate the total number of seats
+        total_seats = sum([int(rows) for rows in rows_per_columns])
+        # Copy the same values to u_row_c1, u_row_c2, ..., u_row_c6
+        updated_rows_per_columns = rows_per_columns
+        
         myconn = sqlite3.connect("room_details.db")
 
         with myconn:
             cursor = myconn.cursor()
-            cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no INTEGER PRIMARY KEY, col INTEGER, row INTEGER, seat INTEGER)")
+            cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no INTEGER PRIMARY KEY, col INTEGER, row_c1 INTEGER, row_c2 INTEGER, row_c3 INTEGER, row_c4 INTEGER, row_c5 INTEGER, row_c6 INTEGER,u_row_c1 INTEGER, u_row_c2 INTEGER, u_row_c3 INTEGER, u_row_c4 INTEGER,u_row_c5 INTEGER, u_row_c6 INTEGER, seat INTEGER)")
             temp_no = cursor.execute("SELECT room_no from room where room_no=?", [room_no])
-            temp_no = cursor.fetchone()
+            temp_no = temp_no.fetchone()
 
         if temp_no is None:
             with myconn:
                 cursor = myconn.cursor()
-                cursor.execute("INSERT INTO room(room_no, col, row, seat) VALUES(?,?,?,?)", [room_no, col, row, seat])
-                error = f"Room {room_no} is added with {col} columns and {row} rows, total {seat} seats."
+                cursor.execute("INSERT INTO room(room_no, col, row_c1, row_c2, row_c3, row_c4, row_c5, row_c6, u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6, seat) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", 
+                               [room_no, 6] + rows_per_columns + [total_seats])
+                error = f"Room {room_no} is added "
         else:
             error = f"Room {room_no} is already exist."
 
-    return render_template("addroom.html", error=error, capacity=capacity)  # Pass capacity to the HTML template
+    return render_template("addroom.html", error=error)  # Pass capacity to the HTML template
     
 def show():
 	data=None
@@ -80,7 +77,7 @@ def show():
 	myconn = sqlite3.connect("room_details.db")
 	with myconn:
 		cursor = myconn.cursor()
-		cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row integer(10),seat integer(10))")
+		cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row_c1 integer(10),row_c2 integer(10),row_c3 integer(10),row_c4 integer(10),row_c5 integer(10),row_c6 integer(10),u_row_c1 integer(10),u_row_c2 integer(10),u_row_c3 integer(10),u_row_c4 integer(10),u_row_c5 integer(10),u_row_c6 integer(10),seat integer(10))")
 		temp_no = cursor.execute("SELECT room_no from room ")
 		temp_no = cursor.fetchall()
 	if request.method == 'POST':
@@ -95,7 +92,7 @@ def delete(id):
 	myconn = sqlite3.connect("room_details.db")
 	with myconn:
 		cursor = myconn.cursor()
-		cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row integer(10),seat integer(10))")
+		cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row_c1 integer(10),row_c2 integer(10),row_c3 integer(10),row_c4 integer(10),row_c5 integer(10),row_c6 integer(10),u_row_c1 integer(10),u_row_c2 integer(10),u_row_c3 integer(10),u_row_c4 integer(10),u_row_c5 integer(10),u_row_c6 integer(10),seat integer(10))")
 		cursor.execute("DELETE FROM room WHERE room_no=?",[id])
 	return  redirect(url_for('admin'))
 

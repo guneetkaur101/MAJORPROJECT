@@ -1,98 +1,172 @@
-﻿URN
-"19,000"
-"19,001"
-"19,002"
-"19,003"
-"19,004"
-"19,005"
-"19,006"
-"19,007"
-"19,008"
-"19,009"
-"19,010"
-"19,011"
-"19,012"
-"19,013"
-"19,014"
-"19,015"
-"19,016"
-"19,017"
-"19,018"
-"19,019"
-"19,020"
-"19,021"
-"19,022"
-"19,023"
-"19,024"
-"19,025"
-"19,026"
-"19,027"
-"19,028"
-"19,029"
-"19,030"
-"19,031"
-"19,032"
-"19,033"
-"19,034"
-"19,035"
-"19,036"
-"19,037"
-"19,038"
-"19,039"
-"19,040"
-"19,041"
-"19,042"
-"19,043"
-"19,044"
-"19,045"
-"19,046"
-"19,047"
-"19,048"
-"19,049"
-"19,050"
-"19,051"
-"19,052"
-"19,053"
-"19,054"
-"19,055"
-"19,056"
-"19,057"
-"19,058"
-"19,059"
-"19,060"
-"19,061"
-"19,062"
-"19,063"
-"19,064"
-"19,065"
-"19,066"
-"19,067"
-"19,068"
-"19,069"
-"19,070"
-"19,071"
-"19,072"
-"19,073"
-"19,074"
-"19,075"
-"19,076"
-"19,077"
-"19,078"
-"19,079"
-"19,080"
-"19,081"
-"19,082"
-"19,083"
-"19,084"
-"19,085"
-"19,086"
-"19,087"
-"19,088"
-"19,089"
-"19,090"
-"19,091"
-"19,092"
-"19,093"
-"19,094"
-"19,095"
-"19,096"
+D3CSE,,,,,,
+Sr. No.,College Roll No.,University Roll No.,Student Name,Father Name,Mother Name,Section / Group
+1,2115001,2104055,Abhinav Prashar,Aman Kumar,Poonam Rani,A / A1
+2,2115002,2104056,Abhishek Sharma,Ashwani Kumar,Bindra Sharma,A / A1
+3,2115003,2104057,Aditya Kumar,Shri Niwas Kushwaha,Nirmla Devi,A / A1
+4,2115004,2104058,Aditya Sankhyan,Surinder Sankhyan,Sudesh Kumari,A / A1
+5,2115005,2104059,Aditya Yadav,Rajinder Kumar,Renu Yadav,A / A1
+6,2115006,2104060,Agampreet Singh,Kuljeet Singh,Satinder Kaur,A / A1
+7,2115007,2104061,Ajay Kumar,Pradeep Kumar,Shobha Ddevi,A / A1
+8,2115008,2104062,Akash Kumar,Sunil Prasad,Asha Devi,A / A1
+9,2115009,2104063,Akshat Chopra,Naveen Chopra,Aarti Chopra,A / A1
+10,2115010,2104064,Amandeep Kaur,Krishan Lal,Santosh Rani,A / A1
+11,2115011,2104065,Amanpreet Kaur,Bheem Singh,Swarnjit Kaur,A / A1
+12,2115012,2104066,Amrinder Singh,Baljit Singh,Baljit Kaur,A / A1
+13,2115013,2104067,Anayan Raj,Om Raj,Sumna Devi,A / A1
+14,2115014,2104068,Ankit Kapoor,Karan Kapoor,Ritu Kapoor,A / A1
+15,2115015,2104069,Ankush Makkar,Anil Makkar,Rimple Makkar,A / A1
+16,2115016,2104070,Anmol Kumar,Arbind Kumar,Indu Kumari,A / A1
+17,2115018,2104071,Anshvir Singh Sihra,Sukhdev Singh Sihra,Bhupinder Kaur Sihra,A / A1
+18,2115019,2104072,Anuradha Bharti,Gopal Kumar,Gunjan Devi,A / A1
+19,2115020,2104073,Areen Singh,Yogesh Singh,Neelam Panwar,A / A1
+20,2115021,2104074,Armaandeep Singh,Sikander Singh,Rupinder Kaur,A / A1
+21,2115022,2104075,Arshdeep Singh,Harjit Singh,Harpreet Kaur,A / A1
+22,2115023,2104076,Arshjeet Singh,Harsimran Singh,Gurmeet Kaur,A / A1
+23,2115024,2104077,Aryan Garg,Aseemdeep Garg,Anu Rani,A / A1
+24,2115025,2104078,Ashish Baweja,Avtar Krishan,Neeru Baweja,A / A1
+25,2115167,2104079,Astha Sharma,Vijay Mohan Sharma,Kamlesh Sharma,A / A1
+26,2115026,2104080,Bharatdeep Singh,Avtar Singh,Nirmaljeet Kaur,A / A1
+27,2115027,2104081,Bikramjeet Singh,Sarvjit Singh,Surjeet Kaur,A / A1
+28,2115028,2104082,Chamanpreet Dhillon,Daljit Singh,Silky Gill,A / A1
+29,2115029,2104083,Chandanbir Singh,Iqbal Singh,Rajinder Kaur,A / A2
+30,2115031,2104085,Dayanand,Dular Chand,Atarvasi Devi,A / A2
+31,2115032,2104087,Deepshikha,Tajinder Kumar Goyal,Shashi Goyal,A / A1
+32,2115033,2104088,Deesha Devi,Roop Lal,Minakshi Kour,A / A2
+33,2115035,2104089,Dhruv Kumar,Ashwani,Rachna,A / A2
+34,2115036,2104090,Dikshit Narayan,Tarsem Lal,Vandana Sharma,A / A2
+35,2115037,2104091,Dilpreet Kaur,Gurpreet Singh,Ramandeep Kaur,A / A2
+36,2115038,2104092,Dilraj Singh,Davinder Singh,Gurbakhash Kaur,A / A2
+37,2115039,2104093,Divneet Kaur,Puran Singh,Ramandeep Kaur,A / A1
+38,2115041,2104095,Divyanshu Kumar,Nathuni Sah,Lalsa Devi,A / A2
+39,2115042,2104096,Ekamdeep Singh Mangat,Jagdeep Singh,Gursharan Kaur,A / A2
+40,2115043,2104097,Ekuspreet Singh,Surinderpal Singh,Jasleen Kaur,A / A2
+41,2115044,2104098,Eshanvir Vishisht,Vishwinder Vishisht,Anita Kumari,A / A2
+42,2115045,2104099,Golu Kumar,Birendra Singh,Pramila Devi,A / A2
+43,2115046,2104100,Gundeep Singh,Pritpal Singh,Rajandeep Kaur,A / A2
+44,2115047,2104101,Gurarpit Singh Dhillon,Bhupinder Singh Dhillon,Kamaljit Kaur Dhillon,A / A2
+45,2115049,2104103,Gurdev Singh,Sukhvir Singh,Kulwinder Kaur,A / A2
+46,2115050,2104104,Gurkirat Singh,Amardeep Singh,Harminder Kaur,A / A2
+47,2115051,2104105,Gurleen Kaur,Guriqbal Singh,Navneet Kaur,A / A2
+48,2115052,2104106,Gurleen Kaur,Jaspal Singh,Satpal Kaur,A / A2
+49,2115053,2104107,Gurpreet Singh,Gurmit Singh,Ushadevi,A / A2
+50,2115054,2104108,Gursimran Kaur,Hari Singh,Sarabjeet Kaur,A / A2
+51,2115055,2104109,Hare Krishna,Mukesh Kumar Sharma,Sharda Devi,A / A2
+52,2115056,2104110,Harkirat Singh,Navneet Singh,Ravinder Kaur,A / A2
+53,2115058,2104112,Harleen Kaur,Satinder Singh,Amarjeet Kaur,A / A2
+54,2115059,2104113,Harnoor Birdi,Inderjit Singh,Harpreet Kaur,A / A2
+55,2115061,2104115,Harsh Rathi,Kirpal Singh,Krishna,B / B1
+56,2115062,2104116,Harsharan Singh,Surinder Singh,Tejpal Kaur,B / B1
+57,2115063,2104117,Harsimran Singh Jaggi,Gurjeet Singh Jaggi,Harpreet Kaur,B / B1
+58,2115064,2104118,Inderpreet Singh,Jagjit Singh,Maninder Kaur,B / B1
+59,2115160,2104119,Inpreet Kour,Isher Singh,Patimber Kour,B / B1
+60,2115065,2104120,Jagjeet Singh,Manmohan Singh,Bhupinder Kaur,B / B1
+61,2115066,2104121,Jagsimranjit Singh,Jagroopjit Singh,Simranjit Kaur,B / B1
+62,2115067,2104122,Jasdeep Kaur Batra,Manjeet Singh Batra,Surender Kaur Batra,B / B1
+63,2115068,2104123,Jashandeep Kaur,Sukhdarshan Singh,Gurpreet Kaur,B / B1
+64,2115070,2104124,Jaskaran Singh,Balbir Singh,Jinder Kaur,B / B1
+65,2115069,2104125,Jaskaran Singh,Charanjit Singh,Tajinder Kaur,B / B1
+66,2115072,2104127,Jaskaran Singh,Sarvjit Singh,Daljit Kour,B / B1
+67,2115073,2104128,Jasnoor Kaur,Mann Singh,Jaswinder Kaur,B / B1
+68,2115074,2104129,Jaspreet Kaur,Kaka Singh,Bhinder Kaur,B / B1
+69,2115075,2104130,Jaspreet Singh,Gurmukh Singh,Rajpreet Kaur,B / B1
+70,2115078,2104133,Kamalpreet Kaur,Jasvir Singh,Sarbjit Kaur,B / B1
+71,2115079,2104134,Karthik K,Suresh Kumar,Sreevidya Km,B / B1
+72,2115080,2104135,Keshav Hari Nanda,Vikas Nanda,Bharti Nanda,B / B1
+73,2115081,2104136,Khushmeet Kaur,Gursharan Singh,Late Kulwant Kaur,B / B1
+74,2115083,2104137,Kuber Tyagi,Kushal Tyagi,Neera Tyagi,B / B1
+75,2115084,2104138,Madhav Purohit,Ved Parkash Purohit,Geeta Purohit,B / B1
+76,2115086,2104140,Maneet Singh,Tarsem Singh,Balwinder Kaur,B / B1
+77,2115087,2104141,Manraj Singh Dhatt,Gurdip Singh Dhatt,Baljit Kaur Dhatt,B / B1
+78,2115088,2104142,Manreet Kaur,Mandeep Singh,Paramjeet Kaur,B / B1
+79,2115089,2104143,Milandeep Kaur,Inderpal Singh,Mandeep Kaur,B / B1
+80,2115090,2104144,Muskan,Deepak Om Pujara,Ruby Pujara,B / B1
+81,2115091,2104145,Naimrata Singh,Diljeet Singh,Sanjeet Kour,B / B1
+82,2115092,2104146,Nikhil Kumar Bidlan,Sanjeev Kumar,Monika Devi,B / B2
+83,2115093,2104147,Nishant Khanna,Sanjay Khanna,Jyoti Khanna,B / B2
+84,2115094,2104148,Nitin,Sh. Sunil Kumar,Smt. Santosh Rani,B / B2
+85,2115095,2104149,Nittin,Yogesh Kumar,Meena Kumari,B / B2
+86,2115096,2104150,Pahulpreet Kaur,Satinder Singh,Lakhwinder Kaur,B / B2
+87,2115097,2104151,Pankaj Ramola,Dinesh Chand,Jaina Devi,B / B2
+88,2115098,2104152,Parveen Kaur,Jaswant Singh,Rupinder Kaur,B / B2
+89,2115099,2104153,Piyush Goyal,Parveen Kumar,Sneh Lata,B / B2
+90,2115101,2104154,Pratham,Surinder Kumar,Rajni,B / B2
+91,2115103,2104156,Pratham Yadav,Kamlesh Yadav,Urmila Rani,B / B2
+92,2115104,2104157,Prinkal Mahajan,Suresh Kumar,Jyoti Mahajan,B / B2
+93,2115166,2104158,Priyanshu Rana,Prem Kumar Rana,Sushma Rana,B / B2
+94,2115105,2104159,Raghav Chopra,Rishi Chopra,Sonia,B / B2
+95,2115106,2104160,Raghav Jit,Kamal Jit Singh,Neha Rani,B / B2
+96,2115107,2104161,Raghav Loomba,Amrish Loomba,Rashmi Loomba,B / B2
+97,2115108,2104162,Rahul Kumar,Kali Prasad,Manju Devi,B / B2
+98,2115109,2104163,Rahul Kumar,Ravindra Kumar,Rinku Kumari,B / B2
+99,2115110,2104164,Rahul Sharma,Susheel Kumar,Renu Bala,B / B2
+100,2115112,2104165,Rajat,Pawan Kumar,Neetu,B / B2
+101,2115113,2104166,Ranbir Singh,Raminder Singh,Balvinder Kaur,B / B2
+102,2115114,2104167,Ranjeet Singh,Gurmeet Singh,Parveen Kaur,B / B2
+103,2115115,2104168,Ravinder Kaur,Gurbachan Singh,Manjeet Kaur,B / B2
+104,2115116,2104169,Roban Singh,Avtar Singh,Baljeet Kaur,B / B2
+105,2115117,2104170,Robin Rawat,Ravindra Singh,Bharti Devi,B / B2
+106,2115118,2104171,Rubanpreet Singh,Rakhbir Singh,Kuldeep Kaur,B / B2
+107,2115119,2104172,Rupalli Devi,Surjeet Kumar,Sunita Devi,B / B2
+108,2115120,2104173,Sahil Guleria,Ajay Guleria,Sushma Guleria,B / B2
+109,2115121,2104174,Sahil Kawatra,Anil Kawatra,Shachi Kawatra,B / B2
+110,2115122,2104175,Sahil Singh Saini,Som Raj Saini,Darshna Devi,B / B2
+111,2115123,2104176,Saksham Kohli,Sandeep Kohli,Harpreet Kaur,C / C1
+112,2115124,2104178,Samiksha,Mr.manmohan Kumar,Mrs.santosh Kumari,C / C1
+113,2115125,2104179,Sandeep Kumar Mohakud,Santosh Kumar Mohakud,Mamata Mohakud,C / C1
+114,2115126,2104180,Saneh Thakur,Chandan Thakur,Premi Devi,C / C1
+115,2115127,2104181,Sangam Arora,Satish Kumar,Leena Kumari,C / C1
+116,2115128,2104182,Sanjay Kumar,Jagjivan Ram,Tripta Devi,C / C1
+117,2115129,2104183,Sanskar Dorwal,Shanker Dorwal,Anita Dorwal,C / C1
+118,2115130,2104184,Sargun Grover,Amandeep Singh Grover,Gurpreet Kaur,C / C1
+119,2115131,2104185,Shashank,Rajpal,Anita,C / C1
+120,2115132,2104186,Shashank Kumar,Sushil Kumar Singh,Kiran Bala,C / C1
+121,2115165,2104187,Shashank Sharma,Neel Kamal Sharma,Rekha Sharma,C / C1
+122,2115134,2104189,Shikha,Anil Kumar,Varindra Kumari,C / C1
+123,2115164,2104190,Shubham Raj,Jitendra Kumar,Sushma Bharti,C / C1
+124,2115136,2104192,Siddh Chhabra,Raj Kumar Chhabra,Seema Chhabra,C / C1
+125,2115137,2104193,Simarpreet Kaur,Arvinder Pal Singh,Paramjit Kaur,C / C1
+126,2115162,2104194,Simran Tiwari,Ram Krishna Tiwari,Anita Tiwari,C / C1
+127,2115138,2104195,Simrandeep Kaur,Najar Singh,Gurmeet Kaur,C / C1
+128,2115139,2104196,Simranjit Kaur,Dalvir Singh,Rajwant Kaur,C / C1
+129,2115140,2104197,Somya Agarwal,Ashish Agarwal,Seema Agarwal,C / C1
+130,2115141,2104198,Sukhdeep Singh,Harpreet Singh,Sukhwinder Kaur,C / C1
+131,2115142,2104199,Sukhman Kaur,Davinder Singh,Amandeep Kaur,C / C1
+132,2115143,2104200,Sumehar Gill,Nirmal Singh Gill,Navdeep Kaur Gill,C / C1
+133,2115146,2104203,Tanvi,Shiv Shambhu,Mamta,C / C1
+134,2115147,2104204,Tanvir Kaur,Jagdish Singh,Sarbjeet Kaur,C / C1
+135,2115148,2104205,Taranjit Kaur,Karamjit Singh,Harpreet Kaur,C / C1
+136,2115149,2104206,Taranvir Singh,Kuljit Singh,Avtar Kaur,C / C2
+137,2115150,2104207,Tarun Singh,Jaswant Singh,Rashpal Kaur,C / C2
+138,2115151,2104208,Tashneet Kaur,Amandeep Singh,Navpreet Kaur,C / C2
+139,2115152,2104209,Tavleen Kaur,Balwinder Singh,Raminder Kaur,C / C2
+140,2115153,2104210,Trilok Singh,Kuldip Singh,Paramjeet Kaur,C / C2
+141,2115154,2104211,Vaani Gupta,Rajnish Gupta,Vandana Gupta,C / C2
+142,2115156,2104212,Vansh,Naveen Kumar,Nisha,C / C2
+143,2115157,2104213,Vanshika Sharma,Manoj Kumar,Bhushan Lata,C / C2
+144,2115158,2104214,Vanshika Verma,Ashok Kumar,Nisha Verma,C / C2
+145,2115163,2104216,Yashwant Singh,Sunil Kumar Singh,Kavita Singh,C / C2
+146,2115170,2104481,Astha Paika,Vaneet Paika,Ravneet Kaur Paika,C / C2
+147,2115169,2104557,Rajveer Singh,Tejwant Singh,Manpreet Kaur,C / C2
+148,2115171,2135212,Shubhdeep Kaur,Gurjeet Singh,Tajinder Kaur,C / C2
+149,2115172,2203579,Amanpreet Singh,Kulwant Singh,Balvir Kaur,C / C2
+150,2115173,2203580,Chandan Goyal,Anil Kumar,Sunita Rani,C / C2
+151,2115174,2203581,Guransh Singh Channi,Surinder Singh,Harinder Kaur,C / C2
+152,2115175,2203582,Harnoor Singh,Harmohinder Jit Singh,Jatinder Kaur,C / C2
+153,2115176,2203583,Harnoor Singh,Tajinder Mohan Singh,Rinki,C / C2
+154,2115177,2203584,Hiten Gupta,Vikram Gupta,Meenu Gupta,C / C2
+155,2115178,2203585,Kajal Yadav,Girish Yadav,Champa Devi,C / C2
+156,2115179,2203586,Kaushal Kundan,Kumud Kumar Kundan,Kiran Kumari,C / C2
+157,2115180,2203587,Kirandeep Kour,Harpal Singh,Harmeet Kour,C / C2
+158,2115181,2203588,Mehakpreet Kaur,Bhagwant Singh,Hardeep Kaur,C / C2
+159,2115182,2203589,Ridhamjeet Kaur,Gurmukh Singh,Kanwaljeet Kaur,C / C2
+160,2115183,2203590,Ridhimaa Thakur,Tarsem Lal,Indu Bala,C / C2
+161,2115184,2203591,Ritik Kashyap,Girish Chand,Neera Devi,C / C2
+162,2115185,2203592,Ritika Sharma,Rajeev Sharma,Raman Sharma,C / C2
+163,2115186,2203593,Roshni,Santosh Kumar,Saroj Rani,C / C2
+164,2115187,2203594,Saransh,Deepak Kumar,Manju Bala,C / C2
+165,2115188,2203595,Shaina,Ram Baran,Veena,C / C2
+166,2115189,2203596,Simranjeet Kaur,Sarbjeet Singh,Baljinder Kaur,C / C2
+167,2115190,2203597,Snover Preet,Harpreet Singh Preet,Balwinder Pal Kaur Preet,C / C2
+168,2115191,2203598,Swagat,Jasveer Singh,Manjit Kaur,C / C2
+169,2115192,2203599,Tanveer Singh Puniah,Harvinder Singh Puniah,Mandeep Kaur Puniah,C / C2
+170,2115193,2203600,Taranpreet Kaur,Vijay Kumar,Paramjit Kaur,C / C2
