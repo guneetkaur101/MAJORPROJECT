@@ -36,41 +36,44 @@ def admin():
 		data = cursor.execute("SELECT * FROM room")
 		data = cursor.fetchall()
 	return render_template("admin.html",data=data)
-@app.route("/addroom",methods=['GET','POST'])
-
+@app.route('/addroom', methods=['GET', 'POST'])
 def addroom():
     error = None
-    
+
     if request.method == 'POST':
         room_no = request.form['room_no']
+        row_c1 = int(request.form['row1'])
+        row_c2 = int(request.form['row2'])
+        row_c3 = int(request.form['row3'])
+        row_c4 = int(request.form['row4'])
+        row_c5 = int(request.form['row5'])
+        row_c6 = int(request.form['row6'])
+        
+        # Calculate total seats
+        total_seats = row_c1 + row_c2 + row_c3 + row_c4 + row_c5 + row_c6
 
-        # Read the rows per column values from the form
-        rows_per_columns = [request.form[f'row_c{i}'] for i in range(1, 7)]
-        
-        # Calculate the total number of seats
-        total_seats = sum([int(rows) for rows in rows_per_columns])
-        # Copy the same values to u_row_c1, u_row_c2, ..., u_row_c6
-        updated_rows_per_columns = rows_per_columns
-        
+        # Rest of your code
+
+        # Check if the room number already exists in the database
         myconn = sqlite3.connect("room_details.db")
-
         with myconn:
             cursor = myconn.cursor()
-            cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no INTEGER PRIMARY KEY, col INTEGER, row_c1 INTEGER, row_c2 INTEGER, row_c3 INTEGER, row_c4 INTEGER, row_c5 INTEGER, row_c6 INTEGER,u_row_c1 INTEGER, u_row_c2 INTEGER, u_row_c3 INTEGER, u_row_c4 INTEGER,u_row_c5 INTEGER, u_row_c6 INTEGER, seat INTEGER)")
-            temp_no = cursor.execute("SELECT room_no from room where room_no=?", [room_no])
-            temp_no = temp_no.fetchone()
+            cursor.execute("SELECT room_no FROM room WHERE room_no=?", [room_no])
+            existing_room = cursor.fetchone()
 
-        if temp_no is None:
+        if existing_room:
+            error = f"Room {room_no} already exists."
+        else:
+            # Insert the new room into the database
             with myconn:
                 cursor = myconn.cursor()
-                cursor.execute("INSERT INTO room(room_no, col, row_c1, row_c2, row_c3, row_c4, row_c5, row_c6, u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6, seat) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", 
-                               [room_no, 6] + rows_per_columns + [total_seats])
-                error = f"Room {room_no} is added "
-        else:
-            error = f"Room {room_no} is already exist."
+                cursor.execute(
+                    "INSERT INTO room (room_no, col, row_c1, row_c2, row_c3, row_c4, row_c5, row_c6, u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6, seat) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    (room_no, 6, row_c1, row_c2, row_c3, row_c4, row_c5, row_c6, row_c1, row_c2, row_c3, row_c4, row_c5, row_c6, total_seats)
+                )
+            error = f"Room {room_no} has been added."
 
-    return render_template("addroom.html", error=error)  # Pass capacity to the HTML template
-    
+    return render_template("addroom.html", error=error)
 def show():
 	data=None
 	filename = None
@@ -104,7 +107,6 @@ def edit(id):
         col = request.form['col']
         row = request.form['row']
         seat = request.form['seat']
-        
         myconn = sqlite3.connect("room_details.db")
         with myconn:
             cursor = myconn.cursor()
@@ -112,13 +114,11 @@ def edit(id):
             myconn.commit()
             message = "Room details have been updated successfully."  # Set the message
             return redirect('/admin')  # Redirect to the admin page
-
     myconn = sqlite3.connect("room_details.db")
     with myconn:
         cursor = myconn.cursor()
         cursor.execute("SELECT * FROM room WHERE room_no = ?", [id])
         data = cursor.fetchone()
-    
     if data:
         room_no = data[0]
         col = data[1]
