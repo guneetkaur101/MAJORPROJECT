@@ -144,7 +144,7 @@ input[type=submit]:hover {
 </div>
 <div class="container">
   <h2>Add Room</h2>
-  <form action="" method="POST">
+  <form action="" method="POST" onsubmit="updateHiddenFields();">
     {% if error %}
     <pre>{{error}}</pre>
     {% endif %}
@@ -167,58 +167,64 @@ input[type=submit]:hover {
     </div>
     <div class="row">
       <div class="col-25">
-        <label for="row1">Rows per Column 1:</label>
+        <label for="row_c1">Rows per Column 1:</label>
       </div>
       <div class="col-75">
-        <input type="number" id="row1" name="row1" min="0" max="30" step="1" value="{{ row_c1 }}">
+        <input type="number" id="row_c1" name="row_c1" min="0" max="30" step="1" value="{{ row_c1 }}">
       </div>
       </div>
                   <!-- Rows per Column 2 -->
                   <div class="row">
                     <div class="col-25">
-                        <label for="row2">Rows per Column 2:</label>
+                        <label for="row_c2">Rows per Column 2:</label>
                     </div>
                     <div class="col-75">
-                        <input type="number" id="row2" name="row2" min="0" max="30" step="1" value="{{ row_c2 }}">
+                        <input type="number" id="row_c2" name="row_c2" min="0" max="30" step="1" value="{{ row_c2 }}">
                     </div>
                 </div>
                 <!-- Rows per Column 3 -->
                 <div class="row">
                     <div class="col-25">
-                        <label for="row3">Rows per Column 3:</label>
+                        <label for="row_c3">Rows per Column 3:</label>
                     </div>
                     <div class="col-75">
-                        <input type="number" id="row3" name="row3" min="0" max="30" step="1" value="{{ row_c3 }}">
+                        <input type="number" id="row_c3" name="row_c3" min="0" max="30" step="1" value="{{ row_c3 }}">
                     </div>
                 </div>
                 <!-- Rows per Column 4 -->
                 <div class="row">
                     <div class="col-25">
-                        <label for="row4">Rows per Column 4:</label>
+                        <label for="row_c4">Rows per Column 4:</label>
                     </div>
                     <div class="col-75">
-                        <input type="number" id="row4" name="row4" min="0" max="30" step="1" value="{{ row_c4 }}">
+                        <input type="number" id="row_c4" name="row_c4" min="0" max="30" step="1" value="{{ row_c4 }}">
                     </div>
                 </div>
                 <!-- Rows per Column 5 -->
                 <div class="row">
                     <div class="col-25">
-                        <label for="row5">Rows per Column 5:</label>
+                        <label for="row_c5">Rows per Column 5:</label>
                     </div>
                     <div class="col-75">
-                        <input type="number" id="row5" name="row5" min="0" max="30" step="1" value="{{ row_c5 }}">
+                        <input type="number" id="row_c5" name="row_c5" min="0" max="30" step="1" value="{{ row_c5 }}">
                     </div>
                 </div>
                 <!-- Rows per Column 6 -->
                 <div class="row">
                     <div class="col-25">
-                        <label for="row6">Rows per Column 6:</label>
+                        <label for="row_c6">Rows per Column 6:</label>
                     </div>
                     <div class="col-75">
-                        <input type="number" id="row6" name="row6" min="0" max="30" step="1" value="{{ row_c6 }}">
+                        <input type="number" id="row_c6" name="row_c6" min="0" max="30" step="1" value="{{ row_c6 }}">
                     </div>
                 </div>
-    
+                <input type="hidden"  id="u_row_c1" name="u_row_c1" value="{{ row_c1 }}">
+                <input type="hidden"  id="u_row_c2" name="u_row_c2" value="{{ row_c2 }}">
+                <input type="hidden"  id="u_row_c3" name="u_row_c3" value="{{ row_c3 }}">
+                <input type="hidden"  id ="u_row_c4" name="u_row_c4" value="{{ row_c4 }}">
+                <input type="hidden"  id="u_row_c5" name="u_row_c5" value="{{ row_c5 }}">
+                <input type="hidden" id="u_row_c6" name="u_row_c6"  value="{{ row_c6 }}">
+                
       <br>
       <input type="submit" value="Submit">
     </form>
@@ -234,6 +240,21 @@ input[type=submit]:hover {
     }
   
   }
+  <!-- Add this script section to your HTML -->
+    // Function to update the hidden fields with the visible fields' values
+    function updateHiddenFields() {
+        // Loop through the visible input fields
+        for (let i = 1; i <= 6; i++) {
+            // Get the value from the visible field
+            const visibleField = document.getElementById(`row_c${i}`);
+            const value = visibleField.value;
+            
+            // Update the corresponding hidden field with the value
+            const hiddenField = document.getElementById(`u_row_c${i}`);
+            hiddenField.value = value;
+        }
+    }
+
   </script>
 </body>
 </html>

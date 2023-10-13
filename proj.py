@@ -43,15 +43,17 @@ def addroom():
     
     if request.method == 'POST':
         room_no = request.form['room_no']
-
+        print(request.form)
         # Read the rows per column values from the form
         rows_per_columns = [request.form[f'row_c{i}'] for i in range(1, 7)]
-        
+        print(rows_per_columns)
+        # Copy the values to u_row_c1, u_row_c2, ..., u_row_c6
+        updated_rows_per_columns = rows_per_columns
+        print(updated_rows_per_columns)
         # Calculate the total number of seats
         total_seats = sum([int(rows) for rows in rows_per_columns])
-        # Copy the same values to u_row_c1, u_row_c2, ..., u_row_c6
-        updated_rows_per_columns = rows_per_columns
-        
+        print(total_seats)
+       
         myconn = sqlite3.connect("room_details.db")
 
         with myconn:
@@ -64,11 +66,12 @@ def addroom():
             with myconn:
                 cursor = myconn.cursor()
                 cursor.execute("INSERT INTO room(room_no, col, row_c1, row_c2, row_c3, row_c4, row_c5, row_c6, u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6, seat) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", 
-                               [room_no, 6] + rows_per_columns + [total_seats])
+                               [room_no, 6] + rows_per_columns + updated_rows_per_columns + [total_seats])
                 error = f"Room {room_no} is added "
         else:
             error = f"Room {room_no} is already exist."
-
+        # Commit the changes to the database
+        myconn.commit()
     return render_template("addroom.html", error=error)  # Pass capacity to the HTML template
     
 def show():
