@@ -14,6 +14,7 @@
     .topnav {
         overflow: hidden;
         background-color: #333;
+       
     }
 
     .topnav a {
@@ -78,23 +79,23 @@
 </head>
 <body>
     <!-----------------------------------------NAVIGATION BARS--------------------------->
-    <div class="content">
     <div class="topnav">
-        <a class="active" href="/admin">Dashboard</a>
+        <a href="/admin">Dashboard</a>
         <a href="/addroom">Add Room</a>
         <a href="/upload_form">Upload</a>
-        <a href="/generate">Generate</a>
+        <a  class="active" href="/generate">Generate</a>
         <a href="/login">Logout</a>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
           </a>
     </div>
     <div>
-        <h2>AVAILABLE ROOMS</h2>
 
-        <table id="example" class="display" cellspacing="0" width="100%">
+        <form action="/generate" method="POST">  
+        <table id="example" class="display" cellspacing="0" width="100%" style="margin-top: 10px;">
             <thead>
                 <tr>
+                    <th>Select</th>  <!-- Add a new column for checkboxes -->
                     <th>Room No</th>
                     <th>Columns</th>
                     <th>Row 1</th>
@@ -110,21 +111,23 @@
                     <th>Usable Row 5</th>
                     <th>Usable Row 6</th>
                     <th>Total Capacity</th>
-                    <th>DELETE</th>
                     <th>EDIT</th>
                 </tr>
             </thead>
+            <tbody>
             {% for row in data %}
             <tr>
+                <td><input type="checkbox" name="selected_rooms" value="{{ row[0] }}"></td>  <!-- Add a checkbox for each room -->
                 {% for d in row %}
                 <td>{{d}}</td>
                 {% endfor %}
-                <td><a href="/delete/{{row[0]}}">DELETE</a></td>
-                <td><a href="/edit/{{row[0]}}">EDIT</a></td>
+               <td> <a href="/edit-usable-rows/{{ row[0] }}" >EDIT</a></td>
             </tr>
             {% endfor %}
+        </tbody>
         </table>
-        </div>
+        <input type="submit" value="Edit Selected Rooms">  <!-- Add a submit button to send selected rooms to the server -->
+       </form>
     </div>
         <script>
         $(document).ready(function() {
@@ -142,6 +145,8 @@
     }
   
   }
+
+  
         </script>
 </body>
 </html>

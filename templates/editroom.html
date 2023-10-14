@@ -9,6 +9,7 @@
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+  background-color: #f2f2f2;
 }
 
 .topnav {
@@ -134,8 +135,7 @@ input[type=submit]:hover {
   <a  href="/admin">Dashboard</a>
   <a  class="active" href="/addroom">Add Room</a>
   <a href="/upload_form">Upload</a>
-  <a href="/Generate">Generate</a>
-  <a  href="/result">Show Result</a>
+  <a href="/generate">Generate</a>
   <a href="/login">Logout</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
@@ -157,31 +157,78 @@ input[type=submit]:hover {
     </div>
     <div class="row">
       <div class="col-25">
-        <label for="quantity">Total Number of Rows:</label>
-      </div>
-      <div class="col-75">
-        <input type="number" id="quantity" name="row" min="0" max="30" step="1" value="{{row}}">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-25">
         <label for="quantity">Total Number of Columns:</label>
       </div>
       <div class="col-75">
-        <input type="number" id="quantity" name="col" min="0" max="30" step="1" value="{{col}}">
+         <!-- Display the number of columns (6) as a non-editable input -->
+         <input type="text" name="columns" value="6" readonly>
       </div>
     </div>
     <div class="row">
       <div class="col-25">
-        <label for="quantity">Total Number of Seats:</label>
+        <label for="row_c1">Rows per Column 1:</label>
       </div>
       <div class="col-75">
-        <input type="number" id="quantity" name="seat" min="0" max="500" step="1" value="{{seat}}">
+        <input type="number" id="row_c1" name="row_c1" min="0" max="30" step="1" value="{{ row_c1 }}">
       </div>
-    </div> 
-<br>
-  <input type="submit" value="Submit">
-  </form>
+      </div>
+                  <!-- Rows per Column 2 -->
+                  <div class="row">
+                    <div class="col-25">
+                        <label for="row_c2">Rows per Column 2:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="number" id="row_c2" name="row_c2" min="0" max="30" step="1" value="{{ row_c2 }}">
+                    </div>
+                </div>
+                <!-- Rows per Column 3 -->
+                <div class="row">
+                    <div class="col-25">
+                        <label for="row_c3">Rows per Column 3:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="number" id="row_c3" name="row_c3" min="0" max="30" step="1" value="{{ row_c3 }}">
+                    </div>
+                </div>
+                <!-- Rows per Column 4 -->
+                <div class="row">
+                    <div class="col-25">
+                        <label for="row_c4">Rows per Column 4:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="number" id="row_c4" name="row_c4" min="0" max="30" step="1" value="{{ row_c4 }}">
+                    </div>
+                </div>
+                <!-- Rows per Column 5 -->
+                <div class="row">
+                    <div class="col-25">
+                        <label for="row_c5">Rows per Column 5:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="number" id="row_c5" name="row_c5" min="0" max="30" step="1" value="{{ row_c5 }}">
+                    </div>
+                </div>
+                <!-- Rows per Column 6 -->
+                <div class="row">
+                    <div class="col-25">
+                        <label for="row_c6">Rows per Column 6:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="number" id="row_c6" name="row_c6" min="0" max="30" step="1" value="{{ row_c6 }}">
+                    </div>
+                </div>
+                <!-- <input type="hidden"  id="u_row_c1" name="u_row_c1" value="{{ row_c1 }}">
+                <input type="hidden"  id="u_row_c2" name="u_row_c2" value="{{ row_c2 }}">
+                <input type="hidden"  id="u_row_c3" name="u_row_c3" value="{{ row_c3 }}">
+                <input type="hidden"  id ="u_row_c4" name="u_row_c4" value="{{ row_c4 }}">
+                <input type="hidden"  id="u_row_c5" name="u_row_c5" value="{{ row_c5 }}">
+                <input type="hidden" id="u_row_c6" name="u_row_c6"  value="{{ row_c6 }}">
+                 -->
+
+      <br>
+      <input type="submit" value="Submit">
+    </form>
+    
   
 </div>  
 <script>

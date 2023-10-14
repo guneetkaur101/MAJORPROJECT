@@ -4,7 +4,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Add Room</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<!-- <link rel="stylesheet" type="text/css" href="homee.css"> -->
+	<link rel="stylesheet" type="text/css" href="homee.css">
 <style>
 body {
   margin: 0;
@@ -135,8 +135,7 @@ input[type=submit]:hover {
   <a  href="/admin">Dashboard</a>
   <a  class="active" href="/addroom">Add Room</a>
   <a href="/upload_form">Upload</a>
-  <a href="/Generate">Generate</a>
-  <a  href="/result">Show Result</a>
+  <a href="/generate">Generate</a>
   <a href="/login">Logout</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
@@ -218,17 +217,14 @@ input[type=submit]:hover {
                         <input type="number" id="row_c6" name="row_c6" min="0" max="30" step="1" value="{{ row_c6 }}">
                     </div>
                 </div>
-<<<<<<< HEAD
-                <input type="hidden"  id="u_row_c1" name="u_row_c1" value="{{ row_c1 }}">
+                <!-- <input type="hidden"  id="u_row_c1" name="u_row_c1" value="{{ row_c1 }}">
                 <input type="hidden"  id="u_row_c2" name="u_row_c2" value="{{ row_c2 }}">
                 <input type="hidden"  id="u_row_c3" name="u_row_c3" value="{{ row_c3 }}">
                 <input type="hidden"  id ="u_row_c4" name="u_row_c4" value="{{ row_c4 }}">
                 <input type="hidden"  id="u_row_c5" name="u_row_c5" value="{{ row_c5 }}">
                 <input type="hidden" id="u_row_c6" name="u_row_c6"  value="{{ row_c6 }}">
-                
-=======
+                 -->
 
->>>>>>> 68d0304548c02c0221eae47f565cb9d2ecf87183
       <br>
       <input type="submit" value="Submit">
     </form>
@@ -244,20 +240,20 @@ input[type=submit]:hover {
     }
   
   }
-  <!-- Add this script section to your HTML -->
-    // Function to update the hidden fields with the visible fields' values
-    function updateHiddenFields() {
-        // Loop through the visible input fields
-        for (let i = 1; i <= 6; i++) {
-            // Get the value from the visible field
-            const visibleField = document.getElementById(`row_c${i}`);
-            const value = visibleField.value;
+  // <!-- Add this script section to your HTML -->
+  //   // Function to update the hidden fields with the visible fields' values
+  //   function updateHiddenFields() {
+  //       // Loop through the visible input fields
+  //       for (let i = 1; i <= 6; i++) {
+  //           // Get the value from the visible field
+  //           const visibleField = document.getElementById(`row_c${i}`);
+  //           const value = visibleField.value;
             
-            // Update the corresponding hidden field with the value
-            const hiddenField = document.getElementById(`u_row_c${i}`);
-            hiddenField.value = value;
-        }
-    }
+  //           // Update the corresponding hidden field with the value
+  //           const hiddenField = document.getElementById(`u_row_c${i}`);
+  //           hiddenField.value = value;
+  //       }
+  //   }
 
   </script>
 </body>
