@@ -9,6 +9,7 @@
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+  background-color: #f2f2f2;
 }
 
 .topnav {
@@ -78,6 +79,7 @@ input[type=submit] {
 }
 input[type=submit]:hover {
   background-color: #45a049;
+  
 }
 
 .hidden {
@@ -117,10 +119,6 @@ input[type=submit]:hover {
   }
 }
 
-/* Apply a background color and padding to the body */
-body {
-    background-color: #f2f2f2;
-}
 
 
 /* Style the form container */
@@ -128,7 +126,9 @@ form {
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); */
+    margin: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 /* Style the labels
@@ -143,7 +143,7 @@ input[type="file"] {
     width: 100%;
     padding: 5px;
     margin-bottom: 15px;
-    border: 1px solid #ccc;
+    border: 1px solid #ffffff;
     border-radius: 3px;
 }
 
@@ -193,6 +193,7 @@ li {
     list-style-type: none;
     padding: 0;
 }
+#submission{text-align: center;}
 
 </style>
 <script>
@@ -232,7 +233,7 @@ li {
 </head>
 <body>
   <!----NAVIGATION BARS----->
-  <div class="topnav">
+  <div class="topnav" id="myTopnav">
   <a  href="/admin">Dashboard</a>
   <a  href="/addroom">Add Room</a>
   <a class="active" href="/upload_form">Upload</a>
@@ -240,6 +241,7 @@ li {
   <a href="/login">Logout</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
+  </a>
 </div>
 <!-- <div class="container">
   <form action="" method="POST" enctype="multipart/form-data">
@@ -294,8 +296,8 @@ li {
     {% if error %}
     <p class="error">{{ error }}</p>
     {% endif %} -->
-    <fieldset style="width: 100%; margin-left: 20px;margin-right: 20px;background-color: #d9eee1;">
-      <legend style="font-size: 25px; font-family: 'Times New Roman', Times, 
+    <fieldset style=" margin-left: 20px;margin-right: 20px; background-color: #cdd8d1;">
+      <legend style="font-size: 20px; font-family: 'Times New Roman', Times, 
       serif;">Upload CSV Files(year wise):-</legend>
         <label for="2nd_year_csv">2nd Year:</label>
         <input type="file" name="2nd_year_csv" id="2nd_year_csv" accept=".csv" onload="showUploadMessage()"><br>
@@ -305,9 +307,9 @@ li {
         
         <label for="4th_year_csv">4th Year:</label>
         <input type="file" name="4th_year_csv" id="4th_year_csv" accept=".csv"onload="showUploadMessage()" ><br>
-    </fieldset>
-    <fieldset style="width: 100%; margin-left: 20px;margin-right: 20px; background-color:#d9eee1;">
-      <legend style="font-size: 25px; font-family: 'Times New Roman', Times, 
+    </fieldset><br>
+    <fieldset style=" margin-left: 20px;margin-right: 20px; background-color:#cdd8d1;">
+      <legend style="font-size: 20px; font-family: 'Times New Roman', Times, 
       serif;">Enter Date and Time:-</legend>
         <!-- <h2>Enter Date and Time:</h2> -->
         <label for="date">Date:</label>
@@ -315,11 +317,11 @@ li {
         
         <label for="time">Time:</label>
         <input type="time" name="time" id="time"><br>
-      </fieldset>
-      <fieldset style="width: 100%; margin-left: 20px; margin-left: 20px;background-color:  #d9eee1;">
-        <legend style="font-size: 25px; font-family: 'Times New Roman', Times, 
+      </fieldset><br>
+      <fieldset style="margin-left: 20px; margin-right: 20px;background-color:  #cdd8d1;">
+        <legend style="font-size: 20px; font-family: 'Times New Roman', Times, 
         serif;">Select Year(s):</legend>
-        <!-- <h2>Select Year(s):</h2> -->
+  
         <label for="select_2nd_year">2nd Year</label>
         <input type="checkbox" name="select_year" value="2nd" id="select_2nd_year"><br>
         
@@ -328,7 +330,7 @@ li {
         
         <label for="select_4th_year">4th Year</label>
         <input type="checkbox" name="select_year" value="4th" id="select_4th_year"><br>
-</fieldset>
+       </fieldset><br>
         <h2 id="strengthHeading" class="hidden">Total Strength of Selected years</h2>
         
         <ul>
@@ -344,8 +346,9 @@ li {
             {% endfor %}
         </ul>
         {% endif %}
-        <input type="submit" value="Upload and Process" onclick="showHeading();">
-
+        <p id="submission">
+        <input type="submit" value="Upload and Process" onclick="showHeading();" >
+      </p>
     </form>
     
     

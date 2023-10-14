@@ -4,6 +4,8 @@
   <title>Login</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="/static/homee.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <style>
 body {
   margin: 0;
@@ -97,15 +99,42 @@ input[type=text]:focus, input[type=password]:focus {
 .btn:hover {
   opacity: 1;
 }
+
+/* responsive navigation */
+@media screen and (max-width: 650px) {
+  .topnav a:not(.active) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  } 
+ }
+
+@media screen and (max-width: 650px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive a.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
+
 </style>
 </head>
 <body>
   <body>
-    <div class="topnav">
+    <div class="topnav" id="myTopnav" >
   <a href="/">Home</a>
   <a class="active" href="/login">Login</a>
   <a href="/contact">Contact</a>
   <a  href="/About">About</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
 
 </div>
 
@@ -130,6 +159,17 @@ input[type=text]:focus, input[type=password]:focus {
   </form>
 </div>
 
-
+<script>
+  // responsive
+  function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";
+    }
+  
+  }
+  </script>
 </body>
 </html>

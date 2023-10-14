@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin</title>
     <link rel="stylesheet" type="text/css" href="/static/homee.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
     body {
         margin: 0;
@@ -53,6 +54,28 @@
     tr:nth-child(even) {
         background-color: #e6e2e2;
     }
+    input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+input[type=number] {
+  width: 20%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  /* box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px; */
+  resize: vertical;
+
+}
  /* Responsive layout  */
     @media screen and (max-width: 650px) {
   .topnav a:not(.active) {display: none;}
@@ -79,7 +102,7 @@
 </head>
 <body>
     <!-----------------------------------------NAVIGATION BARS--------------------------->
-    <div class="topnav">
+    <div class="topnav" id="myTopnav">
         <a href="/admin">Dashboard</a>
         <a href="/addroom">Add Room</a>
         <a href="/upload_form">Upload</a>
@@ -111,6 +134,7 @@
                     <th>Usable Row 5</th>
                     <th>Usable Row 6</th>
                     <th>Total Capacity</th>
+                    <th>Total Usable Capacity</th>
                     <th>EDIT</th>
                 </tr>
             </thead>
@@ -126,7 +150,7 @@
             {% endfor %}
         </tbody>
         </table>
-        <input type="submit" value="Edit Selected Rooms">  <!-- Add a submit button to send selected rooms to the server -->
+        <input type="submit" value="Generate Report">  <!-- Add a submit button to send selected rooms to the server -->
        </form>
     </div>
         <script>
@@ -137,6 +161,15 @@
             } );
         } );
          function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";
+    }
+  
+  }
+  function myFunction() {
     var x = document.getElementById("myTopnav");
     if (x.className === "topnav") {
       x.className += " responsive";

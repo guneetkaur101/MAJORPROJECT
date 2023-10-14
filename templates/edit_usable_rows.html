@@ -4,6 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin</title>
     <link rel="stylesheet" type="text/css" href="/static/homee.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <style>
     body {
         margin: 0;
@@ -53,6 +55,28 @@
     tr:nth-child(even) {
         background-color: #e6e2e2;
     }
+    input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+    input[type=number] {
+  width: 70px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  /* box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px; */
+  resize: vertical;
+
+}
  /* Responsive layout  */
     @media screen and (max-width: 650px) {
   .topnav a:not(.active) {display: none;}
@@ -79,7 +103,7 @@
 </head>
 <body>
     <!-----------------------------------------NAVIGATION BARS--------------------------->
-    <div class="topnav">
+    <div class="topnav" id="myTopnav">
         <a href="/admin">Dashboard</a>
         <a href="/addroom">Add Room</a>
         <a href="/upload_form">Upload</a>
@@ -128,22 +152,22 @@
                     <td>{{ room_data[7] }}</td>
 
                     <td>
-                        <input type="number" name="usable_row_c1" value="{{ room_data[8] }}" min="0">
+                        <input type="number" name="usable_row_c1"  value="{{ room_data[8] }}" placeholder="{{ room_data[8] }}" min="0">
                     </td>
                     <td>
-                        <input type="number" name="usable_row_c2" value="{{ room_data[9] }}" min="0">
+                        <input type="number" name="usable_row_c2" value="{{ room_data[9] }}" placeholder="{{ room_data[9] }}" min="0">
                     </td>
                     <td>
-                        <input type="number" name="usable_row_c3" value="{{ room_data[10] }}" min="0">
+                        <input type="number" name="usable_row_c3" value="{{ room_data[10] }}" placeholder="{{ room_data[10] }}" min="0">
                     </td>
                     <td>
-                        <input type="number" name="usable_row_c4" value="{{ room_data[11] }}" min="0">
+                        <input type="number" name="usable_row_c4" value="{{ room_data[11] }}" placeholder="{{ room_data[11] }}" min="0">
                     </td>
                     <td>
-                        <input type="number" name="usable_row_c5" value="{{ room_data[12] }}" min="0">
+                        <input type="number" name="usable_row_c5" value="{{ room_data[12] }}" placeholder="{{ room_data[12] }}" min="0">
                     </td>
                     <td>
-                        <input type="number" name="usable_row_c6" value="{{ room_data[13] }}" min="0">
+                        <input type="number" name="usable_row_c6" value="{{ room_data[13] }}" placeholder="{{ room_data[13] }}" min="0">
                     </td>
                     <td>{{ room_data[14] }}</td>
                     <td>

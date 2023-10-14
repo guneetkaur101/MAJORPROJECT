@@ -32,7 +32,7 @@ def admin():
 	myconn = sqlite3.connect("room_details.db")
 	with myconn:
 		cursor = myconn.cursor()
-		cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row_c1 integer(10),row_c2 integer(10),row_c3 integer(10),row_c4 integer(10),row_c5 integer(10),row_c6 integer(10),u_row_c1 integer(10),u_row_c2 integer(10),u_row_c3 integer(10),u_row_c4 integer(10),u_row_c5 integer(10),u_row_c6 integer(10),seat integer(10))")
+		cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row_c1 integer(10),row_c2 integer(10),row_c3 integer(10),row_c4 integer(10),row_c5 integer(10),row_c6 integer(10),u_row_c1 integer(10),u_row_c2 integer(10),u_row_c3 integer(10),u_row_c4 integer(10),u_row_c5 integer(10),u_row_c6 integer(10),seat integer(10),usable_seats integer(10))")
 		data = cursor.execute("SELECT * FROM room")
 		data = cursor.fetchall()
 	return render_template("admin.html",data=data)
@@ -53,20 +53,22 @@ def addroom():
         # Calculate the total number of seats
         total_seats = sum([int(rows) for rows in rows_per_columns])
         print(total_seats)
-       
+        room_usable_seats=sum([int(rows) for rows in updated_rows_per_columns])
+        print(room_usable_seats)
+
         myconn = sqlite3.connect("room_details.db")
 
         with myconn:
             cursor = myconn.cursor()
-            cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no INTEGER PRIMARY KEY, col INTEGER, row_c1 INTEGER, row_c2 INTEGER, row_c3 INTEGER, row_c4 INTEGER, row_c5 INTEGER, row_c6 INTEGER,u_row_c1 INTEGER, u_row_c2 INTEGER, u_row_c3 INTEGER, u_row_c4 INTEGER,u_row_c5 INTEGER, u_row_c6 INTEGER, seat INTEGER)")
+            cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no INTEGER PRIMARY KEY, col INTEGER, row_c1 INTEGER, row_c2 INTEGER, row_c3 INTEGER, row_c4 INTEGER, row_c5 INTEGER, row_c6 INTEGER,u_row_c1 INTEGER, u_row_c2 INTEGER, u_row_c3 INTEGER, u_row_c4 INTEGER,u_row_c5 INTEGER, u_row_c6 INTEGER, seat INTEGER, usable_seats INTEGER)")
             temp_no = cursor.execute("SELECT room_no from room where room_no=?", [room_no])
             temp_no = temp_no.fetchone()
 
         if temp_no is None:
             with myconn:
                 cursor = myconn.cursor()
-                cursor.execute("INSERT INTO room(room_no, col, row_c1, row_c2, row_c3, row_c4, row_c5, row_c6, u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6, seat) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", 
-                               [room_no, 6] + rows_per_columns + updated_rows_per_columns + [total_seats])
+                cursor.execute("INSERT INTO room(room_no, col, row_c1, row_c2, row_c3, row_c4, row_c5, row_c6, u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6,seat,usable_seats) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", 
+                               [room_no, 6] + rows_per_columns + updated_rows_per_columns + [total_seats,room_usable_seats])
                 error = f"Room {room_no} is added "
         else:
             error = f"Room {room_no} is already exist."
@@ -80,7 +82,7 @@ def show():
 	myconn = sqlite3.connect("room_details.db")
 	with myconn:
 		cursor = myconn.cursor()
-		cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row_c1 integer(10),row_c2 integer(10),row_c3 integer(10),row_c4 integer(10),row_c5 integer(10),row_c6 integer(10),u_row_c1 integer(10),u_row_c2 integer(10),u_row_c3 integer(10),u_row_c4 integer(10),u_row_c5 integer(10),u_row_c6 integer(10),seat integer(10))")
+		cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row_c1 integer(10),row_c2 integer(10),row_c3 integer(10),row_c4 integer(10),row_c5 integer(10),row_c6 integer(10),u_row_c1 integer(10),u_row_c2 integer(10),u_row_c3 integer(10),u_row_c4 integer(10),u_row_c5 integer(10),u_row_c6 integer(10),seat integer(10),usable_seats integer(10))")
 		temp_no = cursor.execute("SELECT room_no from room ")
 		temp_no = cursor.fetchall()
 	if request.method == 'POST':
@@ -95,7 +97,7 @@ def delete(id):
 	myconn = sqlite3.connect("room_details.db")
 	with myconn:
 		cursor = myconn.cursor()
-		cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row_c1 integer(10),row_c2 integer(10),row_c3 integer(10),row_c4 integer(10),row_c5 integer(10),row_c6 integer(10),u_row_c1 integer(10),u_row_c2 integer(10),u_row_c3 integer(10),u_row_c4 integer(10),u_row_c5 integer(10),u_row_c6 integer(10),seat integer(10))")
+		cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row_c1 integer(10),row_c2 integer(10),row_c3 integer(10),row_c4 integer(10),row_c5 integer(10),row_c6 integer(10),u_row_c1 integer(10),u_row_c2 integer(10),u_row_c3 integer(10),u_row_c4 integer(10),u_row_c5 integer(10),u_row_c6 integer(10),seat integer(10),usable_seats integer(10))")
 		cursor.execute("DELETE FROM room WHERE room_no=?",[id])
 	return  redirect(url_for('admin'))
 
@@ -109,13 +111,22 @@ def edit(room_no):
         print(rows_per_columns)
         # Calculate the total number of seats
         total_seats = sum([int(rows) for rows in rows_per_columns])
+        updated_rows_per_columns = rows_per_columns
+        print(updated_rows_per_columns)
         print(total_seats)
+        room_usable_seats=sum([int(rows) for rows in updated_rows_per_columns])
+        print(room_usable_seats)
+        room_usable_seats=total_seats
         myconn = sqlite3.connect("room_details.db")
         with myconn:
            cursor = myconn.cursor()
+        # # Update the room details in the database
+        #    cursor.execute("UPDATE room SET col=?, row_c1=?, row_c2=?, row_c3=?, row_c4=?, row_c5=?, row_c6=?, u_row_c1=?, u_row_c2=?, u_row_c3=?, u_row_c4=?, u_row_c5=?, u_row_c6=?, seat=?,usable_seats=? WHERE room_no=?", 
+        #                [col] + rows_per_columns + updated_rows_per_columns + [total_seats, room_no],[room_usable_seats,room_no])
         # Update the room details in the database
-           cursor.execute("UPDATE room SET col=?, row_c1=?, row_c2=?, row_c3=?, row_c4=?, row_c5=?, row_c6=?, u_row_c1=?, u_row_c2=?, u_row_c3=?, u_row_c4=?, u_row_c5=?, u_row_c6=?, seat=? WHERE room_no=?", 
-                       [col] + rows_per_columns + rows_per_columns + [total_seats, room_no])
+           cursor.execute("UPDATE room SET col=?, row_c1=?, row_c2=?, row_c3=?, row_c4=?, row_c5=?, row_c6=?, u_row_c1=?, u_row_c2=?, u_row_c3=?, u_row_c4=?, u_row_c5=?, u_row_c6=?, seat=?, usable_seats=? WHERE room_no=?", 
+               (col, *rows_per_columns, *updated_rows_per_columns, total_seats, room_usable_seats, room_no))
+
            myconn.commit()
            error = "Room details have been updated successfully."
            return redirect('/admin')  # Redirect to the admin page
@@ -220,7 +231,7 @@ def generate():
     myconn = sqlite3.connect("room_details.db")
     with myconn:
         cursor = myconn.cursor()
-        cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row_c1 integer(10),row_c2 integer(10),row_c3 integer(10),row_c4 integer(10),row_c5 integer(10),row_c6 integer(10),u_row_c1 integer(10),u_row_c2 integer(10),u_row_c3 integer(10),u_row_c4 integer(10),u_row_c5 integer(10),u_row_c6 integer(10),seat integer(10))")
+        cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row_c1 integer(10),row_c2 integer(10),row_c3 integer(10),row_c4 integer(10),row_c5 integer(10),row_c6 integer(10),u_row_c1 integer(10),u_row_c2 integer(10),u_row_c3 integer(10),u_row_c4 integer(10),u_row_c5 integer(10),u_row_c6 integer(10),seat integer(10),usable_seats integer(10))")
 
     if request.method == 'POST':
         selected_rooms = request.form.getlist('selected_rooms')
@@ -270,14 +281,18 @@ def edit_usable_rows(room_no):
         usable_row_c4 = request.form.get('usable_row_c4')
         usable_row_c5 = request.form.get('usable_row_c5')
         usable_row_c6 = request.form.get('usable_row_c6')
-
+        usable_rows_per_columns = [request.form[f'usable_row_c{i}'] for i in range(1, 7)]
+        # Calculate the total number of seats
+        room_usable_seats = sum([int(rows) for rows in usable_rows_per_columns])
+        print(room_usable_seats)
+        
         myconn = sqlite3.connect("room_details.db")
         cursor = myconn.cursor()
 
         # Update the database with the new usable rows data
         cursor.execute(
-            "UPDATE room SET u_row_c1=?, u_row_c2=?, u_row_c3=?, u_row_c4=?, u_row_c5=?, u_row_c6=? WHERE room_no=?",
-            (usable_row_c1, usable_row_c2, usable_row_c3, usable_row_c4, usable_row_c5, usable_row_c6, room_no)
+            "UPDATE room SET u_row_c1=?, u_row_c2=?, u_row_c3=?, u_row_c4=?, u_row_c5=?, u_row_c6=?,usable_seats=? WHERE room_no=?",
+            (usable_row_c1, usable_row_c2, usable_row_c3, usable_row_c4, usable_row_c5, usable_row_c6,room_usable_seats, room_no)
         )
         myconn.commit()
         myconn.close()
@@ -290,4 +305,4 @@ def edit_usable_rows(room_no):
 
     return render_template("edit_usable_rows.html", room_data=room_data)
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

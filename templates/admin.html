@@ -4,6 +4,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin</title>
     <link rel="stylesheet" type="text/css" href="/static/homee.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    
     <style>
     body {
         margin: 0;
@@ -34,9 +37,14 @@
         background-color: #4CAF50;
         color: white;
     }
+
     .topnav .icon {
-  display: none;
-}
+        display: none;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
 
     table {
         border-collapse: collapse;
@@ -45,103 +53,101 @@
 
     th, td {
         text-align: center;
-        width: 7%;
         padding: 8px;
     }
 
     tr:nth-child(even) {
         background-color: #e6e2e2;
     }
- /* Responsive layout  */
-    @media screen and (max-width: 650px) {
-  .topnav a:not(.active) {display: none;}
-  .topnav a.icon {
-    float: right;
-    display: block;
-  } 
- }
 
-@media screen and (max-width: 650px) {
-  .topnav.responsive {position: relative;}
-  .topnav.responsive a.icon {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  .topnav.responsive a {
-    float: none;
-    display: block;
-    text-align: left;
-  }
-}
+    /* Responsive layout */
+    @media screen and (max-width: 650px) {
+        .topnav a:not(.active) {
+            display: none;
+        }
+        .topnav a.icon {
+            float: right;
+            display: block;
+        }
+        .table-container {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        table {
+            width: 100%;
+        }
+    }
     </style>
 </head>
 <body>
-    <!-----------------------------------------NAVIGATION BARS--------------------------->
     <div class="content">
-    <div class="topnav">
-        <a class="active" href="/admin">Dashboard</a>
-        <a href="/addroom">Add Room</a>
-        <a href="/upload_form">Upload</a>
-        <a href="/generate">Generate</a>
-        <a href="/login">Logout</a>
-        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-            <i class="fa fa-bars"></i>
-          </a>
-    </div>
-    <div>
-        <h2>AVAILABLE ROOMS</h2>
-
-        <table id="example" class="display" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th>Room No</th>
-                    <th>Columns</th>
-                    <th>Row 1</th>
-                    <th>Row 2</th>
-                    <th>Row 3</th>
-                    <th>Row 4</th>
-                    <th>Row 5</th>
-                    <th>Row 6</th>
-                    <th>Usable Row 1</th>
-                    <th>Usable Row 2</th>
-                    <th>Usable Row 3</th>
-                    <th>Usable Row 4</th>
-                    <th>Usable Row 5</th>
-                    <th>Usable Row 6</th>
-                    <th>Total Capacity</th>
-                    <th>DELETE</th>
-                    <th>EDIT</th>
-                </tr>
-            </thead>
-            {% for row in data %}
-            <tr>
-                {% for d in row %}
-                <td>{{d}}</td>
-                {% endfor %}
-                <td><a href="/delete/{{row[0]}}">DELETE</a></td>
-                <td><a href="/edit/{{row[0]}}">EDIT</a></td>
-            </tr>
-            {% endfor %}
-        </table>
+        <div class="topnav" id="myTopnav">
+            <a class="active" href="/admin">Dashboard</a>
+            <a href="/addroom">Add Room</a>
+            <a href="/upload_form">Upload</a>
+            <a href="/generate">Generate</a>
+            <a href="/login">Logout</a>
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+        <div>
+            <h2>AVAILABLE ROOMS</h2>
+            <div class="table-container">
+                <table id="example" class="display" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Room No</th>
+                            <th>Columns</th>
+                            <th>Row 1</th>
+                            <th>Row 2</th>
+                            <th>Row 3</th>
+                            <th>Row 4</th>
+                            <th>Row 5</th>
+                            <th>Row 6</th>
+                            <th>Usable Row 1</th>
+                            <th>Usable Row 2</th>
+                            <th>Usable Row 3</th>
+                            <th>Usable Row 4</th>
+                            <th>Usable Row 5</th>
+                            <th>Usable Row 6</th>
+                            <th>Total Capacity</th>
+                            <th>Total Usable Capacity</th>
+                            <th>DELETE</th>
+                            <th>EDIT</th>
+                        </tr>
+                    </thead>
+                    {% for row in data %}
+                    <tr>
+                        {% for d in row %}
+                        <td>{{d}}</td>
+                        {% endfor %}
+                        <td><a href="/delete/{{row[0]}}">DELETE</a></td>
+                        <td><a href="/edit/{{row[0]}}">EDIT</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
     </div>
-        <script>
-        $(document).ready(function() {
-            $('#example').DataTable( {
-                responsive: true,
-                "pageLength": 5
-            } );
-        } );
-         function myFunction() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-      x.className += " responsive";
-    } else {
-      x.className = "topnav";
-    }
-  
-  }
-        </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "paging": false, // Disable pagination
+            });
+        });
+
+        function myFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            } else {
+                x.className = "topnav";
+            }
+        }
+    </script>
 </body>
 </html>
