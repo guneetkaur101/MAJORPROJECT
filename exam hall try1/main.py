@@ -1,6 +1,3 @@
-
-
-
 import sqlite3
 import pandas as pd
 
@@ -10,14 +7,17 @@ roll_no_list1 = df1['URN'].tolist()
 roll_no_list2 = df2['URN'].tolist()
 
 max_cols = 6
-
+date= '16-10-2023'
 myconn = sqlite3.connect("room_details.db")
 with myconn:
     cursor = myconn.cursor()
     cursor.execute("SELECT room_no, u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6 from room")
     rows = cursor.fetchall()
+    writer = pd.ExcelWriter(f'{date}.xlsx', engine='xlsxwriter')
+    workbook = writer.book
     for row in rows:
         room_no = row[0]
+        room_name =str(room_no)
         u_row_c1 = row[1]
         u_row_c2 = row[2]
         u_row_c3 = row[3]
@@ -26,10 +26,7 @@ with myconn:
         u_row_c6 = row[6]
         max_rows = [u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6]
 
-        filename = f'{room_no}.xlsx'
-        writer = pd.ExcelWriter(filename, engine='xlsxwriter')
-        workbook = writer.book
-        worksheet = workbook.add_worksheet()
+        worksheet = workbook.add_worksheet(room_name)
         row = 0
         col = 0
         room = []
@@ -49,5 +46,4 @@ with myconn:
                        break
                 room[j].append(roll_no)
                 worksheet.write(i, j, roll_no)
-
-        writer._save()
+    writer._save()
