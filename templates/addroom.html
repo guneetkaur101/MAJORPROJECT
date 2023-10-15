@@ -22,6 +22,184 @@
     * {
       box-sizing: border-box;
     }
+	<link rel="stylesheet" type="css" href="homee.css">
+
+  
+<style>
+.btn,.btn__text,.btn__progress,.btn__progress-check,.btn__progress-fill,.btn__progress-track {
+    border: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+:root {
+    --hue: 223;
+    --bg1: hsl(var(--hue),10%,90%);
+    --bg2: hsl(var(--hue),10%,80%);
+    --fg1: hsl(var(--hue),10%,10%);
+    --fg2: hsl(var(--hue),10%,20%);
+    --primary1: hsl(var(--hue),90%,55%);
+    --primary2: hsl(var(--hue),90%,45%);
+    /* font-size: calc(20px + (40 - 20) * (100vw - 320px) / (1280 - 320)); */
+}
+ button {
+    font: 1em/1.5 Nunito, sans-serif;
+}
+.btn{
+    background-color: #4CAF50;
+    color: white;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+/* Main button styles */
+.btn {
+    background-color: transparent;
+    border-radius: 1.5em;
+    display: block;
+    position: relative;
+    width: 7.5em;
+    height: 3em;
+    transition: width 0.3s ease-in-out;
+}
+.btn:not(:disabled):active {
+    transform: translateY(0.1em);
+}
+.btn__text {
+    background-color: #4CAF50;;
+    border-radius: inherit;
+    color: hsl(0,0%,100%);
+    display: inline-block;
+    padding: 0.75em 1.5em;
+    transition:
+        background-color 0.15s linear,
+        color 0.15s 0.3s ease-in-out;
+    width: 100%;
+}
+.btn:not(:disabled):focus .btn__text,
+.btn:not(:disabled):hover .btn__text {
+    background-color: #45a049;;
+}
+.btn__progress {
+    overflow: visible;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3em;
+    height: 3em;
+    visibility: hidden;
+}
+.btn__progress-track {
+    r: 12px;
+    stroke: #45a049;;
+    stroke-width: 24;
+}
+.btn__progress-fill {
+    stroke: #4CAF50;
+    stroke-dashoffset: 125.66;
+}
+.btn__progress-check {
+    stroke: hsl(0,0%,100%);
+    stroke-dashoffset: 34;
+}
+
+/* Both states */
+.btn--running,
+.btn--done {
+    outline: none;
+    pointer-events: none;
+    width: 3em;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+.btn--running .btn__text,
+.btn--done .btn__text {
+    color: transparent;
+    transition:
+        background-color 0.3s ease-in-out,
+        visibility 0.3s steps(1);
+}
+.btn--running .btn__progress,
+.btn--done .btn__progress {
+    visibility: visible;
+}
+
+/* Running state */
+.btn--running .btn__text {
+    background-color: #45a049;;
+    visibility: hidden;
+}
+.btn--running .btn__progress {
+    transition: visibility 0.3s 0.3s steps(1,start);
+}
+.btn--running .btn__progress-track {
+    r: 20px;
+    stroke-width: 8;
+    transition:
+        r 0.3s 0.3s ease-in-out,
+        stroke-width 0.3s 0.3s ease-in-out;
+}
+.btn--running .btn__progress-fill {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 2s 0.6s linear;
+}
+
+/* Done state */
+.btn--done .btn__progress-track {
+    stroke: #4CAF50;;
+    transition:
+        r 0.3s ease-in-out,
+        stroke-width 0.3s ease-in-out;
+}
+.btn--done .btn__progress-check {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.3s 0.3s ease-out;
+}
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f2f2f2;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+.topnav .icon {
+  display: none;
+}
+div.container {
+  margin: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  
+}
+* {box-sizing: border-box;}
 
     input[type=text],
     select,
@@ -43,38 +221,17 @@
       border-radius: 4px;
       resize: vertical;
 
-    }
+}
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
 
-    label {
-      padding: 12px 12px 12px 0;
-      display: inline-block;
-    }
-
-    input[type=submit] {
-      background-color: #4CAF50;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 12px;
-      font-size: large;
-      font-weight: bold;
-      cursor: pointer;
-      text-align: center;
-      justify-content: center;
-    }
-
-    input[type=submit]:hover {
-      background-color: #45a049;
-      border-radius: 20px;
-      font-size: large;
-      font-weight: bold;
-    }
-
-    .col-25 {
-      float: left;
-      width: 25%;
-      margin-top: 6px;
-    }
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
 
     .col-75 {
       float: left;
@@ -135,39 +292,39 @@
       style="color: #4CAF50; box-shadow: rgba(0, 0, 0, 0.15) 0px 54px 105px, rgba(0, 0, 0, 0.12) 0px -12px 10px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;;display: inline-block; align-items: center;  margin-top: 40px; border: 2px solid#000 ; border-radius: 14px; padding: 0px 10px;">
       <h2>ADD ROOM DETAILS</h2>
 
+  </div> 
+</div>
+<div class="container">
+  
+ 
+  <form action="" method="POST" onclick="updateHiddenFields();">
+    {% if error %}
+    <pre>{{error}}</pre>
+    {% endif %}
+    <div class="row">
+      <div class="col-25">
+       <label for="fname">Enter Room Number:</label>
+      </div>
+      <div class="col-75">
+        <input  type="text" id="fname" name="room_no" placeholder="Enter Room No." value="{{room_no}}" >
+      </div>
     </div>
-  </div>
-  <div class="container">
-
-
-    <form action="" method="POST" onsubmit="updateHiddenFields();">
-      {% if error %}
-      <pre>{{error}}</pre>
-      {% endif %}
-      <div class="row">
-        <div class="col-25">
-          <label for="fname">Enter Room Number:</label>
-        </div>
-        <div class="col-75">
-          <input type="text" id="fname" name="room_no" placeholder="Enter Room No." value="{{room_no}}">
-        </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="quantity">Total Number of Columns:</label>
       </div>
-      <div class="row">
-        <div class="col-25">
-          <label for="quantity">Total Number of Columns:</label>
-        </div>
-        <div class="col-75">
-          <!-- Display the number of columns (6) as a non-editable input -->
-          <input type="text" name="columns" value="6" readonly>
-        </div>
+      <div class="col-75">
+         <!-- Display the number of columns (6) as a non-editable input -->
+         <input type="text" name="columns" value="6" readonly>
       </div>
-      <div class="row">
-        <div class="col-25">
-          <label for="row_c1">Rows per Column 1:</label>
-        </div>
-        <div class="col-75">
-          <input type="number" id="row_c1" name="row_c1" min="0" max="30" step="1" value="{{ row_c1 }}">
-        </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="row_c1">Rows per Column 1:</label>
+      </div>
+      <div class="col-75">
+        <input type="number" id="row_c1" name="row_c1" min="0" max="30" step="1" value="{{ row_c1 }}" >
+      </div>
       </div>
       <!-- Rows per Column 2 -->
       <div class="row">
@@ -215,20 +372,71 @@
         </div>
       </div>
       <br>
-      <input type="submit" value="Submit">
-    </form>
+      
+     <div style="display: flex;  
+     justify-content: center;  
+     align-items: center;" >
+      <button class="btn" type="button"  >
+        <span class="btn__text">Submit</span>
+        <svg class="btn__progress" viewBox="0 0 48 48" width="48px" height="48px">
+            <circle class="btn__progress-track" r="20" cx="24" cy="24" fill="none" stroke="#c7cad1" stroke-width="8" />
+            <circle class="btn__progress-fill" r="20" cx="24" cy="24" fill="none" stroke="#000000" stroke-width="8" transform="rotate(-90,24,24)" stroke-dasharray="125.66 125.66" stroke-dashoffset="125.66" />
+            <polyline class="btn__progress-check" points="12,24 20,32 36,16" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="34 34" stroke-dashoffset="34" />
+        </svg>
+      </button>
+    </div>
+    
+     
+  </form>
+</div> 
 
-  </div>
-  <script>
-    function myFunction() {
-      var x = document.getElementById("myTopnav");
-      if (x.className === "topnav") {
-        x.className += " responsive";
-      } else {
-        x.className = "topnav";
-      }
+<script>
 
+  function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";
     }
+  
+  }
+
+
+  window.addEventListener("DOMContentLoaded",() => {
+    const btn = document.querySelector("button");
+    var doneTimeout = null,
+        resetTimeout = null;
+
+    if (btn) {
+        btn.addEventListener("click",function() {
+            const runClass = "btn--running";
+            const doneClass = "btn--done";
+            // `.btn--running .btn__progress-fill` `stroke-dashoffset` duration in ms
+            const submitDuration = 2000;
+            const resetDuration = 1500;
+
+            // fake the submission
+            this.disabled = true;
+            this.classList.add(runClass);
+
+            clearTimeout(doneTimeout);
+            clearTimeout(resetTimeout);
+
+            doneTimeout = setTimeout(() => {
+                this.classList.remove(runClass);
+                this.classList.add(doneClass);
+                
+                // reset the button
+                resetTimeout = setTimeout(() => {
+                    this.disabled = false;
+                    this.classList.remove(doneClass);
+                }, resetDuration);
+
+            }, 600 + submitDuration);
+        });
+    }
+});
 
   </script>
 </body>
