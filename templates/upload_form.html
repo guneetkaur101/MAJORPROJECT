@@ -252,49 +252,8 @@ li {
     <i class="fa fa-bars"></i>
   </a>
 </div>
-<!-- <div class="container">
-  <form action="" method="POST" enctype="multipart/form-data">
-  <h1>Upload CSV Files for 2nd, 3rd, and 4th Year Students</h1><br>
-  {% if error%}
-  <h4>{{error}}</h4>
-  {%endif%}
-  <!-- <label>Select Room</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <select id="browser" name="room">
-    {% for row in room_no %}
-    {%for no in row %}
-    <option value={{no}}>{{no}}</option>
-    {% endfor %}
-    {% endfor %}
-  </select>&nbsp;&nbsp;&nbsp;&nbsp; -->
-  
-  <!-- <br><label><strong>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Upload CSV Files for 2nd, 3rd, and 4th Year Students &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</strong></label> -->
-  
-  <!-- <h2>2nd Year CSV:</h2>
-  <input type="file" name="2nd_year_csv" accept=".csv"><br>
 
-  <h2>3rd Year CSV:</h2>
-  <input type="file" name="3rd_year_csv" accept=".csv"><br>
-
-  <h2>4th Year CSV:</h2>
-  <input type="file" name="4th_year_csv" accept=".csv"><br>
-
-  <input type="submit" value="Upload CSV Files">
-
-  </form>
-  {% if error %}
-  <p>{{ error }}</p>
-  {% endif %}
-
-  {% if uploaded_files %}
-  <h2>Uploaded Files:</h2>
-  <ul>
-      {% for filename in uploaded_files %}
-      <li>{{ filename }}</li>
-      {% endfor %}
-  </ul>
-  {% endif %}
-
-</div>  --> 
+   
 
 <form action="/upload_form" method="POST" enctype="multipart/form-data" onsubmit="return validateForm();">
   <!-- <h2>Upload CSV Files</h2> -->
