@@ -46,6 +46,7 @@ div.container {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
+  
 }
 * {box-sizing: border-box;}
 
@@ -104,7 +105,7 @@ input[type=submit]:hover {
 }
 
 /* Responsive layout - when the screen is less than 850px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 880px) {
   .col-25, .col-75, input[type=submit],input[type=number],input[type=text] {
     width: 100%;
     margin-top: 0;
@@ -130,6 +131,17 @@ input[type=submit]:hover {
     text-align: left;
   }
 }
+@media screen and  (min-width: 1420px) {
+  div.container{
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+    /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); */
+    margin-left: 340px;
+    margin-right: 340px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+}
 </style>
 </head>
 <body>
@@ -144,8 +156,15 @@ input[type=submit]:hover {
     <i class="fa fa-bars"></i>
   </a>
 </div>
+<div style="text-align: center;">
+  <div style="color: #4CAF50; box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;;display: inline-block; align-items: center;  margin-top: 40px; border: 2px solid#000 ; border-radius: 14px; padding-left: 6px; padding-right: 6px;">
+    <h2>ADD ROOM DETAILS</h2>
+
+  </div> 
+</div>
 <div class="container">
-  <h2>Add Room</h2>
+  
+ 
   <form action="" method="POST" onsubmit="updateHiddenFields();">
     {% if error %}
     <pre>{{error}}</pre>

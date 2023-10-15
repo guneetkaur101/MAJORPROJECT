@@ -119,8 +119,6 @@ input[type=submit]:hover {
   }
 }
 
-
-
 /* Style the form container */
 form {
     background-color: #fff;
@@ -194,6 +192,17 @@ li {
     padding: 0;
 }
 #submission{text-align: center;}
+@media screen and  (min-width: 1170px) {
+  form{
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); */
+    margin-left: 340px;
+    margin-right: 340px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+}
 
 </style>
 <script>
@@ -296,7 +305,7 @@ li {
     {% if error %}
     <p class="error">{{ error }}</p>
     {% endif %} -->
-    <fieldset style=" margin-left: 20px;margin-right: 20px; background-color: #cdd8d1;">
+    <fieldset style=" margin-left: 20px;margin-right: 20px; background-color: #ffffff;">
       <legend style="font-size: 20px; font-family: 'Times New Roman', Times, 
       serif;">Upload CSV Files(year wise):-</legend>
         <label for="2nd_year_csv">2nd Year:</label>
@@ -308,7 +317,7 @@ li {
         <label for="4th_year_csv">4th Year:</label>
         <input type="file" name="4th_year_csv" id="4th_year_csv" accept=".csv"onload="showUploadMessage()" ><br>
     </fieldset><br>
-    <fieldset style=" margin-left: 20px;margin-right: 20px; background-color:#cdd8d1;">
+    <fieldset style=" margin-left: 20px;margin-right: 20px; background-color:#ffffff;">
       <legend style="font-size: 20px; font-family: 'Times New Roman', Times, 
       serif;">Enter Date and Time:-</legend>
         <!-- <h2>Enter Date and Time:</h2> -->
@@ -318,7 +327,7 @@ li {
         <label for="time">Time:</label>
         <input type="time" name="time" id="time"><br>
       </fieldset><br>
-      <fieldset style="margin-left: 20px; margin-right: 20px;background-color:  #cdd8d1;">
+      <fieldset style="margin-left: 20px; margin-right: 20px;background-color:  #ffffff;">
         <legend style="font-size: 20px; font-family: 'Times New Roman', Times, 
         serif;">Select Year(s):</legend>
   
