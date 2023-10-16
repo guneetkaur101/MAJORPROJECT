@@ -6,26 +6,9 @@
   <title>Add Room</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="static/homee.css">
+  <link rel="stylesheet" type="css" href="homee.css">
   <style>
-    div.container {
-      margin: 20px;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    }
-
-    .container {
-      border-radius: 5px;
-      background-color: #f2f2f2;
-      padding: 20px;
-
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-	<link rel="stylesheet" type="css" href="homee.css">
-
-  
-<style>
+    
 .btn,.btn__text,.btn__progress,.btn__progress-check,.btn__progress-fill,.btn__progress-track {
     border: 0;
     box-sizing: border-box;
@@ -190,7 +173,7 @@ body {
   display: none;
 }
 div.container {
-  margin: 20px;
+  margin: 20px 90px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .container {
@@ -246,13 +229,43 @@ label {
       clear: both;
     }
 
-
+    .room-table {
+      border-collapse: separate;
+    }
+    table {
+     margin-top: 10px;
+     width: 220px; 
+     padding: 0%;
+            border-collapse: separate; 
+    }
+    th, td {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    padding: 0px;
+    height: 24px;
+}
+    .room-table td {
+      width: 10px; 
+      font-size:x-small;
+      font-weight: bold;
+      background-color: #ccc;
+      border-radius: 10px; 
+      text-align: center;
+    } 
+    .container1 {
+            position: relative;
+          left: 290px;
+        }
+        
+   @media screen and (max-width:1490px) {
+    .room-table{display: none;}
+    
+   }
     /* Responsive layout - when the screen is less than 850px wide, make the two columns stack on top of each other instead of next to each other */
-    @media screen and (max-width: 880px) {
+    @media screen and (max-width: 930px) {
 
       .col-25,
       .col-75,
-      input[type=submit],
       input[type=number],
       input[type=text] {
         width: 100%;
@@ -272,6 +285,11 @@ label {
       }
 
     }
+    .highlight-column {
+    border: 4px solid #4CAF50; /* You can adjust the border style as needed */
+  }
+
+
   </style>
 </head>
 
@@ -289,14 +307,59 @@ label {
   </div>
   <div style="text-align: center;">
     <div
-      style="color: #4CAF50; box-shadow: rgba(0, 0, 0, 0.15) 0px 54px 105px, rgba(0, 0, 0, 0.12) 0px -12px 10px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;;display: inline-block; align-items: center;  margin-top: 40px; border: 2px solid#000 ; border-radius: 14px; padding: 0px 10px;">
+      style="color: #4CAF50; box-shadow: rgba(0, 0, 0, 0.15) 0px 54px 105px, rgba(0, 0, 0, 0.12) 0px -12px 10px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;;display: inline-block; align-items: center;  margin-top: 30px; border: 2px solid#000 ; border-radius: 14px; padding: 0px 10px;">
       <h2>ADD ROOM DETAILS</h2>
 
   </div> 
 </div>
 <div class="container">
   
- 
+     <!-- Add the table within the container -->
+     <div class="container1">
+     <table class="room-table">
+      <tr>
+        <td>C1</td>
+        <td>C2</td>
+        <td>C3</td>
+        <td>C4</td>
+        <td>C5</td>
+        <td>C6</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <!-- Add more rows as needed -->
+    </table>
+    </div>
   <form action="" method="POST" onclick="updateHiddenFields();">
     {% if error %}
     <pre>{{error}}</pre>
@@ -311,7 +374,7 @@ label {
     </div>
     <div class="row">
       <div class="col-25">
-        <label for="quantity">Total Number of Columns:</label>
+        <label for="quantity">Number of Columns:</label>
       </div>
       <div class="col-75">
          <!-- Display the number of columns (6) as a non-editable input -->
@@ -323,7 +386,7 @@ label {
         <label for="row_c1">Rows per Column 1:</label>
       </div>
       <div class="col-75">
-        <input type="number" id="row_c1" name="row_c1" min="0" max="30" step="1" value="{{ row_c1 }}" >
+        <input type="number" id="row_c1" name="row_c1" min="0" max="30" step="1"  onmouseover="highlightTableColumn(1)" onmouseout="unhighlightTableColumn(1)" value="{{ row_c1 }}" >
       </div>
       </div>
       <!-- Rows per Column 2 -->
@@ -332,7 +395,7 @@ label {
           <label for="row_c2">Rows per Column 2:</label>
         </div>
         <div class="col-75">
-          <input type="number" id="row_c2" name="row_c2" min="0" max="30" step="1" value="{{ row_c2 }}">
+          <input type="number" id="row_c2" name="row_c2" min="0" max="30" step="1" onmouseover="highlightTableColumn(2)" onmouseout="unhighlightTableColumn(2)" value="{{ row_c2 }}">
         </div>
       </div>
       <!-- Rows per Column 3 -->
@@ -341,7 +404,7 @@ label {
           <label for="row_c3">Rows per Column 3:</label>
         </div>
         <div class="col-75">
-          <input type="number" id="row_c3" name="row_c3" min="0" max="30" step="1" value="{{ row_c3 }}">
+          <input type="number" id="row_c3" name="row_c3" min="0" max="30" step="1" onmouseover="highlightTableColumn(3)" onmouseout="unhighlightTableColumn(3)" value="{{ row_c3 }}">
         </div>
       </div>
       <!-- Rows per Column 4 -->
@@ -350,7 +413,7 @@ label {
           <label for="row_c4">Rows per Column 4:</label>
         </div>
         <div class="col-75">
-          <input type="number" id="row_c4" name="row_c4" min="0" max="30" step="1" value="{{ row_c4 }}">
+          <input type="number" id="row_c4" name="row_c4" min="0" max="30" step="1" onmouseover="highlightTableColumn(4)" onmouseout="unhighlightTableColumn(4)" value="{{ row_c4 }}">
         </div>
       </div>
       <!-- Rows per Column 5 -->
@@ -359,7 +422,7 @@ label {
           <label for="row_c5">Rows per Column 5:</label>
         </div>
         <div class="col-75">
-          <input type="number" id="row_c5" name="row_c5" min="0" max="30" step="1" value="{{ row_c5 }}">
+          <input type="number" id="row_c5" name="row_c5" min="0" max="30" step="1"onmouseover="highlightTableColumn(5)" onmouseout="unhighlightTableColumn(5)" value="{{ row_c5 }}">
         </div>
       </div>
       <!-- Rows per Column 6 -->
@@ -368,7 +431,7 @@ label {
           <label for="row_c6">Rows per Column 6:</label>
         </div>
         <div class="col-75">
-          <input type="number" id="row_c6" name="row_c6" min="0" max="30" step="1" value="{{ row_c6 }}">
+          <input type="number" id="row_c6" name="row_c6" min="0" max="30" step="1"onmouseover="highlightTableColumn(6)" onmouseout="unhighlightTableColumn(6)" value="{{ row_c6 }}">
         </div>
       </div>
       <br>
@@ -403,41 +466,68 @@ label {
   }
 
 
-  window.addEventListener("DOMContentLoaded",() => {
-    const btn = document.querySelector("button");
-    var doneTimeout = null,
-        resetTimeout = null;
+  window.addEventListener("DOMContentLoaded", () => {
+  const btn = document.querySelector("button");
+  var doneTimeout = null;
 
-    if (btn) {
-        btn.addEventListener("click",function() {
-            const runClass = "btn--running";
-            const doneClass = "btn--done";
-            // `.btn--running .btn__progress-fill` `stroke-dashoffset` duration in ms
-            const submitDuration = 2000;
-            const resetDuration = 1500;
+  if (btn) {
+    btn.addEventListener("click", function () {
+      const runClass = "btn--running";
+      const doneClass = "btn--done";
+      // `.btn--running .btn__progress-fill` `stroke-dashoffset` duration in ms
+      const submitDuration = 2000;
 
-            // fake the submission
-            this.disabled = true;
-            this.classList.add(runClass);
+      // Disable the button during the animation
+      this.disabled = true;
 
-            clearTimeout(doneTimeout);
-            clearTimeout(resetTimeout);
+      clearTimeout(doneTimeout);
 
-            doneTimeout = setTimeout(() => {
-                this.classList.remove(runClass);
-                this.classList.add(doneClass);
-                
-                // reset the button
-                resetTimeout = setTimeout(() => {
-                    this.disabled = false;
-                    this.classList.remove(doneClass);
-                }, resetDuration);
+      doneTimeout = setTimeout(() => {
+        this.classList.remove(runClass);
+        this.classList.add(doneClass);
 
-            }, 600 + submitDuration);
-        });
-    }
+        // Reset the button and submit the form
+        setTimeout(() => {
+          this.disabled = false;
+          this.classList.remove(doneClass);
+
+          // Now, trigger the form submission
+          const form = document.querySelector("form");
+          if (form) {
+            form.submit();
+          }
+        }, 1500); // Adjust the resetDuration as needed
+      }, 600 + submitDuration);
+    });
+  }
 });
 
+
+// can BE USED WITH oninput="highlightTableColumn(2, this.value)" IN EACH INPUT STYLE REMAIN SAME 2 REPRESENT 2 COL
+// // JavaScript function to highlight the entire column
+// function highlightTableColumn(column, rows) {
+//     const tableCells = document.querySelectorAll('.room-table td:nth-child(' + column + ')');
+
+//     if (rows > 0) {
+//       // Apply the highlight class to the entire column
+//       tableCells.forEach(cell => cell.classList.add('highlight-column'));
+//     } else {
+//       // Remove the highlight class if no rows are specified
+//       tableCells.forEach(cell => cell.classList.remove('highlight-column'));
+//     }
+//   }
+
+// JavaScript function to highlight the entire column
+function highlightTableColumn(column) {
+    const tableCells = document.querySelectorAll('.room-table td:nth-child(' + column + ')');
+    tableCells.forEach(cell => cell.classList.add('highlight-column'));
+  }
+
+  // JavaScript function to remove column highlighting when mouse pointer leaves the input field
+  function unhighlightTableColumn(column) {
+    const tableCells = document.querySelectorAll('.room-table td:nth-child(' + column + ')');
+    tableCells.forEach(cell => cell.classList.remove('highlight-column'));
+  }
   </script>
 </body>
 

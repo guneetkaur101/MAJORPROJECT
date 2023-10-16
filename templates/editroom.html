@@ -5,65 +5,216 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Add Room</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="/static/homee.css">
+  <link rel="stylesheet" type="text/css" href="static/homee.css">
+  <link rel="stylesheet" type="css" href="homee.css">
   <style>
-    .container {
-      border-radius: 5px;
-      background-color: #f2f2f2;
-      padding: 20px;
-    }
+    
+.btn,.btn__text,.btn__progress,.btn__progress-check,.btn__progress-fill,.btn__progress-track {
+    border: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+:root {
+    --hue: 223;
+    --bg1: hsl(var(--hue),10%,90%);
+    --bg2: hsl(var(--hue),10%,80%);
+    --fg1: hsl(var(--hue),10%,10%);
+    --fg2: hsl(var(--hue),10%,20%);
+    --primary1: hsl(var(--hue),90%,55%);
+    --primary2: hsl(var(--hue),90%,45%);
+    /* font-size: calc(20px + (40 - 20) * (100vw - 320px) / (1280 - 320)); */
+}
+ button {
+    font: 1em/1.5 Nunito, sans-serif;
+}
+.btn{
+    background-color: #4CAF50;
+    color: white;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
 
-    * {
-      box-sizing: border-box;
-    }
+/* Main button styles */
+.btn {
+    background-color: transparent;
+    border-radius: 1.5em;
+    display: block;
+    position: relative;
+    width: 7.5em;
+    height: 3em;
+    transition: width 0.3s ease-in-out;
+}
+.btn:not(:disabled):active {
+    transform: translateY(0.1em);
+}
+.btn__text {
+    background-color: #4CAF50;;
+    border-radius: inherit;
+    color: hsl(0,0%,100%);
+    display: inline-block;
+    padding: 0.75em 1.5em;
+    transition:
+        background-color 0.15s linear,
+        color 0.15s 0.3s ease-in-out;
+    width: 100%;
+}
+.btn:not(:disabled):focus .btn__text,
+.btn:not(:disabled):hover .btn__text {
+    background-color: #45a049;;
+}
+.btn__progress {
+    overflow: visible;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3em;
+    height: 3em;
+    visibility: hidden;
+}
+.btn__progress-track {
+    r: 12px;
+    stroke: #45a049;;
+    stroke-width: 24;
+}
+.btn__progress-fill {
+    stroke: #4CAF50;
+    stroke-dashoffset: 125.66;
+}
+.btn__progress-check {
+    stroke: hsl(0,0%,100%);
+    stroke-dashoffset: 34;
+}
+
+/* Both states */
+.btn--running,
+.btn--done {
+    outline: none;
+    pointer-events: none;
+    width: 3em;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+.btn--running .btn__text,
+.btn--done .btn__text {
+    color: transparent;
+    transition:
+        background-color 0.3s ease-in-out,
+        visibility 0.3s steps(1);
+}
+.btn--running .btn__progress,
+.btn--done .btn__progress {
+    visibility: visible;
+}
+
+/* Running state */
+.btn--running .btn__text {
+    background-color: #45a049;;
+    visibility: hidden;
+}
+.btn--running .btn__progress {
+    transition: visibility 0.3s 0.3s steps(1,start);
+}
+.btn--running .btn__progress-track {
+    r: 20px;
+    stroke-width: 8;
+    transition:
+        r 0.3s 0.3s ease-in-out,
+        stroke-width 0.3s 0.3s ease-in-out;
+}
+.btn--running .btn__progress-fill {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 2s 0.6s linear;
+}
+
+/* Done state */
+.btn--done .btn__progress-track {
+    stroke: #4CAF50;;
+    transition:
+        r 0.3s ease-in-out,
+        stroke-width 0.3s ease-in-out;
+}
+.btn--done .btn__progress-check {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.3s 0.3s ease-out;
+}
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f2f2f2;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+.topnav .icon {
+  display: none;
+}
+div.container {
+  margin: 20px 90px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  
+}
+* {box-sizing: border-box;}
 
     input[type=text],
     select,
     textarea {
-      width: 20%;
+      width: 100%;
       padding: 12px;
       border: 1px solid #ccc;
       border-radius: 4px;
-      /* box-sizing: border-box;
-  margin-top: 6px;
-  margin-bottom: 16px; */
       resize: vertical;
+
     }
 
     input[type=number],
     select,
     textarea {
-      width: 20%;
+      width: 100%;
       padding: 12px;
       border: 1px solid #ccc;
       border-radius: 4px;
       resize: vertical;
 
-    }
+}
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
 
-    label {
-      padding: 12px 12px 12px 0;
-      display: inline-block;
-    }
-
-    input[type=submit] {
-      background-color: #4CAF50;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    input[type=submit]:hover {
-      background-color: #45a049;
-    }
-
-    .col-25 {
-      float: left;
-      width: 25%;
-      margin-top: 6px;
-    }
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
 
     .col-75 {
       float: left;
@@ -78,18 +229,66 @@
       clear: both;
     }
 
+    .room-table {
+      border-collapse: separate;
+    }
+    table {
+     margin-top: 10px;
+     width: 220px; 
+     padding: 0%;
+            border-collapse: separate; 
+    }
+    th, td {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    padding: 0px;
+    height: 24px;
+}
+    .room-table td {
+      width: 10px; 
+      font-size:x-small;
+      font-weight: bold;
+      background-color: #ccc;
+      border-radius: 10px; 
+      text-align: center;
+    } 
+    .container1 {
+            position: relative;
+          left: 290px;
+        }
+        
+   @media screen and (max-width:1490px) {
+    .room-table{display: none;}
+    
+   }
     /* Responsive layout - when the screen is less than 850px wide, make the two columns stack on top of each other instead of next to each other */
-    @media screen and (max-width: 850px) {
+    @media screen and (max-width: 930px) {
 
       .col-25,
       .col-75,
-      input[type=submit],
       input[type=number],
       input[type=text] {
         width: 100%;
         margin-top: 0;
       }
     }
+
+    @media screen and (min-width: 1420px) {
+      div.container {
+        background-color: #f2f2f2;
+        padding: 20px;
+        border-radius: 5px;
+        /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); */
+        margin-left: 340px;
+        margin-right: 340px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+
+    }
+    .highlight-column {
+    border: 4px solid #4CAF50; /* You can adjust the border style as needed */
+  }
+
 
   </style>
 </head>
@@ -106,36 +305,89 @@
       <i class="fa fa-bars"></i>
     </a>
   </div>
-  <div class="container">
-    <h2>Add Room</h2>
-    <form action="/edit/{{ room_no }}" method="POST">
-      {% if error %}
-      <pre>{{error}}</pre>
-      {% endif %}
-      <div class="row">
-        <div class="col-25">
-          <label for="fname">Enter Room Number:</label>
-        </div>
-        <div class="col-75">
-          <input type="text" id="fname" name="room_no" placeholder="Enter Room No." value="{{room_no}}">
-        </div>
+  <div style="text-align: center;">
+    <div
+      style="color: #4CAF50; box-shadow: rgba(0, 0, 0, 0.15) 0px 54px 105px, rgba(0, 0, 0, 0.12) 0px -12px 10px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;;display: inline-block; align-items: center;  margin-top: 30px; border: 2px solid#000 ; border-radius: 14px; padding: 0px 10px;">
+      <h2>EDIT ROOM DETAILS</h2>
+
+  </div> 
+</div>
+<div class="container">
+  
+     <!-- Add the table within the container -->
+     <div class="container1">
+     <table class="room-table">
+      <tr>
+        <td>C1</td>
+        <td>C2</td>
+        <td>C3</td>
+        <td>C4</td>
+        <td>C5</td>
+        <td>C6</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <!-- Add more rows as needed -->
+    </table>
+    </div>
+  <form action="/edit/{{ room_no }}" method="POST" onclick="updateHiddenFields();">
+    {% if error %}
+    <pre>{{error}}</pre>
+    {% endif %}
+    <div class="row">
+      <div class="col-25">
+       <label for="fname">Enter Room Number:</label>
       </div>
-      <div class="row">
-        <div class="col-25">
-          <label for="quantity">Total Number of Columns:</label>
-        </div>
-        <div class="col-75">
-          <!-- Display the number of columns (6) as a non-editable input -->
-          <input type="text" name="columns" value="6" readonly>
-        </div>
+      <div class="col-75">
+        <input  type="text" id="fname" name="room_no" placeholder="Enter Room No." value="{{room_no}}" >
       </div>
-      <div class="row">
-        <div class="col-25">
-          <label for="row_c1">Rows per Column 1:</label>
-        </div>
-        <div class="col-75">
-          <input type="number" id="row_c1" name="row_c1" min="0" max="30" step="1" value="{{ row_c1 }}">
-        </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="quantity">Number of Columns:</label>
+      </div>
+      <div class="col-75">
+         <!-- Display the number of columns (6) as a non-editable input -->
+         <input type="text" name="columns" value="6" readonly>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="row_c1">Rows per Column 1:</label>
+      </div>
+      <div class="col-75">
+        <input type="number" id="row_c1" name="row_c1" min="0" max="30" step="1"  onmouseover="highlightTableColumn(1)" onmouseout="unhighlightTableColumn(1)" placeholder="{{ row_c1 }}" value="{{ row_c1 }}" >
+      </div>
       </div>
       <!-- Rows per Column 2 -->
       <div class="row">
@@ -143,7 +395,7 @@
           <label for="row_c2">Rows per Column 2:</label>
         </div>
         <div class="col-75">
-          <input type="number" id="row_c2" name="row_c2" min="0" max="30" step="1" value="{{ row_c2 }}">
+          <input type="number" id="row_c2" name="row_c2" min="0" max="30" step="1" onmouseover="highlightTableColumn(2)" onmouseout="unhighlightTableColumn(2)" placeholder="{{row_c2}}" value="{{ row_c2 }}">
         </div>
       </div>
       <!-- Rows per Column 3 -->
@@ -152,7 +404,7 @@
           <label for="row_c3">Rows per Column 3:</label>
         </div>
         <div class="col-75">
-          <input type="number" id="row_c3" name="row_c3" min="0" max="30" step="1" value="{{ row_c3 }}">
+          <input type="number" id="row_c3" name="row_c3" min="0" max="30" step="1" onmouseover="highlightTableColumn(3)" onmouseout="unhighlightTableColumn(3)"  placeholder="{{row_c3}}" value="{{ row_c3 }}">
         </div>
       </div>
       <!-- Rows per Column 4 -->
@@ -161,7 +413,7 @@
           <label for="row_c4">Rows per Column 4:</label>
         </div>
         <div class="col-75">
-          <input type="number" id="row_c4" name="row_c4" min="0" max="30" step="1" value="{{ row_c4 }}">
+          <input type="number" id="row_c4" name="row_c4" min="0" max="30" step="1" onmouseover="highlightTableColumn(4)" onmouseout="unhighlightTableColumn(4)"  placeholder="{{row_c4}}"value="{{ row_c4 }}">
         </div>
       </div>
       <!-- Rows per Column 5 -->
@@ -170,7 +422,7 @@
           <label for="row_c5">Rows per Column 5:</label>
         </div>
         <div class="col-75">
-          <input type="number" id="row_c5" name="row_c5" min="0" max="30" step="1" value="{{ row_c5 }}">
+          <input type="number" id="row_c5" name="row_c5" min="0" max="30" step="1"onmouseover="highlightTableColumn(5)" onmouseout="unhighlightTableColumn(5)" placeholder="{{row_c5}}" value="{{ row_c5 }}">
         </div>
       </div>
       <!-- Rows per Column 6 -->
@@ -179,33 +431,101 @@
           <label for="row_c6">Rows per Column 6:</label>
         </div>
         <div class="col-75">
-          <input type="number" id="row_c6" name="row_c6" min="0" max="30" step="1" value="{{ row_c6 }}">
+          <input type="number" id="row_c6" name="row_c6" min="0" max="30" step="1"onmouseover="highlightTableColumn(6)" onmouseout="unhighlightTableColumn(6)" placeholder="{{row_c6}}" value="{{ row_c6 }}">
         </div>
       </div>
-      <!-- <input type="hidden"  id="u_row_c1" name="u_row_c1" value="{{ row_c1 }}">
-                <input type="hidden"  id="u_row_c2" name="u_row_c2" value="{{ row_c2 }}">
-                <input type="hidden"  id="u_row_c3" name="u_row_c3" value="{{ row_c3 }}">
-                <input type="hidden"  id ="u_row_c4" name="u_row_c4" value="{{ row_c4 }}">
-                <input type="hidden"  id="u_row_c5" name="u_row_c5" value="{{ row_c5 }}">
-                <input type="hidden" id="u_row_c6" name="u_row_c6"  value="{{ row_c6 }}">
-                 -->
-
       <br>
-      <input type="submit" value="Submit">
-    </form>
+      
+     <div style="display: flex;  
+     justify-content: center;  
+     align-items: center;" >
+      <button class="btn" type="button"  >
+        <span class="btn__text">Submit</span>
+        <svg class="btn__progress" viewBox="0 0 48 48" width="48px" height="48px">
+            <circle class="btn__progress-track" r="20" cx="24" cy="24" fill="none" stroke="#c7cad1" stroke-width="8" />
+            <circle class="btn__progress-fill" r="20" cx="24" cy="24" fill="none" stroke="#000000" stroke-width="8" transform="rotate(-90,24,24)" stroke-dasharray="125.66 125.66" stroke-dashoffset="125.66" />
+            <polyline class="btn__progress-check" points="12,24 20,32 36,16" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="34 34" stroke-dashoffset="34" />
+        </svg>
+      </button>
+    </div>
+    
+     
+  </form>
+</div> 
 
+<script>
 
-  </div>
-  <script>
-    function myFunction() {
-      var x = document.getElementById("myTopnav");
-      if (x.className === "topnav") {
-        x.className += " responsive";
-      } else {
-        x.className = "topnav";
-      }
-
+  function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";
     }
+  
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+  const btn = document.querySelector("button");
+  var doneTimeout = null;
+
+  if (btn) {
+    btn.addEventListener("click", function () {
+      const runClass = "btn--running";
+      const doneClass = "btn--done";
+      // `.btn--running .btn__progress-fill` `stroke-dashoffset` duration in ms
+      const submitDuration = 2000;
+
+      // Disable the button during the animation
+      this.disabled = true;
+
+      clearTimeout(doneTimeout);
+
+      doneTimeout = setTimeout(() => {
+        this.classList.remove(runClass);
+        this.classList.add(doneClass);
+
+        // Reset the button and submit the form
+        setTimeout(() => {
+          this.disabled = false;
+          this.classList.remove(doneClass);
+
+          // Now, trigger the form submission
+          const form = document.querySelector("form");
+          if (form) {
+            form.submit();
+          }
+        }, 1500); // Adjust the resetDuration as needed
+      }, 600 + submitDuration);
+    });
+  }
+});
+
+// can BE USED WITH oninput="highlightTableColumn(2, this.value)" IN EACH INPUT STYLE REMAIN SAME 2 REPRESENT 2 COL
+// // JavaScript function to highlight the entire column
+// function highlightTableColumn(column, rows) {
+//     const tableCells = document.querySelectorAll('.room-table td:nth-child(' + column + ')');
+
+//     if (rows > 0) {
+//       // Apply the highlight class to the entire column
+//       tableCells.forEach(cell => cell.classList.add('highlight-column'));
+//     } else {
+//       // Remove the highlight class if no rows are specified
+//       tableCells.forEach(cell => cell.classList.remove('highlight-column'));
+//     }
+//   }
+
+// JavaScript function to highlight the entire column
+function highlightTableColumn(column) {
+    const tableCells = document.querySelectorAll('.room-table td:nth-child(' + column + ')');
+    tableCells.forEach(cell => cell.classList.add('highlight-column'));
+  }
+
+  // JavaScript function to remove column highlighting when mouse pointer leaves the input field
+  function unhighlightTableColumn(column) {
+    const tableCells = document.querySelectorAll('.room-table td:nth-child(' + column + ')');
+    tableCells.forEach(cell => cell.classList.remove('highlight-column'));
+  }
   </script>
 </body>
 
