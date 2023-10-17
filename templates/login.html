@@ -6,73 +6,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="/static/homee.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
+      /* background: linear-gradient(rgba(0,0,0,0.4),(rgba(0,0,0, 0.4)),url(static/images/gne.png)); */
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      background-image: url(static/images/gne.png);
     }
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
+    
     /* -----------------------------------------------login------------------------------------------------*/
-    .bg-img {
-      /* The image used */
-      background-image: url("/static/images/img3.jpg");
-
-      min-height: 577px;
-
-      /* Center and scale the image nicely */
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      position: relative;
-    }
-
-    /* Add styles to the form container */
-
-    .container {
-      position: absolute;
-      right: 0;
-      margin: 80px;
-      max-width: 400px;
-      padding: 16px;
-      background-color: white;
-    }
-
-    /* Full-width input fields */
-    input[type=text],
-    input[type=password] {
-      width: 100%;
-      padding: 15px;
-      margin: 5px 0 22px 0;
-      border: none;
-      background: #f1f1f1;
-    }
-
-    input[type=text]:focus,
-    input[type=password]:focus {
-      background-color: #ddd;
-      outline: none;
-    }
-
-    /* Set a style for the submit button */
-    .btn {
-      background-color: #4CAF50;
-      color: white;
-      padding: 16px 20px;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-      opacity: 0.9;
-    }
-
-    .btn:hover {
-      opacity: 1;
-    }
-
+    
     /* responsive navigation */
     @media screen and (max-width: 650px) {
       .topnav a:not(.active) {
@@ -84,11 +41,110 @@
         display: block;
       }
     }
+  
+.contact-form {
+	position: absolute;
+	top: 400px;
+	left: 80%;
+	transform: translate(-50%, -50%);
+	width: 400px;
+	height: 500px;
+	padding: 80px 40px;
+	box-sizing: border-box;
+	background-color: rgba(37, 36, 36, 0.313);
+	box-shadow: 0 5px 30px black;
+  backdrop-filter: blur(7px);
+  border-radius: 25px;
+  font-family: 'Libre Baskerville', serif;
+}
+.avatar {
+	position: absolute;
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	overflow: hidden;
+	top: calc(-80px/2);
+	left: calc(50% - 40px);
+	border: 10px solid #fff;
+  box-shadow: 0 5px 30px black;
+}
+.contact-form h2 {
+	margin: 0;
+	padding: 0 0 30px;
+  font-size: 32px;
+  color: #fff;
+	text-align: center;
+	text-transform: uppercase;
+  
+}
+
+
+.contact-form input {	
+	border: none;
+	/* border-bottom-color: currentcolor;
+	border-bottom-style: none;
+	border-bottom-width: medium; */
+	/* border-bottom: 2px solid white; */
+	padding: 10px;
+	margin-bottom: 20px;
+	font-weight: bold;
+	box-sizing: border-box;
+	/* background-color: rgba(41, 39, 39, 0.3); */
+	box-shadow: 0 5px 30px black;
+  border-radius: 10px;
+}
+
+.contact-form input[type="text"], 
+.contact-form input[type="password"] {
+	background: transparent;
+	height: 40px;
+  color:#fff;
+  width: 250px;
+	font-size: 16px;
+}
+.btn {
+  height: 40px;
+	padding: 30px;
+  font-family: 'Libre Baskerville', serif;
+	
+	color: white;
+  display: inline-block;
+	font-weight: bold;
+	margin: 100px 0;
+  background:transparent;
+	box-shadow: 0 5px 30px black;
+}
+.btn-area {
+	color: #fff;
+	justify-content: center;
+  text-align: center;
+  font-weight: bold;
+}
+
+.rem {
+	text-align: center;
+	color: rgb(199, 197, 197) !important;
+	font-size: 16px;
+}
+input[type="checkbox"] {
+	width: 5%;
+}
+::placeholder {
+  color: white;
+  font-size: 18px;
+  font-family: 'Libre Baskerville', serif;
+}
+      label {
+        display: inline-block;
+        text-align:left;
+        margin-right: 10px;
+        color: #fff;
+      }
+   
 
   </style>
 </head>
 
-<body>
 
   <body>
     <div class="topnav" id="myTopnav">
@@ -102,26 +158,43 @@
 
     </div>
 
-    <div class="bg-img">
+   
+<!-- <!--    avatar valal -->
+        <div class="contact-form">
+            <img src="static/images/logo_gne.png" class="avatar">
+            <h2>Login Form</h2>
+            <form action="" class="container" method="POST">
+              <div>
+          <label for="email"><i class="fa-solid fa-user"></i></label>
+        <input type="text" placeholder="Enter Username" name="email" required>
+      </div>
+      <div>
+        <label for="psw"><i class="fa-solid fa-lock"></i></label>
+        <input type="password" placeholder="Enter Your Password" name="psw" required>
+      </div>
+                <div class="btn-area">
+                  {% if error%}
+          <pre> {{error}}</pre>
+          {% endif %}
+        
+        <div>  <input type="submit" class="btn" value="LOGIN">
+              </div>
+              </div></div>
+            </form>
+        </div>
 
-      <form action="" class="container" method="POST">
-        <h1>Login</h1>
 
-        <label for="email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" required>
-
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
-
-        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-        <label for="vehicle1"> Remember me</label><br><br>
-        {% if error%}
-        <pre> {{error}}</pre>
-        {% endif %}
-
-        <input type="submit" class="btn" value="LOGIN">
+     <!-- <div class="container">
+      <h1>Login Forn</h1>
+      <form  action="" class="form" method="POST">
+        <div class="form-group">
+          <i class="fa-solid fa-user fa-2x"></i>
+          <input type="text" class="form-control" id="name" name="email" placeholder="Enter Your Username"  tabindex="1" required>
+        </div>
       </form>
-    </div>
+
+     </div> -->
+
 
     <script>
       // responsive

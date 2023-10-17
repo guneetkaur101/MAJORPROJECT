@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Add Room</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="static/homee.css">
+  <link rel="stylesheet" type="text/css" href="/static/homee.css">
   <link rel="stylesheet" type="css" href="homee.css">
   <style>
     
@@ -386,7 +386,7 @@ label {
         <label for="row_c1">Rows per Column 1:</label>
       </div>
       <div class="col-75">
-        <input type="number" id="row_c1" name="row_c1" min="0" max="30" step="1"  onmouseover="highlightTableColumn(1)" onmouseout="unhighlightTableColumn(1)" placeholder="{{ row_c1 }}" value="{{ row_c1 }}" >
+        <input type="number" id="row_c1" name="row_c1" min="0" max="30" step="1"  onmouseover="highlightTableColumn(1)" onmouseout="unhighlightTableColumn(1)" placeholder="{{ row_details[0] }}" value="{{ row_c1 }}" >
       </div>
       </div>
       <!-- Rows per Column 2 -->
@@ -395,7 +395,7 @@ label {
           <label for="row_c2">Rows per Column 2:</label>
         </div>
         <div class="col-75">
-          <input type="number" id="row_c2" name="row_c2" min="0" max="30" step="1" onmouseover="highlightTableColumn(2)" onmouseout="unhighlightTableColumn(2)" placeholder="{{row_c2}}" value="{{ row_c2 }}">
+          <input type="number" id="row_c2" name="row_c2" min="0" max="30" step="1" onmouseover="highlightTableColumn(2)" onmouseout="unhighlightTableColumn(2)" placeholder="{{row_details[1]}}" value="{{ row_c2 }}">
         </div>
       </div>
       <!-- Rows per Column 3 -->
@@ -404,7 +404,7 @@ label {
           <label for="row_c3">Rows per Column 3:</label>
         </div>
         <div class="col-75">
-          <input type="number" id="row_c3" name="row_c3" min="0" max="30" step="1" onmouseover="highlightTableColumn(3)" onmouseout="unhighlightTableColumn(3)"  placeholder="{{row_c3}}" value="{{ row_c3 }}">
+          <input type="number" id="row_c3" name="row_c3" min="0" max="30" step="1" onmouseover="highlightTableColumn(3)" onmouseout="unhighlightTableColumn(3)"  placeholder="{{row_details[3]}}" value="{{ row_c3 }}">
         </div>
       </div>
       <!-- Rows per Column 4 -->
@@ -413,7 +413,7 @@ label {
           <label for="row_c4">Rows per Column 4:</label>
         </div>
         <div class="col-75">
-          <input type="number" id="row_c4" name="row_c4" min="0" max="30" step="1" onmouseover="highlightTableColumn(4)" onmouseout="unhighlightTableColumn(4)"  placeholder="{{row_c4}}"value="{{ row_c4 }}">
+          <input type="number" id="row_c4" name="row_c4" min="0" max="30" step="1" onmouseover="highlightTableColumn(4)" onmouseout="unhighlightTableColumn(4)"  placeholder="{{row_details[4]}}"value="{{ row_c4 }}">
         </div>
       </div>
       <!-- Rows per Column 5 -->
@@ -422,7 +422,7 @@ label {
           <label for="row_c5">Rows per Column 5:</label>
         </div>
         <div class="col-75">
-          <input type="number" id="row_c5" name="row_c5" min="0" max="30" step="1"onmouseover="highlightTableColumn(5)" onmouseout="unhighlightTableColumn(5)" placeholder="{{row_c5}}" value="{{ row_c5 }}">
+          <input type="number" id="row_c5" name="row_c5" min="0" max="30" step="1"onmouseover="highlightTableColumn(5)" onmouseout="unhighlightTableColumn(5)" placeholder="{{row_details[5]}}" value="{{ row_c5 }}">
         </div>
       </div>
       <!-- Rows per Column 6 -->
@@ -431,7 +431,7 @@ label {
           <label for="row_c6">Rows per Column 6:</label>
         </div>
         <div class="col-75">
-          <input type="number" id="row_c6" name="row_c6" min="0" max="30" step="1"onmouseover="highlightTableColumn(6)" onmouseout="unhighlightTableColumn(6)" placeholder="{{row_c6}}" value="{{ row_c6 }}">
+          <input type="number" id="row_c6" name="row_c6" min="0" max="30" step="1"onmouseover="highlightTableColumn(6)" onmouseout="unhighlightTableColumn(6)" placeholder="{{row_details[6]}}" value="{{ row_c6 }}">
         </div>
       </div>
       <br>
@@ -474,7 +474,7 @@ label {
       const runClass = "btn--running";
       const doneClass = "btn--done";
       // `.btn--running .btn__progress-fill` `stroke-dashoffset` duration in ms
-      const submitDuration = 2000;
+      const submitDuration = 500;
 
       // Disable the button during the animation
       this.disabled = true;

@@ -6,7 +6,7 @@
   <title>Add Room</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="static/homee.css">
-  <link rel="stylesheet" type="css" href="homee.css">
+
   <style>
     
 .btn,.btn__text,.btn__progress,.btn__progress-check,.btn__progress-fill,.btn__progress-track {
@@ -144,6 +144,8 @@ body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   background-color: #f2f2f2;
+  /* background: rgb(243,244,239);
+background: linear-gradient(157deg, rgba(243,244,239,1) 0%, rgba(235,255,236,1) 19%, rgba(27,196,113,1) 100%, rgba(15,14,47,1) 100%); */
 }
 
 .topnav {
@@ -475,7 +477,7 @@ label {
       const runClass = "btn--running";
       const doneClass = "btn--done";
       // `.btn--running .btn__progress-fill` `stroke-dashoffset` duration in ms
-      const submitDuration = 2000;
+      const submitDuration = 500;
 
       // Disable the button during the animation
       this.disabled = true;

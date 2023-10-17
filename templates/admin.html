@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/static/homee.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         table.dataTable {
             width: 100%;
@@ -44,6 +44,7 @@
         tr:nth-child(even) {
       background-color: #e6e2e2;
     }
+    
     </style>
 </head>
 
@@ -99,8 +100,8 @@
                             {% for d in row[1:] %}
                             <td>{{d}}</td>
                             {% endfor %}
-                            <td><a href="/delete/{{row[0]}}">DELETE</a></td>
-                            <td><a href="/edit/{{row[0]}}">EDIT</a></td>
+                            <td><a href="/delete/{{row[0]}}"><i class="fa-solid fa-trash "  style="color: #0ca125;"></i></a></td>
+                            <td><a href="/edit/{{row[0]}}"><i class="fa-solid fa-pen-to-square " style="color: #2e9509;"></i></a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
