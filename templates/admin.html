@@ -20,10 +20,12 @@
         body {
             margin: 0;
             font-family: Arial, Helvetica, sans-serif;
-            background-color: #f2f2f2;
+            /* background-color: #f2f2f2; */
+            background: rgb(243,244,239);
+background: linear-gradient(180deg, rgba(243,244,239,1) 2%, rgba(235,255,236,1) 33%, rgba(27,196,113,1) 100%);
         }
 
-
+    
 
 
         /* Responsive layout for small screens */
@@ -44,8 +46,26 @@
         tr:nth-child(even) {
       background-color: #e6e2e2;
     }
-    
+   
     </style>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+     <script>
+         $(document).ready(function () {
+             $('#example').DataTable({
+                 "paging": false, // Disable pagination
+             });
+         });
+ 
+         function myFunction() {
+             var x = document.getElementById("myTopnav");
+             if (x.className === "topnav") {
+                 x.className += " responsive";
+             } else {
+                 x.className = "topnav";
+             }
+         }
+     </script>
 </head>
 
 <body>
@@ -110,24 +130,7 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#example').DataTable({
-                "paging": false, // Disable pagination
-            });
-        });
-
-        function myFunction() {
-            var x = document.getElementById("myTopnav");
-            if (x.className === "topnav") {
-                x.className += " responsive";
-            } else {
-                x.className = "topnav";
-            }
-        }
-    </script>
+   
 </body>
 
 </html>

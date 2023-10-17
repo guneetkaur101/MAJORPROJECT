@@ -12,7 +12,7 @@ def home():
     return render_template("home.html" )
 @app.route("/About")
 def about():
-    return render_template("aboutusd.html")
+    return render_template("aboutus.html")
 @app.route("/login",methods=['GET','POST'])
 def login():
 	error = None

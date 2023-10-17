@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
+    body{background: rgb(243,244,239);
+background: linear-gradient(180deg, rgba(243,244,239,1) 2%, rgba(235,255,236,1) 33%, rgba(27,196,113,1) 100%);}
     .btn,.btn__text,.btn__progress,.btn__progress-check,.btn__progress-fill,.btn__progress-track {
     border: 0;
     box-sizing: border-box;
@@ -160,6 +162,60 @@
     }
     form{margin: 50px 20px;}
   </style>
+   <script>
+    $(document).ready(function () {
+      $('#example').DataTable({
+        responsive: true,
+        "pageLength": 5
+      });
+    });
+    function myFunction() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+
+    }
+    window.addEventListener("DOMContentLoaded", () => {
+  const btn = document.querySelector("button");
+  var doneTimeout = null;
+
+  if (btn) {
+    btn.addEventListener("click", function () {
+      const runClass = "btn--running";
+      const doneClass = "btn--done";
+      // `.btn--running .btn__progress-fill` `stroke-dashoffset` duration in ms
+      const submitDuration = 500;
+
+      // Disable the button during the animation
+      this.disabled = true;
+
+      clearTimeout(doneTimeout);
+
+      doneTimeout = setTimeout(() => {
+        this.classList.remove(runClass);
+        this.classList.add(doneClass);
+
+        // Reset the button and submit the form
+        setTimeout(() => {
+          this.disabled = false;
+          this.classList.remove(doneClass);
+
+          // Now, trigger the form submission
+          const form = document.querySelector("form");
+          if (form) {
+            form.submit();
+          }
+        }, 1500); // Adjust the resetDuration as needed
+      }, 600 + submitDuration);
+    });
+  }
+});
+
+
+  </script>
 </head>
 
 <body>
@@ -229,60 +285,7 @@
       <!-- <input type="submit" value="Generate Report"> Add a submit button to send selected rooms to the server -->
     </form>
   </div>
-  <script>
-    $(document).ready(function () {
-      $('#example').DataTable({
-        responsive: true,
-        "pageLength": 5
-      });
-    });
-    function myFunction() {
-      var x = document.getElementById("myTopnav");
-      if (x.className === "topnav") {
-        x.className += " responsive";
-      } else {
-        x.className = "topnav";
-      }
-
-    }
-    window.addEventListener("DOMContentLoaded", () => {
-  const btn = document.querySelector("button");
-  var doneTimeout = null;
-
-  if (btn) {
-    btn.addEventListener("click", function () {
-      const runClass = "btn--running";
-      const doneClass = "btn--done";
-      // `.btn--running .btn__progress-fill` `stroke-dashoffset` duration in ms
-      const submitDuration = 500;
-
-      // Disable the button during the animation
-      this.disabled = true;
-
-      clearTimeout(doneTimeout);
-
-      doneTimeout = setTimeout(() => {
-        this.classList.remove(runClass);
-        this.classList.add(doneClass);
-
-        // Reset the button and submit the form
-        setTimeout(() => {
-          this.disabled = false;
-          this.classList.remove(doneClass);
-
-          // Now, trigger the form submission
-          const form = document.querySelector("form");
-          if (form) {
-            form.submit();
-          }
-        }, 1500); // Adjust the resetDuration as needed
-      }, 600 + submitDuration);
-    });
-  }
-});
-
-
-  </script>
+ 
 </body>
 
 </html>
