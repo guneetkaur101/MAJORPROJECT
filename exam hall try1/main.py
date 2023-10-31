@@ -1,13 +1,21 @@
 import sqlite3
 import pandas as pd
+import os
 
 df1 = pd.read_excel('2ND YEAR.xlsx')
 df2 = pd.read_excel('3RD YEAR.xlsx')
-roll_no_list1 = df1['URN'].tolist()
-roll_no_list2 = df2['URN'].tolist()
+df3 = pd.read_excel('4TH YEAR.xlsx')
+# roll_no_list1 = df1['URN'].tolist()
+# roll_no_list2 = df2['URN'].tolist()
+
 
 max_cols = 6
-date= '16-10-2023'
+date = input("Enter the date: ")
+time = input("Enter the time of the exam: ")
+filename = f'{date}.xlsx'
+if os.path.exists(filename):
+    os.remove(filename)
+
 myconn = sqlite3.connect("room_details.db")
 with myconn:
     cursor = myconn.cursor()
