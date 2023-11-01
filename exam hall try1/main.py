@@ -11,8 +11,8 @@ df3 = pd.read_excel('4TH YEAR.xlsx')
 
 
 max_cols = 6
-date = input("Enter the date: ")
-time = input("Enter the time of the exam: ")
+date = "26-10-2023"
+time = "10:00"
 filename = f'{date}.xlsx'
 if os.path.exists(filename):
     os.remove(filename)
