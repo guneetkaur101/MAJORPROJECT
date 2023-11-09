@@ -73,14 +73,17 @@ with myconn:
             # Check if rotating_subjects is empty, terminate the program
             if not rotating_subjects:
                 break
-
+            if len(rotating_subjects) != 1: 
+                    room_schedule[current_col].append(rotating_subjects[0]) 
             for _ in range(max_rows[current_col]):
-                current_subject = rotating_subjects[0]  # Get the current subject from the rotating queue
+                current_subject = rotating_subjects[0]
+                 # Get the current subject from the rotating queue
 
                 if len(rotating_subjects) == 1:
                     if current_col % 2 == 0:
                         # Skip one column allocation on even columns
                         current_col += 1
+                        room_schedule[current_col].append(rotating_subjects[0])
                         max_rows = list(max_rows)
                         max_rows[current_col] = 0
                         max_rows = tuple(max_rows)
@@ -96,13 +99,15 @@ with myconn:
                     if waiting_subjects:
                         rotating_subjects.append(waiting_subjects.pop(0))
                         rotating_subjects.rotate(+1)
-                        break
+                        
                     elif not waiting_subjects:
-                        # Treat the column as filled
+                        # rotating_subjects.append(current_subject)
+                        rotating_subjects.rotate(+1)# Treat the column as filled
                         break
 
             # Rotate the subjects once a column has finished
             rotating_subjects.rotate(-1)
+            
 
         # Create a worksheet for the room
         worksheet = workbook.add_worksheet(room_name)
