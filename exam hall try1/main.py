@@ -1,88 +1,22 @@
 import sqlite3
 import pandas as pd
 import os
+from collections import deque
 
+# Load subject data from Excel files
 df1 = pd.read_excel('2ND YEAR.xlsx')
 df2 = pd.read_excel('3RD YEAR.xlsx')
 df3 = pd.read_excel('4TH YEAR.xlsx')
-# roll_no_list1 = df1['URN'].tolist()
-# roll_no_list2 = df2['URN'].tolist()
-
-
 
 max_cols = 6
 date = "26-10-2023"
-time = "10:00"
 filename = f'{date}.xlsx'
 if os.path.exists(filename):
     os.remove(filename)
-
-myconn = sqlite3.connect("room_details.db")
-with myconn:
-    cursor = myconn.cursor()
-    cursor.execute("SELECT room_no, u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6 from room")
-    rows = cursor.fetchall()
-    writer = pd.ExcelWriter(f'{date}.xlsx', engine='xlsxwriter')
-    workbook = writer.book
-    for row in rows:
-        room_no = row[0]
-        room_name =str(room_no)
-        u_row_c1 = row[1]
-        u_row_c2 = row[2]
-        u_row_c3 = row[3]
-        u_row_c4 = row[4]
-        u_row_c5 = row[5]
-        u_row_c6 = row[6]
-        max_rows = [u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6]
-
-        worksheet = workbook.add_worksheet(room_name)
-        row = 0
-        col = 0
-        room = []
-        for j in range(max_cols):
-            for i in range(max_rows[j]):
-                if len(room) == i:
-                    room.append([])
-                if j % 2 == 0:
-                    if roll_no_list1:
-                        roll_no = roll_no_list1.pop(0)
-                    else:
-                        break
-                else:
-                    if roll_no_list2:
-                        roll_no = roll_no_list2.pop(0)
-                    else:
-                       break
-                room[j].append(roll_no)
-                worksheet.write(i, j, roll_no)
-    writer._save()
-
-# writer = pd.ExcelWriter(f'{filename}', engine='xlsxwriter')
-# workbook = writer.book
-
-# for row in rows:
-#     room_no = row[0]
-#     room_name = str(room_no)
-#     u_row_c1 = row[1]
-#     u_row_c2 = row[2]
-#     u_row_c3 = row[3]
-#     u_row_c4 = row[4]
-#     u_row_c5 = row[5]
-#     u_row_c6 = row[6]
-#     max_rows = [u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6]
-
-#     worksheet = workbook.add_worksheet(room_name)
-#     row = 4
-#     col = 0
-#     room = []
-
-#     worksheet.write(1, 1, date)
-#     worksheet.write(1, 5, time)
-#     worksheet.write(0, 3, room_no)
-
-
-# Get the list of subject headings from the CSV file (use the actual column name)
-subject_headings = list(df3.columns)
+subject_headings = []
+subject_headings.extend(list(df1.columns))
+subject_headings.extend(list(df2.columns))
+subject_headings.extend(list(df3.columns))
 
 print("Select the subjects you want to include:")
 for i, heading in enumerate(subject_headings):
@@ -99,37 +33,84 @@ while True:
     else:
         print("Invalid choice. Please enter a valid number.")
 
-# Now, you have the list of selected subjects in selected_subjects
-print("Selected subjects:", selected_subjects)
+# Create a deque with a maximum length of 3 for rotating subjects
+rotating_subjects = deque(selected_subjects[:3])
 
-# Create a dictionary to store data for each selected subject
-subject_data = {subject: [] for subject in selected_subjects}
+# Create a list to store subjects that are waiting
+waiting_subjects = selected_subjects[3:]
 
-# ...
+# Sort the selected subjects
+selected_subjects.sort()
 
-for j in range(max_cols):
-    for i in range(max_rows[j]):
-        if len(room) == i:
-            room.append([])
-        if j % 2 == 0:
-            if roll_no_list1:
-                roll_no = roll_no_list1.pop(0)
-            else:
+# Create a dictionary to store the subject data and the current roll number position
+subject_data = {subject: df1[subject] if subject in df1.columns else
+               df2[subject] if subject in df2.columns else
+               df3[subject]
+               for subject in selected_subjects}
+
+subject_positions = {subject: 0 for subject in selected_subjects}
+
+# Connect to SQLite database with room details
+myconn = sqlite3.connect("room_details.db")
+with myconn:
+    cursor = myconn.cursor()
+    cursor.execute("SELECT room_no, u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6 from room")
+    rows = cursor.fetchall()
+
+    # Create Excel writer
+    writer = pd.ExcelWriter(f'{date}.xlsx', engine='xlsxwriter')
+    workbook = writer.book
+
+    for row in rows:
+        room_no = row[0]
+        room_name = str(room_no)
+        max_rows = row[1:]  # Extract maximum row counts for each column
+
+        # Initialize a schedule list for the room
+        room_schedule = [[] for _ in range(max_cols)]
+
+        for current_col in range(max_cols):
+            # Check if rotating_subjects is empty, terminate the program
+            if not rotating_subjects:
                 break
-        else:
-            if roll_no_list2:
-                roll_no = roll_no_list2.pop(0)
-            else:
-                break
-        # Check if the student's subject is in the selected subjects
-        # Use the actual column name from your DataFrame
-        student_subject = df3.loc[i, selected_subjects[0]]  # Modify this to select the right subject column
-        if student_subject in selected_subjects:
-            subject_data[student_subject].append(roll_no)
 
+            for _ in range(max_rows[current_col]):
+                current_subject = rotating_subjects[0]  # Get the current subject from the rotating queue
 
-    # Now, you have data under selected subjects stored in respective lists
-    for subject, data in subject_data.items():
-        print(f"Data for {subject}: {data}")
+                if len(rotating_subjects) == 1:
+                    if current_col % 2 == 0:
+                        # Skip one column allocation on even columns
+                        current_col += 1
+                        max_rows = list(max_rows)
+                        max_rows[current_col] = 0
+                        max_rows = tuple(max_rows)
 
+                if subject_positions[current_subject] < len(subject_data[current_subject]):
+                    student = subject_data[current_subject].iloc[subject_positions[current_subject]]
+                    room_schedule[current_col].append(student)
+                    subject_positions[current_subject] += 1
+
+                # Check if the subject is exhausted and replace it
+                if subject_positions[current_subject] >= len(subject_data[current_subject]):
+                    rotating_subjects.popleft()
+                    if waiting_subjects:
+                        rotating_subjects.append(waiting_subjects.pop(0))
+                        rotating_subjects.rotate(+1)
+                        break
+                    elif not waiting_subjects:
+                        # Treat the column as filled
+                        break
+
+            # Rotate the subjects once a column has finished
+            rotating_subjects.rotate(-1)
+
+        # Create a worksheet for the room
+        worksheet = workbook.add_worksheet(room_name)
+
+        # Write the scheduled students to the worksheet
+        for col, students in enumerate(room_schedule):
+            for row, student in enumerate(students):
+                worksheet.write(row, col, student)
+
+# Save the Excel file
 writer._save()

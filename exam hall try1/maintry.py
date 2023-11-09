@@ -40,10 +40,13 @@ with myconn:
         u_row_c6 = row[6]
         max_rows = [u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6]
 
-        worksheet = workbook.add_worksheet(room_name)
-        row = 0
+        row = 4
         col = 0
         room = []
+
+        worksheet.write(1, 1, date)
+        worksheet.write(1, 5, time)
+        worksheet.write(0, 3, room_no)
     
     
     writer._save()
