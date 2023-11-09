@@ -5,52 +5,155 @@
   <title>About</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="/static/homee.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&display=swap');
 
+    body{
+      background: rgb(243,244,239);
+background: linear-gradient(180deg, rgba(243,244,239,1) 2%, rgba(235,255,236,1) 33%, rgba(27,196,113,1) 100%);
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background-color: rgb(240, 240, 240);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius: 0 0 15px 15px;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      width: 250px;
+      font-family: 'Raleway', sans-serif;
+      padding-bottom: 15px;
+      background-color: white;
+      margin: 20px; /* Adjust the margin as needed */
+    }
+
+    .card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-image: linear-gradient(60deg, #2AAA8A, #4169E1);
+      padding: 5px;
+      margin-top: -45px;
+    }
+
+    .card h2 {
+      margin: 10px 0;
+    }
+
+    .cont {
+      width: 90%;
+      height: 0;
+      overflow: hidden;
+      text-align: center;
+      transition: all 0.6s ease;
+    }
+
+    .card .cont .link i {
+      font-size: 25px;
+      color: rgb(82, 82, 82);
+      transition: all 0.2s ease;
+    }
+
+    .card .cont .link i:hover {
+      color: rgb(46, 73, 228);
+      cursor: pointer;
+    }
+
+    .card:hover>.cont {
+      
+      align-items: center;
+      text-align: center;
+      height: 180px;
+    }
+
+    .card:hover>.link {
+      width: 40%;
+      display: flex;
+      
+    }
+    h1{
+      font-weight: bold;
+      font-family: 'Libre Baskerville', serif;
+      text-align: center;
+    }
   </style>
 </head>
 
 <body>
-  <div class="topnav">
+  <div class="topnav" id="myTopnav">
     <a href="/">Home</a>
     <a href="/login">Login</a>
     <a href="/contact">Contact</a>
     <a class="active" href="/About">About</a>
-
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i></a>
   </div>
 
+  <div style="text-align: center;">
+    <div
+      style="color: #4CAF50; box-shadow: rgba(0, 0, 0, 0.15) 0px 54px 105px, rgba(0, 0, 0, 0.12) 0px -12px 10px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;;display: inline-block; align-items: center;  margin-top: 30px; border: 2px solid#000 ; border-radius: 14px; padding: 0px 10px;">
+      <h2>GROUP MEMBERS</h2>
 
-  <h1>MEET OUR GROUP MEMBER</h1>
+  </div> 
+</div>
+  <br>
+  <br>
   <br>
 
-  <div class="row">
-    <div class="column">
-      <div class="card">
-        <img src="/static/images/member1.jpg" alt="Pulkit" style="width:100%">
-        <div class="container">
-          <h2>PULKIT SAINI</h2>
-          <p class="title">Back-End Developer</p>
-          <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-          <p>example@example.com</p>
-          <p><button class="button">Contact</button></p>
+  <div class="container">
+    <div class="card">
+      <img src="https://www.nautec.com/wp-content/uploads/2018/04/placeholder-person.png" alt="">
+      <h2>Guneet Kaur</h2>
+      <div class="cont">
+        <p>Front-end Developer</p>
+        <p>HTML CSS JavScript</p>
+          <p>Flask sqLite</p>
+        <div class="link">
+          <a href="#"><i class="fa-brands fa-square-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+        
+      </div>
+      
+    </div>
+
+    <div class="card">
+      <img src="https://www.nautec.com/wp-content/uploads/2018/04/placeholder-person.png" alt="">
+      <h2>Dikshita</h2>
+      <div class="cont">
+        <p>Backend-end Developer</p>
+        <p>Python Flask sqLite</p>
+        <p>HTML CSS JavScript</p>
+         
+        <div class="link">
+          <a href="#"><i class="fa-brands fa-square-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin"></i></a>
         </div>
       </div>
     </div>
-
-    <div class="column">
-      <div class="card">
-        <img src="/static/images/member2.jpg" alt="Rohit" style="width:100%">
-        <div class="container">
-          <h2>ROHIT BHARTI</h2>
-          <p class="title">Front-End Developer</p>
-          <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-          <p>rohitkumar.thdc@gmail.com</p>
-          <p><button class="button">Contact</button></p>
-        </div>
-      </div>
-    </div>
-
-
-
+  </div>
+<script>
+    function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";
+    }
+  
+  }
+</script>
 </body>
 
 </html>

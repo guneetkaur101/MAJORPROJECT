@@ -5,8 +5,142 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Admin</title>
   <link rel="stylesheet" type="text/css" href="/static/homee.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
+    body{background: rgb(243,244,239);
+background: linear-gradient(180deg, rgba(243,244,239,1) 2%, rgba(235,255,236,1) 33%, rgba(27,196,113,1) 100%);}
+    .btn,.btn__text,.btn__progress,.btn__progress-check,.btn__progress-fill,.btn__progress-track {
+    border: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+:root {
+    --hue: 223;
+    --bg1: hsl(var(--hue),10%,90%);
+    --bg2: hsl(var(--hue),10%,80%);
+    --fg1: hsl(var(--hue),10%,10%);
+    --fg2: hsl(var(--hue),10%,20%);
+    --primary1: hsl(var(--hue),90%,55%);
+    --primary2: hsl(var(--hue),90%,45%);
+    /* font-size: calc(20px + (40 - 20) * (100vw - 320px) / (1280 - 320)); */
+}
+ button {
+    font: 1em/1.5 Nunito, sans-serif;
+}
+.btn{
+    background-color: #4CAF50;
+    color: white;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+/* Main button styles */
+.btn {
+    background-color: transparent;
+    border-radius: 1.5em;
+    display: block;
+    position: relative;
+    width: 7.5em;
+    height: 3em;
+    transition: width 0.3s ease-in-out;
+}
+.btn:not(:disabled):active {
+    transform: translateY(0.1em);
+}
+.btn__text {
+    background-color: #4CAF50;;
+    border-radius: inherit;
+    color: hsl(0,0%,100%);
+    display: inline-block;
+    padding: 0.75em 1.5em;
+    transition:
+        background-color 0.15s linear,
+        color 0.15s 0.3s ease-in-out;
+    width: 100%;
+}
+.btn:not(:disabled):focus .btn__text,
+.btn:not(:disabled):hover .btn__text {
+    background-color: #45a049;;
+}
+.btn__progress {
+    overflow: visible;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3em;
+    height: 3em;
+    visibility: hidden;
+}
+.btn__progress-track {
+    r: 12px;
+    stroke: #45a049;;
+    stroke-width: 24;
+}
+.btn__progress-fill {
+    stroke: #4CAF50;
+    stroke-dashoffset: 125.66;
+}
+.btn__progress-check {
+    stroke: hsl(0,0%,100%);
+    stroke-dashoffset: 34;
+}
+
+/* Both states */
+.btn--running,
+.btn--done {
+    outline: none;
+    pointer-events: none;
+    width: 3em;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+.btn--running .btn__text,
+.btn--done .btn__text {
+    color: transparent;
+    transition:
+        background-color 0.3s ease-in-out,
+        visibility 0.3s steps(1);
+}
+.btn--running .btn__progress,
+.btn--done .btn__progress {
+    visibility: visible;
+}
+
+/* Running state */
+.btn--running .btn__text {
+    background-color: #45a049;;
+    visibility: hidden;
+}
+.btn--running .btn__progress {
+    transition: visibility 0.3s 0.3s steps(1,start);
+}
+.btn--running .btn__progress-track {
+    r: 20px;
+    stroke-width: 8;
+    transition:
+        r 0.3s 0.3s ease-in-out,
+        stroke-width 0.3s 0.3s ease-in-out;
+}
+.btn--running .btn__progress-fill {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 2s 0.6s linear;
+}
+
+/* Done state */
+.btn--done .btn__progress-track {
+    stroke: #4CAF50;;
+    transition:
+        r 0.3s ease-in-out,
+        stroke-width 0.3s ease-in-out;
+}
+.btn--done .btn__progress-check {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.3s 0.3s ease-out;
+}
     th,
     td {
       text-align: center;
@@ -18,19 +152,6 @@
       background-color: #e6e2e2;
     }
 
-    input[type=submit] {
-      background-color: #4CAF50;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    input[type=submit]:hover {
-      background-color: #45a049;
-    }
-
     input[type=number] {
       width: 20%;
       padding: 12px;
@@ -39,7 +160,62 @@
       resize: vertical;
 
     }
+    form{margin: 50px 20px;}
   </style>
+   <script>
+    $(document).ready(function () {
+      $('#example').DataTable({
+        responsive: true,
+        "pageLength": 5
+      });
+    });
+    function myFunction() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+
+    }
+    window.addEventListener("DOMContentLoaded", () => {
+  const btn = document.querySelector("button");
+  var doneTimeout = null;
+
+  if (btn) {
+    btn.addEventListener("click", function () {
+      const runClass = "btn--running";
+      const doneClass = "btn--done";
+      // `.btn--running .btn__progress-fill` `stroke-dashoffset` duration in ms
+      const submitDuration = 500;
+
+      // Disable the button during the animation
+      this.disabled = true;
+
+      clearTimeout(doneTimeout);
+
+      doneTimeout = setTimeout(() => {
+        this.classList.remove(runClass);
+        this.classList.add(doneClass);
+
+        // Reset the button and submit the form
+        setTimeout(() => {
+          this.disabled = false;
+          this.classList.remove(doneClass);
+
+          // Now, trigger the form submission
+          const form = document.querySelector("form");
+          if (form) {
+            form.submit();
+          }
+        }, 1500); // Adjust the resetDuration as needed
+      }, 600 + submitDuration);
+    });
+  }
+});
+
+
+  </script>
 </head>
 
 <body>
@@ -64,20 +240,20 @@
             <th>Select</th> <!-- Add a new column for checkboxes -->
             <th>Room No</th>
             <th>Columns</th>
-            <th>Row 1</th>
-            <th>Row 2</th>
-            <th>Row 3</th>
-            <th>Row 4</th>
-            <th>Row 5</th>
-            <th>Row 6</th>
-            <th>Usable Row 1</th>
-            <th>Usable Row 2</th>
-            <th>Usable Row 3</th>
-            <th>Usable Row 4</th>
-            <th>Usable Row 5</th>
-            <th>Usable Row 6</th>
-            <th>Total Capacity</th>
-            <th>Total Usable Capacity</th>
+            <th>Col 1 Max Rows</th>
+                            <th>Col 2 Max Rows</th>
+                            <th>Col 3 Max Rows</th>
+                            <th>Col 4 Max Rows</th>
+                            <th>Col 5 Max Rows</th>
+                            <th>Col 6 Max Rows</th>
+                            <th>Col 1 Usable Row</th>
+                            <th>Col 2 Usable Row</th>
+                            <th>Col 3 Usable Row</th>
+                            <th>Col 4 Usable Row</th>
+                            <th>Col 5 Usable Row</th>
+                            <th>Col 6 Usable Row</th>
+                            <th>Total Capacity</th>
+                            <th>Total Usable Capacity</th>
             <th>EDIT</th>
           </tr>
         </thead>
@@ -89,42 +265,27 @@
             {% for d in row %}
             <td>{{d}}</td>
             {% endfor %}
-            <td> <a href="/edit-usable-rows/{{ row[0] }}">EDIT</a></td>
+            <td> <a href="/edit-usable-rows/{{ row[0] }}"><i class="fas fa-edit" style="color: #0ca125;"></i></a></td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
-      <input type="submit" value="Generate Report"> <!-- Add a submit button to send selected rooms to the server -->
+      <div style="display: flex;  
+     justify-content: center;  
+     align-items: center; margin-top: 20px;" >
+      <button class="btn" type="button"  >
+        <span class="btn__text">Generate</span>
+        <svg class="btn__progress" viewBox="0 0 48 48" width="48px" height="48px">
+            <circle class="btn__progress-track" r="20" cx="24" cy="24" fill="none" stroke="#c7cad1" stroke-width="8" />
+            <circle class="btn__progress-fill" r="20" cx="24" cy="24" fill="none" stroke="#000000" stroke-width="8" transform="rotate(-90,24,24)" stroke-dasharray="125.66 125.66" stroke-dashoffset="125.66" />
+            <polyline class="btn__progress-check" points="12,24 20,32 36,16" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="34 34" stroke-dashoffset="34" />
+        </svg>
+      </button>
+    </div>
+      <!-- <input type="submit" value="Generate Report"> Add a submit button to send selected rooms to the server -->
     </form>
   </div>
-  <script>
-    $(document).ready(function () {
-      $('#example').DataTable({
-        responsive: true,
-        "pageLength": 5
-      });
-    });
-    function myFunction() {
-      var x = document.getElementById("myTopnav");
-      if (x.className === "topnav") {
-        x.className += " responsive";
-      } else {
-        x.className = "topnav";
-      }
-
-    }
-    function myFunction() {
-      var x = document.getElementById("myTopnav");
-      if (x.className === "topnav") {
-        x.className += " responsive";
-      } else {
-        x.className = "topnav";
-      }
-
-    }
-
-
-  </script>
+ 
 </body>
 
 </html>
