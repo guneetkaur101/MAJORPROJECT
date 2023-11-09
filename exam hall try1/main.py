@@ -3,35 +3,40 @@ import pandas as pd
 import os
 from collections import deque
 
-# Load subject data from Excel files
-df1 = pd.read_excel('2ND YEAR.xlsx')
-df2 = pd.read_excel('3RD YEAR.xlsx')
-df3 = pd.read_excel('4TH YEAR.xlsx')
+MAX_COLS = 6
+DATE = "26-10-2023"
+TIME = "10:00 AM"
+FILENAME = f'{DATE}.xlsx'
 
-max_cols = 6
-date = "26-10-2023"
-filename = f'{date}.xlsx'
-if os.path.exists(filename):
-    os.remove(filename)
-subject_headings = []
-subject_headings.extend(list(df1.columns))
-subject_headings.extend(list(df2.columns))
-subject_headings.extend(list(df3.columns))
+def load_subject_data():
+    # Load subject data from Excel files
+    df1 = pd.read_excel('2ND YEAR.xlsx')
+    df2 = pd.read_excel('3RD YEAR.xlsx')
+    df3 = pd.read_excel('4TH YEAR.xlsx')
+    return df1, df2, df3
 
-print("Select the subjects you want to include:")
-for i, heading in enumerate(subject_headings):
-    print(f"{i + 1}. {heading}")
+def get_selected_subjects(subject_headings):
+    print("Select the subjects you want to include:")
+    for i, heading in enumerate(subject_headings):
+        print(f"{i + 1}. {heading}")
 
-# Ask the user to select subjects
-selected_subjects = []
-while True:
-    subject_choice = int(input("Enter the number of the subject (0 to finish): "))
-    if subject_choice == 0:
-        break
-    elif 1 <= subject_choice <= len(subject_headings):
-        selected_subjects.append(subject_headings[subject_choice - 1])
-    else:
-        print("Invalid choice. Please enter a valid number.")
+    selected_subjects = []
+    while True:
+        subject_choice = int(input("Enter the number of the subject (0 to finish): "))
+        if subject_choice == 0:
+            break
+        elif 1 <= subject_choice <= len(subject_headings):
+            selected_subjects.append(subject_headings[subject_choice - 1])
+        else:
+            print("Invalid choice. Please enter a valid number.")
+    return selected_subjects
+
+# Load subject data
+df1, df2, df3 = load_subject_data()
+subject_headings = list(df1.columns) + list(df2.columns) + list(df3.columns)
+
+# Get selected subjects from the user
+selected_subjects = get_selected_subjects(subject_headings)
 
 # Create a deque with a maximum length of 3 for rotating subjects
 rotating_subjects = deque(selected_subjects[:3])
@@ -58,7 +63,7 @@ with myconn:
     rows = cursor.fetchall()
 
     # Create Excel writer
-    writer = pd.ExcelWriter(f'{date}.xlsx', engine='xlsxwriter')
+    writer = pd.ExcelWriter(FILENAME, engine='xlsxwriter')
     workbook = writer.book
 
     for row in rows:
@@ -67,26 +72,40 @@ with myconn:
         max_rows = row[1:]  # Extract maximum row counts for each column
 
         # Initialize a schedule list for the room
-        room_schedule = [[] for _ in range(max_cols)]
+        room_schedule = [[] for _ in range(MAX_COLS)]
 
-        for current_col in range(max_cols):
+        for current_col in range(MAX_COLS):
             # Check if rotating_subjects is empty, terminate the program
+            subject_heading_added = False
             if not rotating_subjects:
                 break
             if len(rotating_subjects) != 1: 
                     room_schedule[current_col].append(rotating_subjects[0]) 
+                    
             for _ in range(max_rows[current_col]):
                 current_subject = rotating_subjects[0]
                  # Get the current subject from the rotating queue
 
+                # Inside the loop where you handle column allocation
                 if len(rotating_subjects) == 1:
-                    if current_col % 2 == 0:
+                    
+
+                    if (current_col - 1) % 2 == 0:
                         # Skip one column allocation on even columns
                         current_col += 1
-                        room_schedule[current_col].append(rotating_subjects[0])
+                        break
+                    elif current_col % 2 == 0:
+                        if not subject_heading_added:
+                            room_schedule[current_col].append(rotating_subjects[0])
+                            subject_heading_added = True
+
                         max_rows = list(max_rows)
                         max_rows[current_col] = 0
                         max_rows = tuple(max_rows)
+
+# Continue with the rest of the loop...
+
+                     
 
                 if subject_positions[current_subject] < len(subject_data[current_subject]):
                     student = subject_data[current_subject].iloc[subject_positions[current_subject]]
