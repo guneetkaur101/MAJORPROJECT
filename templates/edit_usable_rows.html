@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
+   
         table {
             border-collapse: collapse;
             width: 100%;
@@ -45,10 +46,11 @@
             resize: vertical;
 
         }
-
+        form{margin: 50px 20px;}
      
        
-
+body{background: rgb(243,244,239);
+background: linear-gradient(180deg, rgba(243,244,239,1) 2%, rgba(235,255,236,1) 33%, rgba(27,196,113,1) 100%);}
        
     </style>
 </head>
@@ -74,19 +76,20 @@
                         <th>Select</th> <!-- Add a new column for checkboxes -->
                         <th>Room No</th>
                         <th>Columns</th>
-                        <th>Row 1</th>
-                        <th>Row 2</th>
-                        <th>Row 3</th>
-                        <th>Row 4</th>
-                        <th>Row 5</th>
-                        <th>Row 6</th>
-                        <th>Usable Row 1</th>
-                        <th>Usable Row 2</th>
-                        <th>Usable Row 3</th>
-                        <th>Usable Row 4</th>
-                        <th>Usable Row 5</th>
-                        <th>Usable Row 6</th>
-                        <th>Total Capacity</th>
+                        <th>Col 1 Max Rows</th>
+                            <th>Col 2 Max Rows</th>
+                            <th>Col 3 Max Rows</th>
+                            <th>Col 4 Max Rows</th>
+                            <th>Col 5 Max Rows</th>
+                            <th>Col 6 Max Rows</th>
+                            <th>Col 1 Usable Row</th>
+                            <th>Col 2 Usable Row</th>
+                            <th>Col 3 Usable Row</th>
+                            <th>Col 4 Usable Row</th>
+                            <th>Col 5 Usable Row</th>
+                            <th>Col 6 Usable Row</th>
+                            <th>Total Capacity</th>
+                            
                         <th>EDIT</th>
                     </tr>
                 </thead>
@@ -135,8 +138,9 @@
                     </tr>
                 </tbody>
             </table>
-            <input type="submit" value="Generate Report">
-            <!-- Add a submit button to send selected rooms to the server -->
+            
+            <!-- <input type="submit" value="Generate Report">
+            Add a submit button to send selected rooms to the server -->
         </form>
     </div>
     <script>
@@ -165,7 +169,7 @@
                 editForm.style.display = "block";
             }
         }
-
+       
 
     </script>
 </body>

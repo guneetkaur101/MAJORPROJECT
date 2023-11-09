@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/static/homee.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         table.dataTable {
             width: 100%;
@@ -20,10 +20,12 @@
         body {
             margin: 0;
             font-family: Arial, Helvetica, sans-serif;
-            background-color: #f2f2f2;
+            /* background-color: #f2f2f2; */
+            background: rgb(243,244,239);
+background: linear-gradient(180deg, rgba(243,244,239,1) 2%, rgba(235,255,236,1) 33%, rgba(27,196,113,1) 100%);
         }
 
-
+    
 
 
         /* Responsive layout for small screens */
@@ -38,7 +40,32 @@
                 border-collapse: collapse;
             }
         }
+        /* table.dataTable tbody tr {
+    background-color: #fff;
+} */
+        tr:nth-child(even) {
+      background-color: #e6e2e2;
+    }
+   
     </style>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+     <script>
+         $(document).ready(function () {
+             $('#example').DataTable({
+                 "paging": false, // Disable pagination
+             });
+         });
+ 
+         function myFunction() {
+             var x = document.getElementById("myTopnav");
+             if (x.className === "topnav") {
+                 x.className += " responsive";
+             } else {
+                 x.className = "topnav";
+             }
+         }
+     </script>
 </head>
 
 <body>
@@ -93,8 +120,8 @@
                             {% for d in row[1:] %}
                             <td>{{d}}</td>
                             {% endfor %}
-                            <td><a href="/delete/{{row[0]}}">DELETE</a></td>
-                            <td><a href="/edit/{{row[0]}}">EDIT</a></td>
+                            <td><a href="/delete/{{row[0]}}"><i class="fa-solid fa-trash "  style="color: #0ca125;"></i></a></td>
+                            <td><a href="/edit/{{row[0]}}"><i class="fa-solid fa-pen-to-square " style="color: #2e9509;"></i></a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -103,24 +130,7 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#example').DataTable({
-                "paging": false, // Disable pagination
-            });
-        });
-
-        function myFunction() {
-            var x = document.getElementById("myTopnav");
-            if (x.className === "topnav") {
-                x.className += " responsive";
-            } else {
-                x.className = "topnav";
-            }
-        }
-    </script>
+   
 </body>
 
 </html>

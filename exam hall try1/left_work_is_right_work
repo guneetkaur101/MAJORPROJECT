@@ -1,9 +1,19 @@
 rooms database link with the logic file - DONEDONEDONE
 
 make output excel/pdf file wherein the matrix along with row headings: year and section with subject is displayed; 
-date and time headings;
+
+date and time headings; - DONEDONEDONE
+
 total count of the different batches sitting in a single room.  
 
-MAKE A WORKBOOK WITH DATE NAME AND STORE ALL ROOMS GENERATED IN THAT
+MAKE A WORKBOOK WITH DATE NAME AND STORE ALL ROOMS GENERATED IN THAT- DONEDONEDONE
 
 INTEGRATION WITH GUI
+
+
+
+
+frontend :-
+
+add subjects against year selection in upload form page
+
