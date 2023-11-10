@@ -189,7 +189,7 @@ def edit(room_no):
 def upload_form():
     total_strengths = {}  # Initialize as an empty dictionary
     # Define the list of available years
-    available_years = ['2nd', '3rd', '4th']
+    # available_subjects = [list(df1.columns) + list(df2.columns) + list(df3.columns)]
     global selected_subjects
     selected_subjects = []
     df1, df2, df3 = ff.load_subject_data()
@@ -199,36 +199,40 @@ def upload_form():
         # Get the selected years from checkboxes
         selected_subjects = request.form.getlist('select_subject')
         print(selected_subjects)
-        # # Check if at least one year is selected (already alert box)
-        # if not selected_years:
-        #     error = "Please select at least one year"
-        #     return render_template('upload_form.html', total_strengths=total_strengths, error=error)
+        # Check if at least one year is selected (already alert box)
+        if not selected_subjects:
+            error = "Please select at least one subject"
+            return render_template('upload_form.html', total_strengths=total_strengths, error=error)
         upload_errors = []
+        
+        # Initialize a dictionary to store the length of each subject's roll numbers
+        subject_lengths = {}
 
-        # for year in available_years:
-        #     if year in selected_years:
-        #         csv_file = request.files.get(f'{year}_year_csv')
+        # Iterate over the selected subjects
+        for subject in selected_subjects:
+            # Initialize the length of the roll numbers for the subject
+            subject_length = 0
 
-        #         if not csv_file:
-        #             upload_errors.append(f"Please upload a file for {year} year.")
-        #             continue  # Skip this year if the file is missing
+            # Iterate over the csv files
+            for csv_file in [df1, df2, df3]:
+                # Check if the subject is present in the csv file
+                if subject in csv_file.columns:
+                    # Get the roll numbers for the subject
+                    roll_numbers = csv_file[subject].dropna().tolist()
+                    # Update the subject length with the number of roll numbers
+                    subject_length += len(roll_numbers)-1
 
-        #         filename = f'{year}_year.csv'
-        #         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        #         csv_file.save(file_path)
-        #         print("File saved") 
-        #         # df = pd.read_csv(file_path)
+            # Store the subject length in the dictionary
+            subject_lengths[subject] = subject_length
 
-        #         # # Exclude the top two rows (assuming they are headers)
-        #         # df = df.iloc[1:]
-                
-        #         df = pd.read_csv(file_path, skiprows=1)
-        #         # Calculate the number of entries (rows) in the CSV
-        #         num_entries = len(df)
-        #         total_strengths[year] = num_entries
+        # Calculate the total strength by summing up the subject lengths
+        total_strength = sum(subject_lengths.values())
 
+        # Update the total_strengths dictionary with the subject lengths
+        total_strengths.update(subject_lengths)
+        total_strengths['Total'] = total_strength
         if upload_errors:
-            return render_template('upload_form.html', total_strengths=total_strengths, upload_errors=upload_errors,df1=df1,df2=df2,df3=df3)
+            return render_template('upload_form.html', total_strengths=total_strengths, upload_errors=upload_errors)
         print("Processing completed")
         return render_template('upload_form.html', total_strengths=total_strengths,df1=df1,df2=df2,df3=df3,selected_subjects=selected_subjects)
 
