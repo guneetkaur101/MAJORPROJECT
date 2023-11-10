@@ -3,6 +3,9 @@ import sqlite3
 import csv
 import os
 import pandas as pd
+from collections import deque
+import fullfinalized as ff
+
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -187,44 +190,50 @@ def upload_form():
     total_strengths = {}  # Initialize as an empty dictionary
     # Define the list of available years
     available_years = ['2nd', '3rd', '4th']
+    global selected_subjects
+    selected_subjects = []
+    df1, df2, df3 = ff.load_subject_data()
+    subject_headings = list(df1.columns) + list(df2.columns) + list(df3.columns)
     if request.method == 'POST':
         print("Processing started") 
         # Get the selected years from checkboxes
-        selected_years = request.form.getlist('select_year')
+        selected_subjects = request.form.getlist('select_subject')
+        print(selected_subjects)
         # # Check if at least one year is selected (already alert box)
         # if not selected_years:
         #     error = "Please select at least one year"
         #     return render_template('upload_form.html', total_strengths=total_strengths, error=error)
         upload_errors = []
 
-        for year in available_years:
-            if year in selected_years:
-                csv_file = request.files.get(f'{year}_year_csv')
+        # for year in available_years:
+        #     if year in selected_years:
+        #         csv_file = request.files.get(f'{year}_year_csv')
 
-                if not csv_file:
-                    upload_errors.append(f"Please upload a file for {year} year.")
-                    continue  # Skip this year if the file is missing
+        #         if not csv_file:
+        #             upload_errors.append(f"Please upload a file for {year} year.")
+        #             continue  # Skip this year if the file is missing
 
-                filename = f'{year}_year.csv'
-                file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                csv_file.save(file_path)
-                print("File saved") 
-                # df = pd.read_csv(file_path)
+        #         filename = f'{year}_year.csv'
+        #         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        #         csv_file.save(file_path)
+        #         print("File saved") 
+        #         # df = pd.read_csv(file_path)
 
-                # # Exclude the top two rows (assuming they are headers)
-                # df = df.iloc[1:]
+        #         # # Exclude the top two rows (assuming they are headers)
+        #         # df = df.iloc[1:]
                 
-                df = pd.read_csv(file_path, skiprows=1)
-                # Calculate the number of entries (rows) in the CSV
-                num_entries = len(df)
-                total_strengths[year] = num_entries
+        #         df = pd.read_csv(file_path, skiprows=1)
+        #         # Calculate the number of entries (rows) in the CSV
+        #         num_entries = len(df)
+        #         total_strengths[year] = num_entries
 
         if upload_errors:
-            return render_template('upload_form.html', total_strengths=total_strengths, upload_errors=upload_errors)
+            return render_template('upload_form.html', total_strengths=total_strengths, upload_errors=upload_errors,df1=df1,df2=df2,df3=df3)
         print("Processing completed")
-        return render_template('upload_form.html', total_strengths=total_strengths)
+        return render_template('upload_form.html', total_strengths=total_strengths,df1=df1,df2=df2,df3=df3,selected_subjects=selected_subjects)
 
-    return render_template('upload_form.html', total_strengths=total_strengths)
+    return render_template('upload_form.html', total_strengths=total_strengths,df1=df1,df2=df2,df3=df3,selected_subjects=selected_subjects)
+
 
 @app.route("/generate", methods=['GET', 'POST'])
 def generate():
@@ -234,10 +243,24 @@ def generate():
         cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row_c1 integer(10),row_c2 integer(10),row_c3 integer(10),row_c4 integer(10),row_c5 integer(10),row_c6 integer(10),u_row_c1 integer(10),u_row_c2 integer(10),u_row_c3 integer(10),u_row_c4 integer(10),u_row_c5 integer(10),u_row_c6 integer(10),seat integer(10),usable_seats integer(10))")
 
     if request.method == 'POST':
+        global selected_rooms,df1,df2,df3,FILENAME,DATE,TIME
         selected_rooms = request.form.getlist('selected_rooms')
         print(selected_rooms)
-        # Process the selected rooms here as needed.
-        # You can perform actions like generating a report, storing selections, etc.
+        MAX_COLS = 6
+        DATE = "26-10-2023"
+        TIME = "10-00 AM"
+        FILENAME = f'{DATE}_{TIME}.xlsx'
+
+        
+        df1, df2, df3 = ff.load_subject_data()
+        subject_headings = list(df1.columns) + list(df2.columns) + list(df3.columns)
+        print(selected_subjects)
+        print(subject_headings)
+
+        ff.main(selected_rooms,df1,df2,df3,FILENAME,DATE,TIME,selected_subjects)
+
+
+        
 
     # Fetch data for the table
     cursor.execute("SELECT * FROM room")

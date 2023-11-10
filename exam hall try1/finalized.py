@@ -5,8 +5,8 @@ from collections import deque
 
 MAX_COLS = 6
 DATE = "26-10-2023"
-TIME = "10:00 AM"
-FILENAME = f'{DATE}.xlsx'
+TIME = "10-00 AM"
+FILENAME = f'{DATE}_{TIME}.xlsx'
 
 def load_subject_data():
     # Load subject data from Excel files
@@ -54,22 +54,23 @@ subject_data = {subject: df1[subject] if subject in df1.columns else
                for subject in selected_subjects}
 
 subject_positions = {subject: 0 for subject in selected_subjects}
-
+first_check=True
+column_odd_flag= True
 # Connect to SQLite database with room details
 myconn = sqlite3.connect("room_details.db")
 with myconn:
     cursor = myconn.cursor()
     cursor.execute("SELECT room_no, u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6 from room")
-    rows = cursor.fetchall()
+    rooms = cursor.fetchall()
 
     # Create Excel writer
     writer = pd.ExcelWriter(FILENAME, engine='xlsxwriter')
     workbook = writer.book
 
-    for row in rows:
-        room_no = row[0]
+    for room in rooms:
+        room_no = room[0]
         room_name = str(room_no)
-        max_rows = row[1:]  # Extract maximum row counts for each column
+        max_rows = room[1:]  # Extract maximum row counts for each column
         
         # Initialize a schedule list for the room
         room_schedule = [[] for _ in range(MAX_COLS)]
@@ -86,21 +87,42 @@ with myconn:
                 current_subject = rotating_subjects[0]
                  # Get the current subject from the rotating queue
                 if len(rotating_subjects) == 1:
-                    
+                    # if not subject_heading_added:
+                    #             room_schedule[current_col].append(rotating_subjects[0])
+                    #             subject_heading_added = True
+                                
+                    if current_col % 2 ==0 and first_check==True:
+                        column_odd_flag=False
+                        first_check=False
 
-                    if (current_col - 1) % 2 == 0:
+                    if column_odd_flag==True:
                         # Skip one column allocation on even columns
-                        current_col += 1
-                        break
-                    elif current_col % 2 == 0:
+                        first_check=False
+                        if current_col%2 == 0:
+                            max_rows = list(max_rows)
+                            print(max_rows,current_col)
+                            max_rows[current_col] = 0
+                            max_rows = tuple(max_rows)
+                            current_col +=1
+                            break
                         if not subject_heading_added:
                             room_schedule[current_col].append(rotating_subjects[0])
                             subject_heading_added = True
+                            
+                    if column_odd_flag==False:
+                        if current_col%2 != 0:
+                            max_rows = list(max_rows)
+                            print(max_rows,current_col)
+                            max_rows[current_col] = 0
+                            max_rows = tuple(max_rows)
+                            current_col +=1
+                            break
 
-                        max_rows = list(max_rows)
-                        max_rows[current_col] = 0
-                        max_rows = tuple(max_rows)
-
+                        if not subject_heading_added:
+                            room_schedule[current_col].append(rotating_subjects[0])
+                            subject_heading_added = True
+                                
+                                
                 if subject_positions[current_subject] < len(subject_data[current_subject]):
                     student = subject_data[current_subject].iloc[subject_positions[current_subject]]
                     room_schedule[current_col].append(student)
@@ -114,7 +136,6 @@ with myconn:
                         rotating_subjects.rotate(+1)
                         
                     elif not waiting_subjects:
-                        # rotating_subjects.append(current_subject)
                         rotating_subjects.rotate(+1)# Treat the column as filled
                         break
 
@@ -136,3 +157,4 @@ with myconn:
 
 # Save the Excel file
 writer._save()
+

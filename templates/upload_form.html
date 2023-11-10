@@ -2,481 +2,472 @@
 <html>
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Uploading data</title>
-  <link rel="stylesheet" type="text/css" href="static/homee.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <style>
-    .btn,
-    .btn__text,
-    .btn__progress,
-    .btn__progress-check,
-    .btn__progress-fill,
-    .btn__progress-track {
-      border: 0;
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Uploading data</title>
+    <link rel="stylesheet" type="text/css" href="static/homee.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .btn,
+        .btn__text,
+        .btn__progress,
+        .btn__progress-check,
+        .btn__progress-fill,
+        .btn__progress-track {
+            border: 0;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+         :root {
+            --hue: 223;
+            --bg1: hsl(var(--hue), 10%, 90%);
+            --bg2: hsl(var(--hue), 10%, 80%);
+            --fg1: hsl(var(--hue), 10%, 10%);
+            --fg2: hsl(var(--hue), 10%, 20%);
+            --primary1: hsl(var(--hue), 90%, 55%);
+            --primary2: hsl(var(--hue), 90%, 45%);
+            /* font-size: calc(20px + (40 - 20) * (100vw - 320px) / (1280 - 320)); */
+        }
+        
+        button {
+            font: 1em/1.5 Nunito, sans-serif;
+        }
+        
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            height: 100vh;
+            display: grid;
+            place-items: center;
+        }
+        /* Main button styles */
+        
+        .btn {
+            background-color: transparent;
+            border-radius: 1.5em;
+            display: block;
+            position: relative;
+            width: 7.5em;
+            height: 3em;
+            transition: width 0.3s ease-in-out;
+        }
+        
+        .btn:not(:disabled):active {
+            transform: translateY(0.1em);
+        }
+        
+        .btn__text {
+            background-color: #4CAF50;
+            ;
+            border-radius: inherit;
+            color: hsl(0, 0%, 100%);
+            display: inline-block;
+            padding: 0.75em 1.5em;
+            transition: background-color 0.15s linear, color 0.15s 0.3s ease-in-out;
+            width: 100%;
+        }
+        
+        .btn:not(:disabled):focus .btn__text,
+        .btn:not(:disabled):hover .btn__text {
+            background-color: #45a049;
+            ;
+        }
+        
+        .btn__progress {
+            overflow: visible;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3em;
+            height: 3em;
+            visibility: hidden;
+        }
+        
+        .btn__progress-track {
+            r: 12px;
+            stroke: #45a049;
+            ;
+            stroke-width: 24;
+        }
+        
+        .btn__progress-fill {
+            stroke: #4CAF50;
+            stroke-dashoffset: 125.66;
+        }
+        
+        .btn__progress-check {
+            stroke: hsl(0, 0%, 100%);
+            stroke-dashoffset: 34;
+        }
+        /* Both states */
+        
+        .btn--running,
+        .btn--done {
+            outline: none;
+            pointer-events: none;
+            width: 3em;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+        }
+        
+        .btn--running .btn__text,
+        .btn--done .btn__text {
+            color: transparent;
+            transition: background-color 0.3s ease-in-out, visibility 0.3s steps(1);
+        }
+        
+        .btn--running .btn__progress,
+        .btn--done .btn__progress {
+            visibility: visible;
+        }
+        /* Running state */
+        
+        .btn--running .btn__text {
+            background-color: #45a049;
+            ;
+            visibility: hidden;
+        }
+        
+        .btn--running .btn__progress {
+            transition: visibility 0.3s 0.3s steps(1, start);
+        }
+        
+        .btn--running .btn__progress-track {
+            r: 20px;
+            stroke-width: 8;
+            transition: r 0.3s 0.3s ease-in-out, stroke-width 0.3s 0.3s ease-in-out;
+        }
+        
+        .btn--running .btn__progress-fill {
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 2s 0.6s linear;
+        }
+        /* Done state */
+        
+        .btn--done .btn__progress-track {
+            stroke: #4CAF50;
+            ;
+            transition: r 0.3s ease-in-out, stroke-width 0.3s ease-in-out;
+        }
+        
+        .btn--done .btn__progress-check {
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 0.3s 0.3s ease-out;
+        }
+        
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f2f2f2;
+            background: rgb(207, 222, 205);
+            background: linear-gradient(180deg, rgba(207, 222, 205, 1) 0%, rgba(152, 202, 153, 1) 72%, rgba(76, 175, 80, 1) 100%);
+        }
+        
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+        
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+        
+        .topnav a {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        
+        .topnav a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        /* resposivness */
+        
+        .topnav .icon {
+            display: none;
+        }
+        
+        .container {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        input[type=text],
+        select,
+        textarea {
+            width: 15%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        
+        input[type=number],
+        select,
+        textarea {
+            width: 15%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        form {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+        
+        input[type="file"] {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ffffff;
+            border-radius: 3px;
+        }
+        /* Style the date and time input fields */
+        
+        input[type="date"],
+        input[type="time"] {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        /* Style the checkboxes */
+        
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        /* Style the heading for selected years */
+        
+        #strengthHeading {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+        /* Style the list of selected years' strengths */
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        li {
+            color: #555;
+            margin-bottom: 5px;
+        }
+        /* Style the upload errors */
+        
+        .upload-errors {
+            color: #ff0000;
+            font-weight: bold;
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        #submission {
+            text-align: center;
+        }
+        
+        @media screen and (min-width: 1170px) {
+            form {
+                background-color: #f2f2f2;
+                padding: 20px;
+                border-radius: 5px;
+                /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); */
+                margin-left: 340px;
+                margin-right: 340px;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            }
+        }
+    </style>
+    <script>
+        // responsive
+        function myFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            } else {
+                x.className = "topnav";
+            }
 
-    :root {
-      --hue: 223;
-      --bg1: hsl(var(--hue), 10%, 90%);
-      --bg2: hsl(var(--hue), 10%, 80%);
-      --fg1: hsl(var(--hue), 10%, 10%);
-      --fg2: hsl(var(--hue), 10%, 20%);
-      --primary1: hsl(var(--hue), 90%, 55%);
-      --primary2: hsl(var(--hue), 90%, 45%);
-      /* font-size: calc(20px + (40 - 20) * (100vw - 320px) / (1280 - 320)); */
-    }
+        }
+        // function validateForm() {
+        //   var selectedYears = document.querySelectorAll('input[name="select_year"]:checked');
+        //   if (selectedYears.length === 0) {
+        //     alert("Please select at least one year and upload files.");
+        //     return false;  // Prevent the form from submitting
+        //   }
+        //   return true;
+        // }
+        function showUploadMessage() {
+            alert("File uploaded successfully.");
+        }
 
-    button {
-      font: 1em/1.5 Nunito, sans-serif;
-    }
+        function showHeading() {
+            var heading = document.getElementById("strengthHeading");
+            var fileInputs = document.querySelectorAll('input[type="file"]');
 
-    .btn {
-      background-color: #4CAF50;
-      color: white;
-      height: 100vh;
-      display: grid;
-      place-items: center;
-    }
+            // Check if at least one file input has a file selected
+            var filesSelected = Array.from(fileInputs).some(input => input.files.length > 0);
 
-    /* Main button styles */
-    .btn {
-      background-color: transparent;
-      border-radius: 1.5em;
-      display: block;
-      position: relative;
-      width: 7.5em;
-      height: 3em;
-      transition: width 0.3s ease-in-out;
-    }
+            if (filesSelected) {
+                heading.classList.remove("hidden");
+            }
+        }
+        window.addEventListener("DOMContentLoaded", () => {
+            const btn = document.querySelector("button");
+            var doneTimeout = null,
+                resetTimeout = null;
 
-    .btn:not(:disabled):active {
-      transform: translateY(0.1em);
-    }
+            if (btn) {
+                btn.addEventListener("click", function() {
+                    const runClass = "btn--running";
+                    const doneClass = "btn--done";
+                    // `.btn--running .btn__progress-fill` `stroke-dashoffset` duration in ms
+                    const submitDuration = 500;
+                    const resetDuration = 1500;
 
-    .btn__text {
-      background-color: #4CAF50;
-      ;
-      border-radius: inherit;
-      color: hsl(0, 0%, 100%);
-      display: inline-block;
-      padding: 0.75em 1.5em;
-      transition:
-        background-color 0.15s linear,
-        color 0.15s 0.3s ease-in-out;
-      width: 100%;
-    }
+                    // fake the submission
+                    this.disabled = true;
+                    this.classList.add(runClass);
 
-    .btn:not(:disabled):focus .btn__text,
-    .btn:not(:disabled):hover .btn__text {
-      background-color: #45a049;
-      ;
-    }
+                    clearTimeout(doneTimeout);
+                    clearTimeout(resetTimeout);
 
-    .btn__progress {
-      overflow: visible;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 3em;
-      height: 3em;
-      visibility: hidden;
-    }
+                    doneTimeout = setTimeout(() => {
+                        this.classList.remove(runClass);
+                        this.classList.add(doneClass);
 
-    .btn__progress-track {
-      r: 12px;
-      stroke: #45a049;
-      ;
-      stroke-width: 24;
-    }
+                        // reset the button
+                        resetTimeout = setTimeout(() => {
+                            this.disabled = false;
+                            this.classList.remove(doneClass);
+                        }, resetDuration);
 
-    .btn__progress-fill {
-      stroke: #4CAF50;
-      stroke-dashoffset: 125.66;
-    }
-
-    .btn__progress-check {
-      stroke: hsl(0, 0%, 100%);
-      stroke-dashoffset: 34;
-    }
-
-    /* Both states */
-    .btn--running,
-    .btn--done {
-      outline: none;
-      pointer-events: none;
-      width: 3em;
-      user-select: none;
-      -moz-user-select: none;
-      -webkit-user-select: none;
-    }
-
-    .btn--running .btn__text,
-    .btn--done .btn__text {
-      color: transparent;
-      transition:
-        background-color 0.3s ease-in-out,
-        visibility 0.3s steps(1);
-    }
-
-    .btn--running .btn__progress,
-    .btn--done .btn__progress {
-      visibility: visible;
-    }
-
-    /* Running state */
-    .btn--running .btn__text {
-      background-color: #45a049;
-      ;
-      visibility: hidden;
-    }
-
-    .btn--running .btn__progress {
-      transition: visibility 0.3s 0.3s steps(1, start);
-    }
-
-    .btn--running .btn__progress-track {
-      r: 20px;
-      stroke-width: 8;
-      transition:
-        r 0.3s 0.3s ease-in-out,
-        stroke-width 0.3s 0.3s ease-in-out;
-    }
-
-    .btn--running .btn__progress-fill {
-      stroke-dashoffset: 0;
-      transition: stroke-dashoffset 2s 0.6s linear;
-    }
-
-    /* Done state */
-    .btn--done .btn__progress-track {
-      stroke: #4CAF50;
-      ;
-      transition:
-        r 0.3s ease-in-out,
-        stroke-width 0.3s ease-in-out;
-    }
-
-    .btn--done .btn__progress-check {
-      stroke-dashoffset: 0;
-      transition: stroke-dashoffset 0.3s 0.3s ease-out;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #f2f2f2;
-     
-      background: rgb(207,222,205);
-background: linear-gradient(180deg, rgba(207,222,205,1) 0%, rgba(152,202,153,1) 72%, rgba(76,175,80,1) 100%);
-}
-input[type=submit] {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  
-  
-}
-input[type=submit]:hover {
-  background-color: #45a049;
-}
-    .topnav {
-      overflow: hidden;
-      background-color: #333;
-    }
-
-    .topnav a {
-      float: left;
-      color: #f2f2f2;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-      font-size: 17px;
-    }
-
-    .topnav a:hover {
-      background-color: #ddd;
-      color: black;
-    }
-
-    .topnav a.active {
-      background-color: #4CAF50;
-      color: white;
-    }
-
-    /* resposivness */
-    .topnav .icon {
-      display: none;
-    }
-
-    .container {
-      border-radius: 5px;
-      background-color: #f2f2f2;
-      padding: 20px;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    input[type=text],
-    select,
-    textarea {
-      width: 15%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      resize: vertical;
-    }
-
-    input[type=number],
-    select,
-    textarea {
-      width: 15%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      resize: vertical;
-
-    }
-
-
-    .hidden {
-      display: none;
-    }
-
-
-    form {
-      background-color: #f2f2f2;
-      padding: 20px;
-      border-radius: 5px;
-      margin: 20px;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    }
-
-    input[type="file"] {
-      width: 100%;
-      padding: 5px;
-      margin-bottom: 15px;
-      border: 1px solid #ffffff;
-      border-radius: 3px;
-    }
-
-    /* Style the date and time input fields */
-    input[type="date"],
-    input[type="time"] {
-      width: 100%;
-      padding: 5px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-    }
-
-    /* Style the checkboxes */
-    input[type="checkbox"] {
-      margin-right: 5px;
-    }
-
-
-
-    /* Style the heading for selected years */
-    #strengthHeading {
-      text-align: center;
-      color: #333;
-      margin-top: 20px;
-    }
-
-    /* Style the list of selected years' strengths */
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    li {
-      color: #555;
-      margin-bottom: 5px;
-    }
-
-    /* Style the upload errors */
-    .upload-errors {
-      color: #ff0000;
-      font-weight: bold;
-      list-style-type: none;
-      padding: 0;
-    }
-
-    #submission {
-      text-align: center;
-    }
-
-    @media screen and (min-width: 1170px) {
-      form {
-        background-color: #f2f2f2;
-        padding: 20px;
-        border-radius: 5px;
-        /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); */
-        margin-left: 340px;
-        margin-right: 340px;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-      }
-    }
-  </style>
-  <script>
-    // responsive
-    function myFunction() {
-      var x = document.getElementById("myTopnav");
-      if (x.className === "topnav") {
-        x.className += " responsive";
-      } else {
-        x.className = "topnav";
-      }
-
-    }
-    function validateForm() {
-      var selectedYears = document.querySelectorAll('input[name="select_year"]:checked');
-      if (selectedYears.length === 0) {
-        alert("Please select at least one year and upload files.");
-        return false;  // Prevent the form from submitting
-      }
-      return true;
-    }
-    function showUploadMessage() {
-      alert("File uploaded successfully.");
-    }
-    function showHeading() {
-      var heading = document.getElementById("strengthHeading");
-      var fileInputs = document.querySelectorAll('input[type="file"]');
-
-      // Check if at least one file input has a file selected
-      var filesSelected = Array.from(fileInputs).some(input => input.files.length > 0);
-
-      if (filesSelected) {
-        heading.classList.remove("hidden");
-      }
-    }
-    window.addEventListener("DOMContentLoaded", () => {
-      const btn = document.querySelector("button");
-      var doneTimeout = null,
-        resetTimeout = null;
-
-      if (btn) {
-        btn.addEventListener("click", function () {
-          const runClass = "btn--running";
-          const doneClass = "btn--done";
-          // `.btn--running .btn__progress-fill` `stroke-dashoffset` duration in ms
-          const submitDuration = 500;
-          const resetDuration = 1500;
-
-          // fake the submission
-          this.disabled = true;
-          this.classList.add(runClass);
-
-          clearTimeout(doneTimeout);
-          clearTimeout(resetTimeout);
-
-          doneTimeout = setTimeout(() => {
-            this.classList.remove(runClass);
-            this.classList.add(doneClass);
-
-            // reset the button
-            resetTimeout = setTimeout(() => {
-              this.disabled = false;
-              this.classList.remove(doneClass);
-            }, resetDuration);
-
-          }, 600 + submitDuration);
+                    }, 600 + submitDuration);
+                });
+            }
         });
-      }
-    });
-
-
-  </script>
+    </script>
 
 </head>
 
 <body>
-  <!----NAVIGATION BARS----->
-  <div class="topnav" id="myTopnav">
-    <a href="/admin">Dashboard</a>
-    <a href="/addroom">Add Room</a>
-    <a class="active" href="/upload_form">Upload</a>
-    <a href="/generate">Generate</a>
-    <a href="/login">Logout</a>
-    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-      <i class="fa fa-bars"></i>
-    </a>
-  </div>
+    <!----NAVIGATION BARS----->
+    <div class="topnav" id="myTopnav">
+        <a href="/admin">Dashboard</a>
+        <a href="/addroom">Add Room</a>
+        <a class="active" href="/upload_form">Upload</a>
+        <a href="/generate">Generate</a>
+        <a href="/login">Logout</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
 
 
 
-  <form action="/upload_form" method="POST" enctype="multipart/form-data" onclick="return validateForm();">
-    <!-- <h2>Upload CSV Files</h2> -->
+    <form action="/upload_form" method="POST" enctype="multipart/form-data" onclick="return validateForm();">
+        <!-- <h2>Upload CSV Files</h2> -->
 
-    <!-- <input type="hidden" id="uploadErrors" value="{{ upload_errors|join('\n') }}"> -->
-    <!-- we can use either error display method using js -->
-    <!-- Display general error message if it exists
+        <!-- <input type="hidden" id="uploadErrors" value="{{ upload_errors|join('\n') }}"> -->
+        <!-- we can use either error display method using js -->
+        <!-- Display general error message if it exists
     {% if error %}
     <p class="error">{{ error }}</p>
     {% endif %} -->
-    <fieldset style=" margin-left: 20px;margin-right: 20px; background-color: #ffffff;">
-      <legend style="font-size: 20px; font-family: 'Times New Roman', Times, 
+        <fieldset style=" margin-left: 20px;margin-right: 20px; background-color: #ffffff;">
+            <legend style="font-size: 20px; font-family: 'Times New Roman', Times, 
       serif;">Upload CSV Files(year wise):-</legend>
-      <label for="2nd_year_csv">2nd Year:</label>
-      <input type="file" name="2nd_year_csv" id="2nd_year_csv" accept=".csv" onload="showUploadMessage()"><br>
+            <label for="2nd_year_csv">2nd Year:</label>
+            <input type="file" name="2nd_year_csv" id="2nd_year_csv" accept=".csv" onload="showUploadMessage()"><br>
 
-      <label for="3rd_year_csv">3rd Year:</label>
-      <input type="file" name="3rd_year_csv" id="3rd_year_csv" accept=".csv" onload="showUploadMessage()"><br>
+            <label for="3rd_year_csv">3rd Year:</label>
+            <input type="file" name="3rd_year_csv" id="3rd_year_csv" accept=".csv" onload="showUploadMessage()"><br>
 
-      <label for="4th_year_csv">4th Year:</label>
-      <input type="file" name="4th_year_csv" id="4th_year_csv" accept=".csv" onload="showUploadMessage()"><br>
-    </fieldset><br>
-    <fieldset style=" margin-left: 20px;margin-right: 20px; background-color:#ffffff;">
-      <legend style="font-size: 20px; font-family: 'Times New Roman', Times, 
+            <label for="4th_year_csv">4th Year:</label>
+            <input type="file" name="4th_year_csv" id="4th_year_csv" accept=".csv" onload="showUploadMessage()"><br>
+        </fieldset><br>
+        <fieldset style=" margin-left: 20px;margin-right: 20px; background-color:#ffffff;">
+            <legend style="font-size: 20px; font-family: 'Times New Roman', Times, 
       serif;">Enter Date and Time:-</legend>
-      <!-- <h2>Enter Date and Time:</h2> -->
-      <label for="date">Date:</label>
-      <input type="date" name="date" id="date"><br>
+            <!-- <h2>Enter Date and Time:</h2> -->
+            <label for="date">Date:</label>
+            <input type="date" name="date" id="date"><br>
 
-      <label for="time">Time:</label>
-      <input type="time" name="time" id="time"><br>
-    </fieldset><br>
-    <fieldset style="margin-left: 20px; margin-right: 20px;background-color:  #ffffff;">
-      <legend style="font-size: 20px; font-family: 'Times New Roman', Times, 
+            <label for="time">Time:</label>
+            <input type="time" name="time" id="time"><br>
+        </fieldset><br>
+        <fieldset style="margin-left: 20px; margin-right: 20px;background-color:  #ffffff;">
+            <legend style="font-size: 20px; font-family: 'Times New Roman', Times, 
         serif;">Select Year(s):</legend>
+            {% for subject in df1.columns %}
+            <span>2nd Year</span></br>
+            <label for="{{ subject }}">{{ subject }}</label>
+            <input type="checkbox" name="select_subject" value="{{ subject }}" id="{{ subject }}"><br> {% endfor %} {% for subject in df2.columns %}
+            <span>3rd Year</span></br>
+            <label for="{{ subject }}">{{ subject }}</label>
+            <input type="checkbox" name="select_subject" value="{{ subject }}" id="{{ subject }}">
+            <br> <span>4th Year</span></br>{% endfor %} {% for subject in df3.columns %}
+            <label for="{{ subject }}">{{ subject }}</label>
+            <input type="checkbox" name="select_subject" value="{{ subject }}" id="{{ subject }}"><br> {% endfor %}
 
-      <label for="select_2nd_year">2nd Year</label>
-      <input type="checkbox" name="select_year" value="2nd" id="select_2nd_year"><br>
 
-      <label for="select_3rd_year">3rd Year</label>
-      <input type="checkbox" name="select_year" value="3rd" id="select_3rd_year"><br>
 
-      <label for="select_4th_year">4th Year</label>
-      <input type="checkbox" name="select_year" value="4th" id="select_4th_year"><br>
-    </fieldset><br>
-    <h2 id="strengthHeading" class="hidden">Total Strength of Selected years</h2>
 
-    <ul>
-      {% for year, strength in total_strengths.items() %}
-      <li>{{ year }} Year Total Strength: {{ strength }} students</li>
-      {% endfor %}
-    </ul>
-    <!-- Display uploading error messages if they exist -->
-    {% if upload_errors %}
-    <ul class="upload-errors">
-      {% for upload_error in upload_errors %}
-      <li>{{ upload_error }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-    <input type="submit" value="Upload and Process" onclick="displayUploadErrors();">
+        </fieldset><br>
+        <h2 id="strengthHeading" class="hidden">Total Strength of Selected Subjects</h2>
 
-    <!-- <div style="display: flex;  
+        <ul>
+            {% for year, strength in total_strengths.items() %}
+            <li>{{ year }} Year Total Strength: {{ strength }} students</li>
+            {% endfor %}
+        </ul>
+        <!-- Display uploading error messages if they exist -->
+        {% if upload_errors %}
+        <ul class="upload-errors">
+            {% for upload_error in upload_errors %}
+            <li>{{ upload_error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <input type="submit" value="Upload and Process" onclick="displayUploadErrors();">
+
+        <!-- <div style="display: flex;  
       justify-content: center;  
       align-items: center;">
       <button class="btn" type="button" onclick="showHeading();">
@@ -491,7 +482,7 @@ input[type=submit]:hover {
       </button>
     </div> -->
 
-  </form>
+    </form>
 
 
 </body>

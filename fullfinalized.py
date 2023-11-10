@@ -2,7 +2,7 @@ import sqlite3
 import pandas as pd
 import os
 from collections import deque
-
+import proj
 MAX_COLS = 6
 
 def load_subject_data():
@@ -10,69 +10,15 @@ def load_subject_data():
     df1 = pd.read_excel('2ND YEAR.xlsx')
     df2 = pd.read_excel('3RD YEAR.xlsx')
     df3 = pd.read_excel('4TH YEAR.xlsx')
+    print('files read')
     return df1, df2, df3
-
-def get_selected_subjects(subject_headings):
-    print("Select the subjects you want to include:")
-    for i, heading in enumerate(subject_headings):
-        print(f"{i + 1}. {heading}")
-
-    selected_subjects = []
-    while True:
-        subject_choice = int(input("Enter the number of the subject (0 to finish): "))
-        if subject_choice == 0:
-            selected_subjects.sort()
-            print(selected_subjects)
-            break
-        elif 1 <= subject_choice <= len(subject_headings):
-            selected_subjects.append(subject_headings[subject_choice - 1])
-        else:
-            print("Invalid choice. Please enter a valid number.")
-            
-    return selected_subjects
-
-def get_selected_rooms(room_list):
-    print("Select the rooms you want to include:")
-    for i, room in enumerate(room_list):
-        print(f"{i + 1}. {room}")
-
-    selected_rooms = []
-    while True:
-        room_choice = int(input("Enter the number of the room (0 to finish): "))
-        if room_choice == 0:
-            
-            break
-        elif 1 <= room_choice <= len(room_list):
-            selected_rooms.append(room_list[room_choice - 1])
-        else:
-            print("Invalid choice. Please enter a valid number.")
-        
-    return selected_rooms
-
-def main():
-    DATE = "26-10-2023"
-    TIME = "10-00 AM"
-    FILENAME = f'{DATE}_{TIME}.xlsx'
-    
-    # Load subject data
-    df1, df2, df3 = load_subject_data()
-    subject_headings = list(df1.columns) + list(df2.columns) + list(df3.columns)
-
-    # Get selected subjects from the user
-    selected_subjects = get_selected_subjects(subject_headings)
-
-    # Connect to SQLite database with room details
-    myconn = sqlite3.connect("room_details.db")
-    with myconn:
-        cursor = myconn.cursor()
-        cursor.execute("SELECT room_no, u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6 from room")
-        rooms = cursor.fetchall()
-
-    # Get selected rooms from the user
-    selected_rooms = get_selected_rooms([room[0] for room in rooms])
+# selected_subjects=proj.selected_subjects
+def main(selected_rooms,df1,df2,df3, FILENAME,DATE,TIME,selected_subjects):
+    # if os.path.exists(FILENAME):
+    #         os.remove(FILENAME)
 
     # Filter rooms based on user selection
-    rooms = [room for room in rooms if room[0] in selected_rooms]
+    
 
     # Create a deque with a maximum length of 3 for rotating subjects
     rotating_subjects = deque(selected_subjects[:3])
@@ -81,7 +27,7 @@ def main():
     waiting_subjects = selected_subjects[3:]
 
     # Sort the selected subjects
-    selected_subjects.sort()
+    # selected_subjects.sort()
     first_check=True
     column_odd_flag= True
     # Create a dictionary to store the subject data and the current roll number position
@@ -91,10 +37,15 @@ def main():
                 for subject in selected_subjects}
 
     subject_positions = {subject: 0 for subject in selected_subjects}
-
+    myconn = sqlite3.connect("room_details.db")
+    with myconn:
+        cursor = myconn.cursor()
+        cursor.execute("SELECT room_no, u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6 from room")
+        rooms = cursor.fetchall()
     # Create Excel writer
     writer = pd.ExcelWriter(FILENAME, engine='xlsxwriter')
     workbook = writer.book
+    rooms = [room for room in rooms if room[0] in selected_rooms]
 
     for room in rooms:
         room_no = room[0]
