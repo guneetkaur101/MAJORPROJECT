@@ -414,14 +414,22 @@
             <legend style="font-size: 20px; font-family: 'Times New Roman', Times, 
       serif;">Upload CSV Files(year wise):-</legend>
             <label for="2nd_year_csv">2nd Year:</label>
-            <input type="file" name="2nd_year_csv" id="2nd_year_csv" accept=".xlsx" onload="showUploadMessage()"><br>
+            <input type="file" name="2nd_year_xlsx" id="2nd_year_xlsx" accept=".xlsx" onload="showUploadMessage()"><br>
 
             <label for="3rd_year_csv">3rd Year:</label>
-            <input type="file" name="3rd_year_csv" id="3rd_year_csv" accept=".csv" onload="showUploadMessage()"><br>
+            <input type="file" name="3rd_year_xlsx" id="3rd_year_xlsx" accept=".xlsx" onload="showUploadMessage()"><br>
 
             <label for="4th_year_csv">4th Year:</label>
-            <input type="file" name="4th_year_csv" id="4th_year_csv" accept=".csv" onload="showUploadMessage()"><br>
+            <input type="file" name="4th_year_xlsx" id="4th_year_xlsx" accept=".xlsx" onload="showUploadMessage()"><br>
         </fieldset><br>
+        {% if uploaded_files %}
+        <p>Files uploaded on:</p>
+        <ul>
+            {% for file, timestamp in uploaded_files %}
+            <li>{{ file }} - {{ timestamp }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         <!-- <fieldset style=" margin-left: 20px;margin-right: 20px; background-color:#ffffff;">
             <legend style="font-size: 20px; font-family: 'Times New Roman', Times, 
       serif;">Enter Date and Time:-</legend>

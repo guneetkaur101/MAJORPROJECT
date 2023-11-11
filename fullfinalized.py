@@ -7,9 +7,9 @@ MAX_COLS = 6
 
 def load_subject_data():
     # Load subject data from Excel files
-    df1 = pd.read_excel('2ND YEAR.xlsx')
-    df2 = pd.read_excel('3RD YEAR.xlsx')
-    df3 = pd.read_excel('4TH YEAR.xlsx')
+    df1 = pd.read_excel('uploads/2nd_year.xlsx')
+    df2 = pd.read_excel('uploads/3rd_year.xlsx')
+    df3 = pd.read_excel('uploads/4th_year.xlsx')
     print('files read')
     return df1, df2, df3
 # selected_subjects=proj.selected_subjects

@@ -4,6 +4,7 @@ import csv
 import os
 import pandas as pd
 from collections import deque
+import datetime
 import fullfinalized as ff
 
 
@@ -185,71 +186,42 @@ def edit(room_no):
 #         seat = None
 
 #     return render_template("editroom.html", room_no=room_no, col=col, row=row, seat=seat, message=message)
-#@app.route('/upload_form', methods=['GET', 'POST'])
-#def upload_form():
-    # total_strengths = {}  # Initialize as an empty dictionary
-    # # Define the list of available years
-    # # available_subjects = [list(df1.columns) + list(df2.columns) + list(df3.columns)]
-    # global selected_subjects
-    # selected_subjects = []
-    # df1, df2, df3 = ff.load_subject_data()
-    # subject_headings = list(df1.columns) + list(df2.columns) + list(df3.columns)
-    # if request.method == 'POST':
-    #     print("Processing started") 
-    #     # Get the selected years from checkboxes
-    #     selected_subjects = request.form.getlist('select_subject')
-    #     print(selected_subjects)
-    #     # Check if at least one year is selected (already alert box)
-    #     if not selected_subjects:
-    #         error = "Please select at least one subject"
-    #         return render_template('upload_form.html', total_strengths=total_strengths, error=error)
-    #     upload_errors = []
-        
-    #     # Initialize a dictionary to store the length of each subject's roll numbers
-    #     subject_lengths = {}
-    #     file_strength_df1=0
-    #     file_strength_df2=0
-    #     file_strength_df3=0
+@app.route('/upload_form', methods=['GET', 'POST'])
+def upload_form():
+    total_strengths = {}  # Initialize as an empty dictionary
+    # Define the list of available years
+    # available_subjects = [list(df1.columns) + list(df2.columns) + list(df3.columns)]
+    global selected_subjects
+    selected_subjects = []
+    df1, df2, df3 = ff.load_subject_data()
+    available_years = ['2nd', '3rd', '4th']
 
-    #     # Iterate over the selected subjects
-    #     for subject in selected_subjects:
-    #         # Initialize the length of the roll numbers for the subject
-    #         subject_length = 0
+    # Check if the upload folder already contains excel files for respective inputs
+    uploaded_files = []
+    for year in available_years:
+        filename = f'{year}_year.xlsx'
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        if os.path.exists(file_path):
+            timestamp = os.path.getmtime(file_path)
+            formatted_timestamp = datetime.datetime.fromtimestamp(timestamp).strftime('%d:%m:%Y %H:%M')
+            uploaded_files.append((filename, formatted_timestamp))
 
-    #         # Iterate over the csv files
-    #         for csv_file in [df1, df2, df3]:
-    #             # Check if the subject is present in the csv file
-    #             if subject in csv_file.columns:
-    #                 # Get the roll numbers for the subject
-    #                 roll_numbers = csv_file[subject].dropna().tolist()
-    #                 # Update the subject length with the number of roll numbers
-    #                 subject_length += len(roll_numbers)-1
-    #                 if subject in df1:
-    #                     file_strength_df1 += subject_length
-    #                 if subject in df2:
-    #                     file_strength_df2 += subject_length
-    #                 if subject in df3:
-    #                     file_strength_df3 += subject_length
-                     
-    #         # Store the subject length in the dictionary
-    #         subject_lengths[subject] = subject_length
-    #         # print(subject_lengths)
-    #     # Calculate the total strength by summing up the subject lengths
-    #     total_strength = sum(subject_lengths.values())
-    #     print(subject_lengths)  
-    #     # Update the total_strengths dictionary with the subject lengths
-    #     total_strengths.update(subject_lengths)
-    #     # Add the file strengths to the total strengths dictionary
-    #     total_strengths['2nd Year students'] = file_strength_df1
-    #     total_strengths['3rd Year students'] = file_strength_df2
-    #     total_strengths['4th Year students'] = file_strength_df3
-    #     total_strengths['ALL Years total'] = total_strength
-    #     if upload_errors:
-    #         return render_template('upload_form.html', total_strengths=total_strengths, upload_errors=upload_errors)
-    #     print("Processing completed")
-    #     return render_template('upload_form.html', total_strengths=total_strengths,df1=df1,df2=df2,df3=df3,selected_subjects=selected_subjects)
 
-    # return render_template('upload_form.html', total_strengths=total_strengths,df1=df1,df2=df2,df3=df3,selected_subjects=selected_subjects)
+    if request.method == 'POST':
+        upload_errors = []
+        for year in available_years:
+            xlsx_file = request.files.get(f'{year}_year_xlsx')
+
+            if not xlsx_file:
+                upload_errors.append(f"Please upload a file for {year} year.")
+                continue  # Skip this year if the file is missing
+
+            filename = f'{year}_year.xlsx'
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            xlsx_file.save(file_path)
+            print("File saved") 
+
+    return render_template('upload_form.html', total_strengths=total_strengths, df1=df1, df2=df2, df3=df3, selected_subjects=selected_subjects, uploaded_files=uploaded_files)
 
 
 @app.route("/generate", methods=['GET', 'POST'])
