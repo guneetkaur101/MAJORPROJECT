@@ -185,8 +185,80 @@ def edit(room_no):
 #         seat = None
 
 #     return render_template("editroom.html", room_no=room_no, col=col, row=row, seat=seat, message=message)
-@app.route('/upload_form', methods=['GET', 'POST'])
-def upload_form():
+#@app.route('/upload_form', methods=['GET', 'POST'])
+#def upload_form():
+    # total_strengths = {}  # Initialize as an empty dictionary
+    # # Define the list of available years
+    # # available_subjects = [list(df1.columns) + list(df2.columns) + list(df3.columns)]
+    # global selected_subjects
+    # selected_subjects = []
+    # df1, df2, df3 = ff.load_subject_data()
+    # subject_headings = list(df1.columns) + list(df2.columns) + list(df3.columns)
+    # if request.method == 'POST':
+    #     print("Processing started") 
+    #     # Get the selected years from checkboxes
+    #     selected_subjects = request.form.getlist('select_subject')
+    #     print(selected_subjects)
+    #     # Check if at least one year is selected (already alert box)
+    #     if not selected_subjects:
+    #         error = "Please select at least one subject"
+    #         return render_template('upload_form.html', total_strengths=total_strengths, error=error)
+    #     upload_errors = []
+        
+    #     # Initialize a dictionary to store the length of each subject's roll numbers
+    #     subject_lengths = {}
+    #     file_strength_df1=0
+    #     file_strength_df2=0
+    #     file_strength_df3=0
+
+    #     # Iterate over the selected subjects
+    #     for subject in selected_subjects:
+    #         # Initialize the length of the roll numbers for the subject
+    #         subject_length = 0
+
+    #         # Iterate over the csv files
+    #         for csv_file in [df1, df2, df3]:
+    #             # Check if the subject is present in the csv file
+    #             if subject in csv_file.columns:
+    #                 # Get the roll numbers for the subject
+    #                 roll_numbers = csv_file[subject].dropna().tolist()
+    #                 # Update the subject length with the number of roll numbers
+    #                 subject_length += len(roll_numbers)-1
+    #                 if subject in df1:
+    #                     file_strength_df1 += subject_length
+    #                 if subject in df2:
+    #                     file_strength_df2 += subject_length
+    #                 if subject in df3:
+    #                     file_strength_df3 += subject_length
+                     
+    #         # Store the subject length in the dictionary
+    #         subject_lengths[subject] = subject_length
+    #         # print(subject_lengths)
+    #     # Calculate the total strength by summing up the subject lengths
+    #     total_strength = sum(subject_lengths.values())
+    #     print(subject_lengths)  
+    #     # Update the total_strengths dictionary with the subject lengths
+    #     total_strengths.update(subject_lengths)
+    #     # Add the file strengths to the total strengths dictionary
+    #     total_strengths['2nd Year students'] = file_strength_df1
+    #     total_strengths['3rd Year students'] = file_strength_df2
+    #     total_strengths['4th Year students'] = file_strength_df3
+    #     total_strengths['ALL Years total'] = total_strength
+    #     if upload_errors:
+    #         return render_template('upload_form.html', total_strengths=total_strengths, upload_errors=upload_errors)
+    #     print("Processing completed")
+    #     return render_template('upload_form.html', total_strengths=total_strengths,df1=df1,df2=df2,df3=df3,selected_subjects=selected_subjects)
+
+    # return render_template('upload_form.html', total_strengths=total_strengths,df1=df1,df2=df2,df3=df3,selected_subjects=selected_subjects)
+
+
+@app.route("/generate", methods=['GET', 'POST'])
+def generate():
+    myconn = sqlite3.connect("room_details.db")
+    with myconn:
+        cursor = myconn.cursor()
+        cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row_c1 integer(10),row_c2 integer(10),row_c3 integer(10),row_c4 integer(10),row_c5 integer(10),row_c6 integer(10),u_row_c1 integer(10),u_row_c2 integer(10),u_row_c3 integer(10),u_row_c4 integer(10),u_row_c5 integer(10),u_row_c6 integer(10),seat integer(10),usable_seats integer(10))")
+
     total_strengths = {}  # Initialize as an empty dictionary
     # Define the list of available years
     # available_subjects = [list(df1.columns) + list(df2.columns) + list(df3.columns)]
@@ -248,19 +320,9 @@ def upload_form():
             return render_template('upload_form.html', total_strengths=total_strengths, upload_errors=upload_errors)
         print("Processing completed")
         return render_template('upload_form.html', total_strengths=total_strengths,df1=df1,df2=df2,df3=df3,selected_subjects=selected_subjects)
-
-    return render_template('upload_form.html', total_strengths=total_strengths,df1=df1,df2=df2,df3=df3,selected_subjects=selected_subjects)
-
-
-@app.route("/generate", methods=['GET', 'POST'])
-def generate():
-    myconn = sqlite3.connect("room_details.db")
-    with myconn:
-        cursor = myconn.cursor()
-        cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row_c1 integer(10),row_c2 integer(10),row_c3 integer(10),row_c4 integer(10),row_c5 integer(10),row_c6 integer(10),u_row_c1 integer(10),u_row_c2 integer(10),u_row_c3 integer(10),u_row_c4 integer(10),u_row_c5 integer(10),u_row_c6 integer(10),seat integer(10),usable_seats integer(10))")
-
     if request.method == 'POST':
-        global selected_rooms,df1,df2,df3,FILENAME,DATE,TIME
+        global selected_rooms
+        df1,df2,df3,FILENAME,DATE,TIME
         selected_rooms = request.form.getlist('selected_rooms')
         print(selected_rooms)
         MAX_COLS = 6
@@ -283,7 +345,7 @@ def generate():
     cursor.execute("SELECT * FROM room")
     data = cursor.fetchall()
 
-    return render_template("generate.html", data=data)
+    return render_template("generate.html", data=data, total_strengths=total_strengths,df1=df1,df2=df2,df3=df3,selected_subjects=selected_subjects)
 # @app.route("/edit-usable-rows/<room_no>", methods=['GET','POST'])
 # def edit_usable_rows(room_no):
     
