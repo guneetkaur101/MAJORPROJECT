@@ -161,6 +161,10 @@ background: linear-gradient(180deg, rgba(207,222,205,1) 0%, rgba(152,202,153,1) 
 
     }
     form{margin: 50px 20px;}
+    ul{
+      list-style: none;
+      padding-inline-start: 0;
+    }
   </style>
    <script>
     // $(document).ready(function () {
@@ -233,38 +237,58 @@ background: linear-gradient(180deg, rgba(207,222,205,1) 0%, rgba(152,202,153,1) 
   <div>
 
     <form action="/generate" method="POST">
-
-      <fieldset style="margin-left: auto; margin-right: 20px; border: none; display: flex; flex-direction: column; max-width: 10%; align-self: flex-end;">
-        <legend style="font-size: 15px; font-family: 'Times New Roman', Times, serif;"></legend>
-        <label for="date" style="float: right; font-size: 15px; margin-right: 10px; border-radius: 5px; height: 30px; margin-bottom: -10px;">Select Date:</label>
-        <input type="date" name="date" id="date" style="float: right; background-color: #e6e2e2; border-radius: 10px; padding: 10px; height: 30px; margin-bottom: 10px" placeholder="Select Date">
-        <label for="time" style="float: right; margin-right: 10px; border-radius: 5px; font-size: 15px; height: 30px; margin-bottom: -10px">Select Time:</label>
-        <input type="time" name="time" id="time" style="float: right;  background-color: #e6e2e2; padding: 10px; border-radius: 10px; height: 30px;" placeholder="Select Time">
-        <div style="display: flex; flex-wrap: wrap;">
-          {% for subject in df1.columns %}
-          <div style="flex: 1; margin-right: 10px;">
-            <span>2nd Year</span></br>
-            <label for="{{ subject }}">{{ subject }}</label>
-            <input type="checkbox" name="select_subject" value="{{ subject }}" id="{{ subject }}"><br>
-          </div>
-          {% endfor %}
-          {% for subject in df2.columns %}
-          <div style="flex: 1; margin-right: 10px;">
-            <span>3rd Year</span></br>
-            <label for="{{ subject }}">{{ subject }}</label>
-            <input type="checkbox" name="select_subject" value="{{ subject }}" id="{{ subject }}"><br>
-          </div>
-          {% endfor %}
-          {% for subject in df3.columns %}
-          <div style="flex: 1; margin-right: 10px;">
-            <span>4th Year</span></br>
-            <label for="{{ subject }}">{{ subject }}</label>
-            <input type="checkbox" name="select_subject" value="{{ subject }}" id="{{ subject }}"><br>
-          </div>
-          {% endfor %}
+      <!-- <fieldset style="margin-left: 20px; margin-right: 20px;background-color:  #ffffff;"> -->
+      
+      <div style="display: flex; flex-wrap: wrap;">
+        
+        
+        <div style="flex: 1; margin-right: 10px;">
+            <span style="font-weight: bold;">2nd Year</span></br>
+            <ul>
+                {% for subject in df1.columns %}
+                    <li>
+                      <input type="checkbox" name="select_subject" value="{{ subject }}" id="{{ subject }}">
+                        <label for="{{ subject }}">{{ subject }}</label>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
-      </fieldset>
-
+    
+        <div style="flex: 1; margin-right: 10px;">
+            <span style="font-weight: bold;">3rd Year</span></br>
+            <ul>
+                {% for subject in df2.columns %}
+                    <li>
+                      <input type="checkbox" name="select_subject" value="{{ subject }}" id="{{ subject }}">
+                        <label for="{{ subject }}">{{ subject }}</label>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    
+        <div style="flex: 1; margin-right: 10px;">
+            <span style="font-weight: bold;">4th Year</span></br>
+            <ul>
+                {% for subject in df3.columns %}
+                    <li>
+                      <input type="checkbox" name="select_subject" value="{{ subject }}" id="{{ subject }}">
+                        <label for="{{ subject }}">{{ subject }}</label>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div style="flex: 1; margin-right: 10px;">
+          <fieldset style=" margin-right: 20px; border: none; display: flex; flex-direction: column; max-width: 10%; align-self: flex-end;">
+          <label for="date" style="float: right; font-size: 15px; margin-right: 10px; border-radius: 5px; height: 30px; margin-bottom: -10px;">Select Date:</label>
+          <input type="date" name="date" id="date" style="float: right; background-color: #e6e2e2; border-radius: 10px; padding: 10px; height: 30px; margin-bottom: 10px" placeholder="Select Date">
+          <label for="time" style="float: right; margin-right: 10px; border-radius: 5px; font-size: 15px; height: 30px; margin-bottom: -10px">Select Time:</label>
+          <input type="time" name="time" id="time" style="float: right;  background-color: #e6e2e2; padding: 10px; border-radius: 10px; height: 30px;" placeholder="Select Time">
+          </fieldset>
+      </div>
+  
+    </div>
+    
+      <!-- </fieldset> -->
       <!-- <fieldset style="margin-left: 20px; margin-right: 20px;">
         <div style="display: flex; flex-wrap: wrap;">
           {% for subject in df1.columns %}
