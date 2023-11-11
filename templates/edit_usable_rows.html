@@ -89,6 +89,7 @@ background: linear-gradient(180deg, rgba(207,222,205,1) 0%, rgba(152,202,153,1) 
                             <th>Col 5 Usable Row</th>
                             <th>Col 6 Usable Row</th>
                             <th>Total Capacity</th>
+                            <th>Total Usable Capacity</th>
                             
                         <th>EDIT</th>
                     </tr>
@@ -109,29 +110,30 @@ background: linear-gradient(180deg, rgba(207,222,205,1) 0%, rgba(152,202,153,1) 
 
                         <td>
                             <input type="number" name="usable_row_c1" value="{{ room_data[8] }}"
-                                placeholder="{{ room_data[8] }}" min="0">
+                                placeholder="{{ room_data[8] }}" min="0" max="{{ room_data[2] }}">
                         </td>
                         <td>
                             <input type="number" name="usable_row_c2" value="{{ room_data[9] }}"
-                                placeholder="{{ room_data[9] }}" min="0">
+                                placeholder="{{ room_data[9] }}" min="0" max="{{ room_data[3] }}">
                         </td>
                         <td>
                             <input type="number" name="usable_row_c3" value="{{ room_data[10] }}"
-                                placeholder="{{ room_data[10] }}" min="0">
+                                placeholder="{{ room_data[10] }}" min="0" max="{{ room_data[4] }}">
                         </td>
                         <td>
                             <input type="number" name="usable_row_c4" value="{{ room_data[11] }}"
-                                placeholder="{{ room_data[11] }}" min="0">
+                                placeholder="{{ room_data[11] }}" min="0" max="{{ room_data[5] }}">
                         </td>
                         <td>
                             <input type="number" name="usable_row_c5" value="{{ room_data[12] }}"
-                                placeholder="{{ room_data[12] }}" min="0">
+                                placeholder="{{ room_data[12] }}" min="0" max="{{ room_data[6] }}">
                         </td>
                         <td>
                             <input type="number" name="usable_row_c6" value="{{ room_data[13] }}"
-                                placeholder="{{ room_data[13] }}" min="0">
+                                placeholder="{{ room_data[13] }}" min="0" max="{{ room_data[7] }}">
                         </td>
                         <td>{{ room_data[14] }}</td>
+                        <td>{{ room_data[15] }}</td>
                         <td>
                             <input type="submit" value="Save">
                         </td>
