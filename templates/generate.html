@@ -7,6 +7,7 @@
   <link rel="stylesheet" type="text/css" href="/static/homee.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
   <style>
     body{background: rgb(207,222,205);
 background: linear-gradient(180deg, rgba(207,222,205,1) 0%, rgba(152,202,153,1) 72%, rgba(76,175,80,1) 100%);}
@@ -234,15 +235,13 @@ background: linear-gradient(180deg, rgba(207,222,205,1) 0%, rgba(152,202,153,1) 
       <i class="fa fa-bars"></i>
     </a>
   </div>
-  <div>
-
-    <form action="/generate" method="POST">
+    <form action="/generate" method="POST" id="generateForm">
       <!-- <fieldset style="margin-left: 20px; margin-right: 20px;background-color:  #ffffff;"> -->
       
       <div style="display: flex; flex-wrap: wrap;">
         
         
-        <div style="flex: 1; margin-right: 10px;">
+        <div style="flex: 1; margin-right: 10px;" onchange="updateStrength()">
             <span style="font-weight: bold;">2nd Year</span></br>
             <ul>
                 {% for subject in df1.columns %}
@@ -254,7 +253,7 @@ background: linear-gradient(180deg, rgba(207,222,205,1) 0%, rgba(152,202,153,1) 
             </ul>
         </div>
     
-        <div style="flex: 1; margin-right: 10px;">
+        <div style="flex: 1; margin-right: 10px;" onchange="updateStrength()">
             <span style="font-weight: bold;">3rd Year</span></br>
             <ul>
                 {% for subject in df2.columns %}
@@ -266,7 +265,7 @@ background: linear-gradient(180deg, rgba(207,222,205,1) 0%, rgba(152,202,153,1) 
             </ul>
         </div>
     
-        <div style="flex: 1; margin-right: 10px;">
+        <div style="flex: 1; margin-right: 10px;" onchange="updateStrength()">
             <span style="font-weight: bold;">4th Year</span></br>
             <ul>
                 {% for subject in df3.columns %}
@@ -287,33 +286,17 @@ background: linear-gradient(180deg, rgba(207,222,205,1) 0%, rgba(152,202,153,1) 
       </div>
   
     </div>
-    
-      <!-- </fieldset> -->
-      <!-- <fieldset style="margin-left: 20px; margin-right: 20px;">
-        <div style="display: flex; flex-wrap: wrap;">
-          {% for subject in df1.columns %}
-          <div style="flex: 1; margin-right: 10px;">
-            <span>2nd Year</span></br>
-            <label for="{{ subject }}">{{ subject }}</label>
-            <input type="checkbox" name="select_subject" value="{{ subject }}" id="{{ subject }}"><br>
-          </div>
-          {% endfor %}
-          {% for subject in df2.columns %}
-          <div style="flex: 1; margin-right: 10px;">
-            <span>3rd Year</span></br>
-            <label for="{{ subject }}">{{ subject }}</label>
-            <input type="checkbox" name="select_subject" value="{{ subject }}" id="{{ subject }}"><br>
-          </div>
-          {% endfor %}
-          {% for subject in df3.columns %}
-          <div style="flex: 1; margin-right: 10px;">
-            <span>4th Year</span></br>
-            <label for="{{ subject }}">{{ subject }}</label>
-            <input type="checkbox" name="select_subject" value="{{ subject }}" id="{{ subject }}"><br>
-          </div>
-          {% endfor %}
-        </div>
-      </fieldset> -->
+     <div>
+      <div id="strength_display"> 
+        <!-- The strength content will be updated dynamically here -->
+         <h2 id="strengthHeading" class="hidden">Total Strength of Selected Subjects</h2> 
+          <ul>
+              <!-- {% for year, strength in total_strengths.items() %}
+              <li>{{ year }} Strength: {{ total_strengths }} students</li>
+              {% endfor %} -->
+          </ul>
+      </div> 
+
       <table id="example" class="display" cellspacing="0" width="100%" style="margin-top: 10px;">
         <thead>
           <tr>
@@ -364,6 +347,37 @@ background: linear-gradient(180deg, rgba(207,222,205,1) 0%, rgba(152,202,153,1) 
     </div>
       <!-- <input type="submit" value="Generate Report"> Add a submit button to send selected rooms to the server -->
     </form>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+      // Function to update strength using AJAX
+      function updateStrength() {
+         // Serialize form data
+         var formData = $('#generateForm').serialize();
+   
+         // Send AJAX request
+         $.ajax({
+            type: 'POST',
+            url: '/generate',
+            data: formData,
+            success: function (data) {
+               // Update the strength display dynamically
+               updateStrengthDisplay(data);
+            },
+         });
+      }
+   
+      // Function to update strength display
+      function updateStrengthDisplay(strengthData) {
+         $('#strengthHeading').removeClass('hidden'); // Show the strength heading
+         $('#strength_display ul').empty(); // Clear existing strength data
+   
+         // Append new strength data
+         $.each(strengthData, function (year, strength) {
+            $('#strength_display ul').append('<li>' + year + ' Strength: ' + strength + ' students</li>');
+         });
+      }
+   </script>
   </div>
  
 </body>

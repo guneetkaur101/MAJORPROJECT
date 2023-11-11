@@ -6,7 +6,7 @@ import pandas as pd
 from collections import deque
 import datetime
 import fullfinalized as ff
-
+from flask import jsonify
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -245,10 +245,10 @@ def generate():
         selected_subjects = request.form.getlist('select_subject')
         print(selected_subjects)
         # Check if at least one year is selected (already alert box)
-        if not selected_subjects:
-            error = "Please select at least one subject"
-            return render_template('upload_form.html', total_strengths=total_strengths, error=error)
-        upload_errors = []
+        # if not selected_subjects:
+        #     error = "Please select at least one subject"
+        #     return render_template('upload_form.html', total_strengths=total_strengths, error=error)
+        # upload_errors = []
         
         # Initialize a dictionary to store the length of each subject's roll numbers
         subject_lengths = {}
