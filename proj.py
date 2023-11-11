@@ -231,6 +231,7 @@ def generate():
         cursor = myconn.cursor()
         cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row_c1 integer(10),row_c2 integer(10),row_c3 integer(10),row_c4 integer(10),row_c5 integer(10),row_c6 integer(10),u_row_c1 integer(10),u_row_c2 integer(10),u_row_c3 integer(10),u_row_c4 integer(10),u_row_c5 integer(10),u_row_c6 integer(10),seat integer(10),usable_seats integer(10))")
 
+    
     total_strengths = {}  # Initialize as an empty dictionary
     # Define the list of available years
     # available_subjects = [list(df1.columns) + list(df2.columns) + list(df3.columns)]
@@ -288,18 +289,15 @@ def generate():
         total_strengths['3rd Year students'] = file_strength_df2
         total_strengths['4th Year students'] = file_strength_df3
         total_strengths['ALL Years total'] = total_strength
-        if upload_errors:
-            return render_template('upload_form.html', total_strengths=total_strengths, upload_errors=upload_errors)
-        print("Processing completed")
-        return render_template('upload_form.html', total_strengths=total_strengths,df1=df1,df2=df2,df3=df3,selected_subjects=selected_subjects)
+        
+ 
     if request.method == 'POST':
         global selected_rooms
-        df1,df2,df3,FILENAME,DATE,TIME
         selected_rooms = request.form.getlist('selected_rooms')
         print(selected_rooms)
         MAX_COLS = 6
-        DATE = "26-10-2023"
-        TIME = "10-00 AM"
+        DATE = datetime.datetime.now().strftime('%d-%m-%Y')
+        TIME = datetime.datetime.now().strftime('%H-%M %p')
         FILENAME = f'{DATE}_{TIME}.xlsx'
 
         
@@ -318,25 +316,7 @@ def generate():
     data = cursor.fetchall()
 
     return render_template("generate.html", data=data, total_strengths=total_strengths,df1=df1,df2=df2,df3=df3,selected_subjects=selected_subjects)
-# @app.route("/edit-usable-rows/<room_no>", methods=['GET','POST'])
-# def edit_usable_rows(room_no):
-    
-#     usable_row_c1 = request.form.get('usable_row_c1')
-#     usable_row_c2 = request.form.get('usable_row_c2')
-#     usable_row_c3 = request.form.get('usable_row_c3')
-#     usable_row_c4 = request.form.get('usable_row_c4')
-#     usable_row_c5 = request.form.get('usable_row_c5')
-#     usable_row_c6 = request.form.get('usable_row_c6')
-    
-#     myconn = sqlite3.connect("room_details.db")
-#     with myconn:
-#         cursor = myconn.cursor()
-      
-#         # Update the database with the new usable rows data
-#         cursor.execute("UPDATE room SET u_row_c1=?, u_row_c2=?, u_row_c3=?, u_row_c4=?, u_row_c5=?, u_row_c6=? WHERE room_no=?", (usable_row_c1, usable_row_c2, usable_row_c3, usable_row_c4, usable_row_c5, usable_row_c6, room_no))
-        
-#     # Redirect back to the page after the update.
-#     return redirect("/generate") 
+
 def get_room_data(room_no):
     # This function retrieves the data for the specified room from the database.
     myconn = sqlite3.connect("room_details.db")
