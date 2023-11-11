@@ -207,6 +207,9 @@ def upload_form():
         
         # Initialize a dictionary to store the length of each subject's roll numbers
         subject_lengths = {}
+        file_strength_df1=0
+        file_strength_df2=0
+        file_strength_df3=0
 
         # Iterate over the selected subjects
         for subject in selected_subjects:
@@ -221,16 +224,26 @@ def upload_form():
                     roll_numbers = csv_file[subject].dropna().tolist()
                     # Update the subject length with the number of roll numbers
                     subject_length += len(roll_numbers)-1
-
+                    if subject in df1:
+                        file_strength_df1 += subject_length
+                    if subject in df2:
+                        file_strength_df2 += subject_length
+                    if subject in df3:
+                        file_strength_df3 += subject_length
+                     
             # Store the subject length in the dictionary
             subject_lengths[subject] = subject_length
-
+            # print(subject_lengths)
         # Calculate the total strength by summing up the subject lengths
         total_strength = sum(subject_lengths.values())
-
+        print(subject_lengths)  
         # Update the total_strengths dictionary with the subject lengths
         total_strengths.update(subject_lengths)
-        total_strengths['Total'] = total_strength
+        # Add the file strengths to the total strengths dictionary
+        total_strengths['2nd Year students'] = file_strength_df1
+        total_strengths['3rd Year students'] = file_strength_df2
+        total_strengths['4th Year students'] = file_strength_df3
+        total_strengths['ALL Years total'] = total_strength
         if upload_errors:
             return render_template('upload_form.html', total_strengths=total_strengths, upload_errors=upload_errors)
         print("Processing completed")
