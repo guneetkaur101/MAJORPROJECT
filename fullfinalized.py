@@ -6,6 +6,7 @@ import proj
 MAX_COLS = 6
 
 def load_subject_data():
+    
     # Load subject data from Excel files
     df1 = pd.read_excel('uploads/2nd_year.xlsx')
     df2 = pd.read_excel('uploads/3rd_year.xlsx')

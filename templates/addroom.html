@@ -8,174 +8,7 @@
   <link rel="stylesheet" type="text/css" href="static/homee.css">
 
   <style>
-    
-.btn,.btn__text,.btn__progress,.btn__progress-check,.btn__progress-fill,.btn__progress-track {
-    border: 0;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-:root {
-    --hue: 223;
-    --bg1: hsl(var(--hue),10%,90%);
-    --bg2: hsl(var(--hue),10%,80%);
-    --fg1: hsl(var(--hue),10%,10%);
-    --fg2: hsl(var(--hue),10%,20%);
-    --primary1: hsl(var(--hue),90%,55%);
-    --primary2: hsl(var(--hue),90%,45%);
-    /* font-size: calc(20px + (40 - 20) * (100vw - 320px) / (1280 - 320)); */
-}
- button {
-    font: 1em/1.5 Nunito, sans-serif;
-}
-.btn{
-    background-color: #4CAF50;
-    color: white;
-    height: 100vh;
-    display: grid;
-    place-items: center;
-}
 
-/* Main button styles */
-.btn {
-    background-color: transparent;
-    border-radius: 1.5em;
-    display: block;
-    position: relative;
-    width: 7.5em;
-    height: 3em;
-    transition: width 0.3s ease-in-out;
-}
-.btn:not(:disabled):active {
-    transform: translateY(0.1em);
-}
-.btn__text {
-    background-color: #4CAF50;;
-    border-radius: inherit;
-    color: hsl(0,0%,100%);
-    display: inline-block;
-    padding: 0.75em 1.5em;
-    transition:
-        background-color 0.15s linear,
-        color 0.15s 0.3s ease-in-out;
-    width: 100%;
-}
-.btn:not(:disabled):focus .btn__text,
-.btn:not(:disabled):hover .btn__text {
-    background-color: #45a049;;
-}
-.btn__progress {
-    overflow: visible;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 3em;
-    height: 3em;
-    visibility: hidden;
-}
-.btn__progress-track {
-    r: 12px;
-    stroke: #45a049;;
-    stroke-width: 24;
-}
-.btn__progress-fill {
-    stroke: #4CAF50;
-    stroke-dashoffset: 125.66;
-}
-.btn__progress-check {
-    stroke: hsl(0,0%,100%);
-    stroke-dashoffset: 34;
-}
-
-/* Both states */
-.btn--running,
-.btn--done {
-    outline: none;
-    pointer-events: none;
-    width: 3em;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-}
-.btn--running .btn__text,
-.btn--done .btn__text {
-    color: transparent;
-    transition:
-        background-color 0.3s ease-in-out,
-        visibility 0.3s steps(1);
-}
-.btn--running .btn__progress,
-.btn--done .btn__progress {
-    visibility: visible;
-}
-
-/* Running state */
-.btn--running .btn__text {
-    background-color: #45a049;;
-    visibility: hidden;
-}
-.btn--running .btn__progress {
-    transition: visibility 0.3s 0.3s steps(1,start);
-}
-.btn--running .btn__progress-track {
-    r: 20px;
-    stroke-width: 8;
-    transition:
-        r 0.3s 0.3s ease-in-out,
-        stroke-width 0.3s 0.3s ease-in-out;
-}
-.btn--running .btn__progress-fill {
-    stroke-dashoffset: 0;
-    transition: stroke-dashoffset 2s 0.6s linear;
-}
-
-/* Done state */
-.btn--done .btn__progress-track {
-    stroke: #4CAF50;;
-    transition:
-        r 0.3s ease-in-out,
-        stroke-width 0.3s ease-in-out;
-}
-.btn--done .btn__progress-check {
-    stroke-dashoffset: 0;
-    transition: stroke-dashoffset 0.3s 0.3s ease-out;
-}
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  /* background-color: #f2f2f2; */
-  background: rgb(207,222,205);
-background: linear-gradient(180deg, rgba(207,222,205,1) 0%, rgba(152,202,153,1) 72%, rgba(76,175,80,1) 100%);
-  /* background: rgb(243,244,239);
-background: linear-gradient(157deg, rgba(243,244,239,1) 0%, rgba(235,255,236,1) 19%, rgba(27,196,113,1) 100%, rgba(15,14,47,1) 100%); */
-}
-
-.topnav {
-  overflow: hidden;
-  background-color: #333;
-}
-
-.topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.topnav a.active {
-  background-color: #4CAF50;
-  color: white;
-}
-.topnav .icon {
-  display: none;
-}
 div.container {
   margin: 20px 90px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -500,26 +333,12 @@ label {
           if (form) {
             form.submit();
           }
-        }, 1500); // Adjust the resetDuration as needed
-      }, 600 + submitDuration);
+        }, 1000); // Adjust the resetDuration as needed
+      }, submitDuration);
     });
   }
 });
 
-
-// can BE USED WITH oninput="highlightTableColumn(2, this.value)" IN EACH INPUT STYLE REMAIN SAME 2 REPRESENT 2 COL
-// // JavaScript function to highlight the entire column
-// function highlightTableColumn(column, rows) {
-//     const tableCells = document.querySelectorAll('.room-table td:nth-child(' + column + ')');
-
-//     if (rows > 0) {
-//       // Apply the highlight class to the entire column
-//       tableCells.forEach(cell => cell.classList.add('highlight-column'));
-//     } else {
-//       // Remove the highlight class if no rows are specified
-//       tableCells.forEach(cell => cell.classList.remove('highlight-column'));
-//     }
-//   }
 
 // JavaScript function to highlight the entire column
 function highlightTableColumn(column) {
