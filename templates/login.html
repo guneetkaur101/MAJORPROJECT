@@ -26,83 +26,7 @@
       margin: 0;
       padding: 0;
     }
-
-    
-    /* -----------------------------------------------login------------------------------------------------*/
-    
-    /* responsive navigation */
-    @media screen and (max-width: 650px) {
-      .topnav a:not(.active) {
-        display: none;
-      }
-
-      .topnav a.icon {
-        float: right;
-        display: block;
-      }
-    }
-  
-.contact-form {
-	position: absolute;
-	top: 400px;
-	left: 80%;
-	transform: translate(-50%, -50%);
-	width: 400px;
-	height: 500px;
-	padding: 80px 40px;
-	box-sizing: border-box;
-	background-color: rgba(37, 36, 36, 0.313);
-	box-shadow: 0 5px 30px black;
-  backdrop-filter: blur(5px);
-  border-radius: 25px;
-  font-family: 'Libre Baskerville', serif;
-}
-.avatar {
-	position: absolute;
-	width: 80px;
-	height: 80px;
-	border-radius: 50%;
-	overflow: hidden;
-	top: calc(-80px/2);
-	left: calc(50% - 40px);
-	border: 10px solid #fff;
-  box-shadow: 0 5px 30px black;
-}
-.contact-form h2 {
-	margin: 0;
-	padding: 0 0 30px;
-  font-size: 32px;
-  color: #fff;
-	text-align: center;
-	text-transform: uppercase;
-  
-}
-
-
-.contact-form input {	
-	border: none;
-	/* border-bottom-color: currentcolor;
-	border-bottom-style: none;
-	border-bottom-width: medium; */
-	/* border-bottom: 2px solid white; */
-	padding: 10px;
-	margin-bottom: 20px;
-	font-weight: bold;
-	box-sizing: border-box;
-	/* background-color: rgba(41, 39, 39, 0.3); */
-	box-shadow: 0 5px 30px black;
-  border-radius: 10px;
-}
-
-.contact-form input[type="text"], 
-.contact-form input[type="password"] {
-	background: transparent;
-	height: 40px;
-  color:#fff;
-  width: 250px;
-	font-size: 16px;
-}
-.btn {
+    .btn {
   height: 40px;
 	padding: 30px;
   font-family: 'Libre Baskerville', serif;
@@ -120,28 +44,25 @@
   text-align: center;
   font-weight: bold;
 }
-
-.rem {
-	text-align: center;
-	color: rgb(199, 197, 197) !important;
-	font-size: 16px;
-}
+  
 input[type="checkbox"] {
-	width: 5%;
-}
-::placeholder {
-  color: white;
-  font-size: 18px;
-  font-family: 'Libre Baskerville', serif;
-}
-      label {
-        display: inline-block;
-        text-align:left;
-        margin-right: 10px;
-        color: #fff;
+    width: 5%;
+  }
+    
+    /* -----------------------------------------------login------------------------------------------------*/
+    
+    /* responsive navigation */
+    @media screen and (max-width: 650px) {
+      .topnav a:not(.active) {
+        display: none;
       }
-   
 
+      .topnav a.icon {
+        float: right;
+        display: block;
+      }
+    }
+  
   </style>
 </head>
 
@@ -182,19 +103,6 @@ input[type="checkbox"] {
               </div></div>
             </form>
         </div>
-
-
-     <!-- <div class="container">
-      <h1>Login Forn</h1>
-      <form  action="" class="form" method="POST">
-        <div class="form-group">
-          <i class="fa-solid fa-user fa-2x"></i>
-          <input type="text" class="form-control" id="name" name="email" placeholder="Enter Your Username"  tabindex="1" required>
-        </div>
-      </form>
-
-     </div> -->
-
 
     <script>
       // responsive

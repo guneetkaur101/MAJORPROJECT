@@ -25,7 +25,7 @@ def login():
 	if request.method=='POST':
 		email = request.form['email']
 		password = request.form['psw']
-		if email =="admin" and password == "admin":
+		if email =="admin" and password == "gndec":
 			return  redirect(url_for('admin'))
 		else:
 			error = "INVALID DETAILS"
@@ -126,10 +126,6 @@ def edit(room_no):
         myconn = sqlite3.connect("room_details.db")
         with myconn:
            cursor = myconn.cursor()
-        # # Update the room details in the database
-        #    cursor.execute("UPDATE room SET col=?, row_c1=?, row_c2=?, row_c3=?, row_c4=?, row_c5=?, row_c6=?, u_row_c1=?, u_row_c2=?, u_row_c3=?, u_row_c4=?, u_row_c5=?, u_row_c6=?, seat=?,usable_seats=? WHERE room_no=?", 
-        #                [col] + rows_per_columns + updated_rows_per_columns + [total_seats, room_no],[room_usable_seats,room_no])
-        # Update the room details in the database
            cursor.execute("UPDATE room SET col=?, row_c1=?, row_c2=?, row_c3=?, row_c4=?, row_c5=?, row_c6=?, u_row_c1=?, u_row_c2=?, u_row_c3=?, u_row_c4=?, u_row_c5=?, u_row_c6=?, seat=?, usable_seats=? WHERE room_no=?", 
                (col, *rows_per_columns, *updated_rows_per_columns, total_seats, room_usable_seats, room_no))
 
@@ -153,49 +149,8 @@ def edit(room_no):
 
     return render_template("editroom.html", room_no=room_no, col=col, row_details=row_details, error=error)
 
-# @app.route('/edit/<id>',methods=['GET','POST'])
-# def edit(id):
-#     message = None  # Initialize the message variable
-#     if request.method == 'POST':
-#         room_no = request.form['room_no']
-#         col = request.form['col']
-#         row = request.form['row']
-#         seat = request.form['seat']
-        
-#         myconn = sqlite3.connect("room_details.db")
-#         with myconn:
-#             cursor = myconn.cursor()
-#             cursor.execute("UPDATE room SET room_no=?, col=?, row=?, seat=? WHERE room_no=?", (room_no, col, row, seat, id))
-#             myconn.commit()
-#             message = "Room details have been updated successfully."  # Set the message
-#             return redirect('/admin')  # Redirect to the admin page
-
-#     myconn = sqlite3.connect("room_details.db")
-#     with myconn:
-#         cursor = myconn.cursor()
-#         cursor.execute("SELECT * FROM room WHERE room_no = ?", [id])
-#         data = cursor.fetchone()
-    
-#     if data:
-#         room_no = data[0]
-#         col = data[1]
-#         row = data[2]
-#         seat = data[3]
-#     else:
-#         room_no = None
-#         col = None
-#         row = None
-#         seat = None
-
-#     return render_template("editroom.html", room_no=room_no, col=col, row=row, seat=seat, message=message)
 @app.route('/upload_form', methods=['GET', 'POST'])
 def upload_form():
-    total_strengths = {}  # Initialize as an empty dictionary
-    # Define the list of available years
-    # available_subjects = [list(df1.columns) + list(df2.columns) + list(df3.columns)]
-    global selected_subjects
-    selected_subjects = []
-    df1, df2, df3 = ff.load_subject_data()
     available_years = ['2nd', '3rd', '4th']
 
     # Check if the upload folder already contains excel files for respective inputs
@@ -207,6 +162,8 @@ def upload_form():
             timestamp = os.path.getmtime(file_path)
             formatted_timestamp = datetime.datetime.fromtimestamp(timestamp).strftime('%d:%m:%Y %H:%M')
             uploaded_files.append((filename, formatted_timestamp))
+            
+
 
 
     if request.method == 'POST':
@@ -223,7 +180,7 @@ def upload_form():
             xlsx_file.save(file_path)
             print("File saved") 
 
-    return render_template('upload_form.html', total_strengths=total_strengths, df1=df1, df2=df2, df3=df3, selected_subjects=selected_subjects, uploaded_files=uploaded_files)
+    return render_template('upload_form.html', uploaded_files=uploaded_files)
 
 
 @app.route("/generate", methods=['GET', 'POST'])
