@@ -119,10 +119,10 @@ def main(selected_rooms,df1,df2,df3, FILENAME,DATE,TIME,selected_subjects):
 
         # Create a worksheet for the room
         worksheet = workbook.add_worksheet(room_name)
-        worksheet.write(1, 1, "Date = " + DATE)
-        worksheet.write(1, 5, "Time = " + TIME)
-        room_name_format = workbook.add_format({'bold': True, 'font_size': 22})
-        worksheet.write(0, 3, room_name, room_name_format)
+        worksheet.merge_range(1, 0, 1, 1, "Date = " + DATE)
+        worksheet.merge_range(1, 4, 1, 5, "Time = " + TIME)
+        room_name_format = workbook.add_format({'bold': True, 'font_size': 22, 'align': 'center'})
+        worksheet.merge_range(0, 2, 0, 3, room_name, room_name_format)
         worksheet.set_row(0, 30)  # Set the row height to double
         # Write the scheduled students to the worksheet
         for col, students in enumerate(room_schedule):
