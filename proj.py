@@ -1,6 +1,8 @@
 from flask import Flask , render_template , request, redirect, url_for, flash, session,send_file
-from flask import request, Response
+from flask import request, Response,redirect, url_for
 import json
+import time
+import webbrowser
 import sqlite3
 import csv
 import os
@@ -12,6 +14,12 @@ from flask import jsonify
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
 app.config['UPLOAD_FOLDER'] = 'uploads'
+app.config['GENERATE_FOLDER'] = 'generated'
+
+
+
+webbrowser.open_new("http://localhost:5000")
+
 
 @app.route("/")
 def home():
@@ -178,7 +186,8 @@ def upload_form():
             filename = f'{year}_year.xlsx'
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             xlsx_file.save(file_path)
-            print("File saved") 
+            print("File saved")
+            return redirect('/generate')
 
     return render_template('upload_form.html', uploaded_files=uploaded_files)
 
@@ -256,7 +265,7 @@ def generate():
             print(subject_headings)
 
             ff.main(selected_rooms, df1, df2, df3, FILENAME, DATE, TIME, selected_subjects)
-            return send_file(FILENAME,as_attachment=True)
+            return send_file(app.config['GENERATE_FOLDER'] + FILENAME,as_attachment=True)
     cursor.execute("SELECT * FROM room")
     data = cursor.fetchall()
     # # Clear the 'selected_subjects' session variable on page refresh

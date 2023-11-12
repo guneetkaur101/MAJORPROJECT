@@ -7,10 +7,16 @@ MAX_COLS = 6
 
 def load_subject_data():
     
-    # Load subject data from Excel files
-    df1 = pd.read_excel('uploads/2nd_year.xlsx')
-    df2 = pd.read_excel('uploads/3rd_year.xlsx')
-    df3 = pd.read_excel('uploads/4th_year.xlsx')
+    # Load subject data from Excel filesdf
+    df1 = pd.DataFrame()
+    df2 = pd.DataFrame()
+    df3 = pd.DataFrame()
+    if os.path.exists('uploads/2nd_year.xlsx'):
+        df1 = pd.read_excel('uploads/2nd_year.xlsx')
+    if os.path.exists('uploads/3rd_year.xlsx'):
+        df2 = pd.read_excel('uploads/3rd_year.xlsx')
+    if os.path.exists('uploads/4th_year.xlsx'):
+        df3 = pd.read_excel('uploads/4th_year.xlsx')
     print('files read')
     return df1, df2, df3
 # selected_subjects=proj.selected_subjects
@@ -44,7 +50,7 @@ def main(selected_rooms,df1,df2,df3, FILENAME,DATE,TIME,selected_subjects):
         cursor.execute("SELECT room_no, u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6 from room")
         rooms = cursor.fetchall()
     # Create Excel writer
-    writer = pd.ExcelWriter(FILENAME, engine='xlsxwriter')
+    writer = pd.ExcelWriter(proj.app.config['GENERATE_FOLDER'] + FILENAME, engine='xlsxwriter')
     workbook = writer.book
     rooms = [room for room in rooms if room[0] in selected_rooms]
 
