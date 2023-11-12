@@ -279,24 +279,22 @@ background: linear-gradient(180deg, rgba(207,222,205,1) 0%, rgba(152,202,153,1) 
         <div style="flex: 1; margin-right: 10px;">
           <fieldset style=" margin-right: 20px; border: none; display: flex; flex-direction: column; max-width: 10%; align-self: flex-end;">
           <label for="date" style="float: right; font-size: 15px; margin-right: 10px; border-radius: 5px; height: 30px; margin-bottom: -10px;">Select Date:</label>
-          <input type="date" name="date" id="date" style="float: right; background-color: #e6e2e2; border-radius: 10px; padding: 10px; height: 30px; margin-bottom: 10px" placeholder="Select Date">
+          <input type="date" name="date" id="date" style="float: right; background-color: #e6e2e2; border-radius: 10px; padding: 10px; height: 30px; margin-bottom: 10px" placeholder="Select Date" required>
           <label for="time" style="float: right; margin-right: 10px; border-radius: 5px; font-size: 15px; height: 30px; margin-bottom: -10px">Select Time:</label>
-          <input type="time" name="time" id="time" style="float: right;  background-color: #e6e2e2; padding: 10px; border-radius: 10px; height: 30px;" placeholder="Select Time">
+          <input type="time" name="time" id="time" style="float: right;  background-color: #e6e2e2; padding: 10px; border-radius: 10px; height: 30px;" placeholder="Select Time" required>
           </fieldset>
       </div>
   
     </div>
-     <div>
-      <div id="strength_display"> 
-        <!-- The strength content will be updated dynamically here -->
-         <h2 id="strengthHeading" class="hidden">Total Strength of Selected Subjects</h2> 
-          <ul>
-              <!-- {% for year, strength in total_strengths.items() %}
-              <li>{{ year }} Strength: {{ total_strengths }} students</li>
-              {% endfor %} -->
-          </ul>
-      </div> 
-
+     <div id="strength_display"> 
+      <!-- The strength content will be updated dynamically here -->
+      <h2 id="strengthHeading" class="hidden">Total Strength of Selected Subjects</h2> 
+      <ul>
+         
+        <!-- Strength data will be appended dynamically here -->
+      </ul>
+   </div> 
+   
       <table id="example" class="display" cellspacing="0" width="100%" style="margin-top: 10px;">
         <thead>
           <tr>
@@ -353,7 +351,9 @@ background: linear-gradient(180deg, rgba(207,222,205,1) 0%, rgba(152,202,153,1) 
       // Function to update strength using AJAX
       function updateStrength() {
          // Serialize form data
+         console.log("Updating Strength...");
          var formData = $('#generateForm').serialize();
+         console.log("Serialized Data:", formData)
    
          // Send AJAX request
          $.ajax({
@@ -361,22 +361,34 @@ background: linear-gradient(180deg, rgba(207,222,205,1) 0%, rgba(152,202,153,1) 
             url: '/generate',
             data: formData,
             success: function (data) {
-               // Update the strength display dynamically
-               updateStrengthDisplay(data);
+              console.log("Data received:", data);
+                // Update the strength display dynamically
+                updateStrengthDisplay(data);
             },
+            error: function (xhr, status, error) {
+        console.error("AJAX Error:", status, error);
+    }
          });
       }
-   
-      // Function to update strength display
-      function updateStrengthDisplay(strengthData) {
-         $('#strengthHeading').removeClass('hidden'); // Show the strength heading
-         $('#strength_display ul').empty(); // Clear existing strength data
-   
-         // Append new strength data
-         $.each(strengthData, function (year, strength) {
-            $('#strength_display ul').append('<li>' + year + ' Strength: ' + strength + ' students</li>');
-         });
-      }
+      // <!-- {% for year, strength in total_strengths.items() %}
+      //         <li>{{ year }} Strength: {{ total_strengths }} students</li>
+      //         {% endfor %} -->
+      //     </ul>
+    // Function to update strength display
+   function updateStrengthDisplay(data) {
+      $('#strengthHeading').removeClass('hidden'); // Show the strength heading
+      $('#strength_display ul').empty(); // Clear existing strength data
+
+        // Display total strength for each selected subject
+        for (var subject in data) {
+            if (subject !== 'ALL Years total') {
+                $('#strength_display ul').append('<li>' + subject + ' Strength: ' + data[subject] + ' students</li>');
+            }
+        }
+
+        // Display total strength for all years
+        $('#strength_display ul').append('<li>Total Strength: ' + data['ALL Years total'] + ' students</li>');
+    }
    </script>
   </div>
  

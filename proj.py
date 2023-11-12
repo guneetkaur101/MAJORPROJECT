@@ -1,4 +1,6 @@
-from flask import Flask , render_template , request, redirect, url_for, flash
+from flask import Flask , render_template , request, redirect, url_for, flash, session,send_file
+from flask import request, Response
+import json
 import sqlite3
 import csv
 import os
@@ -7,8 +9,8 @@ from collections import deque
 import datetime
 import fullfinalized as ff
 from flask import jsonify
-
 app = Flask(__name__)
+app.secret_key = "your_secret_key"
 app.config['UPLOAD_FOLDER'] = 'uploads'
 
 @app.route("/")
@@ -231,91 +233,80 @@ def generate():
         cursor = myconn.cursor()
         cursor.execute("CREATE TABLE IF NOT EXISTS room(room_no integer(10),col integer(10),row_c1 integer(10),row_c2 integer(10),row_c3 integer(10),row_c4 integer(10),row_c5 integer(10),row_c6 integer(10),u_row_c1 integer(10),u_row_c2 integer(10),u_row_c3 integer(10),u_row_c4 integer(10),u_row_c5 integer(10),u_row_c6 integer(10),seat integer(10),usable_seats integer(10))")
 
-    
     total_strengths = {}  # Initialize as an empty dictionary
-    # Define the list of available years
-    # available_subjects = [list(df1.columns) + list(df2.columns) + list(df3.columns)]
     global selected_subjects
     selected_subjects = []
+
     df1, df2, df3 = ff.load_subject_data()
     subject_headings = list(df1.columns) + list(df2.columns) + list(df3.columns)
+
     if request.method == 'POST':
-        print("Processing started") 
-        # Get the selected years from checkboxes
-        selected_subjects = request.form.getlist('select_subject')
-        print(selected_subjects)
-        # Check if at least one year is selected (already alert box)
-        # if not selected_subjects:
-        #     error = "Please select at least one subject"
-        #     return render_template('upload_form.html', total_strengths=total_strengths, error=error)
-        # upload_errors = []
+        print("Processing started")
         
-        # Initialize a dictionary to store the length of each subject's roll numbers
-        subject_lengths = {}
-        file_strength_df1=0
-        file_strength_df2=0
-        file_strength_df3=0
+        # Check if the request is an AJAX request
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            selected_subjects = request.form.getlist('select_subject')
+            session['selected_subjects'] = selected_subjects  # Store in session
+            subject_lengths = {}
+            file_strength_df1 = 0
+            file_strength_df2 = 0
+            file_strength_df3 = 0
 
-        # Iterate over the selected subjects
-        for subject in selected_subjects:
-            # Initialize the length of the roll numbers for the subject
-            subject_length = 0
+            for subject in selected_subjects:
+                subject_length = 0
 
-            # Iterate over the csv files
-            for csv_file in [df1, df2, df3]:
-                # Check if the subject is present in the csv file
-                if subject in csv_file.columns:
-                    # Get the roll numbers for the subject
-                    roll_numbers = csv_file[subject].dropna().tolist()
-                    # Update the subject length with the number of roll numbers
-                    subject_length += len(roll_numbers)-1
-                    if subject in df1:
-                        file_strength_df1 += subject_length
-                    if subject in df2:
-                        file_strength_df2 += subject_length
-                    if subject in df3:
-                        file_strength_df3 += subject_length
-                     
-            # Store the subject length in the dictionary
-            subject_lengths[subject] = subject_length
-            # print(subject_lengths)
-        # Calculate the total strength by summing up the subject lengths
-        total_strength = sum(subject_lengths.values())
-        print(subject_lengths)  
-        # Update the total_strengths dictionary with the subject lengths
-        total_strengths.update(subject_lengths)
-        # Add the file strengths to the total strengths dictionary
-        total_strengths['2nd Year students'] = file_strength_df1
-        total_strengths['3rd Year students'] = file_strength_df2
-        total_strengths['4th Year students'] = file_strength_df3
-        total_strengths['ALL Years total'] = total_strength
-        
- 
-    if request.method == 'POST':
-        global selected_rooms
-        selected_rooms = request.form.getlist('selected_rooms')
-        print(selected_rooms)
-        MAX_COLS = 6
-        DATE = datetime.datetime.now().strftime('%d-%m-%Y')
-        TIME = datetime.datetime.now().strftime('%H-%M %p')
-        FILENAME = f'{DATE}_{TIME}.xlsx'
+                for csv_file in [df1, df2, df3]:
+                    if subject in csv_file.columns:
+                        roll_numbers = csv_file[subject].dropna().tolist()
+                        subject_length += len(roll_numbers) - 1
 
-        
-        df1, df2, df3 = ff.load_subject_data()
-        subject_headings = list(df1.columns) + list(df2.columns) + list(df3.columns)
-        print(selected_subjects)
-        print(subject_headings)
+                        if subject in df1:
+                            file_strength_df1 += subject_length
+                        if subject in df2:
+                            file_strength_df2 += subject_length
+                        if subject in df3:
+                            file_strength_df3 += subject_length
 
-        ff.main(selected_rooms,df1,df2,df3,FILENAME,DATE,TIME,selected_subjects)
+                subject_lengths[subject] = subject_length
 
+            total_strength = sum(subject_lengths.values())
+            total_strengths.update(subject_lengths)
+            total_strengths['2nd Year students'] = file_strength_df1
+            total_strengths['3rd Year students'] = file_strength_df2
+            total_strengths['4th Year students'] = file_strength_df3
+            total_strengths['ALL Years total'] = total_strength
 
-        
+            selected_strengths = {subject: total_strengths.get(subject, 0) for subject in selected_subjects}
+            selected_strengths['ALL Years total'] = total_strength
+            response_data = json.dumps(selected_strengths)
 
-    # Fetch data for the table
+            return Response(response_data, content_type='application/json')
+
+        else:
+            selected_rooms = request.form.getlist('selected_rooms')
+            selected_subjects = session.get('selected_subjects', [])
+            # This block will handle non-AJAX form submissions
+            selected_rooms = request.form.getlist('selected_rooms')
+            print(selected_rooms)
+            MAX_COLS = 6
+            DATE = datetime.datetime.now().strftime('%d-%m-%Y')
+            TIME = datetime.datetime.now().strftime('%H-%M %p')
+            FILENAME = f'{DATE}_{TIME}.xlsx'
+
+            df1, df2, df3 = ff.load_subject_data()
+            subject_headings = list(df1.columns) + list(df2.columns) + list(df3.columns)
+            print(selected_subjects)
+            print(subject_headings)
+
+            ff.main(selected_rooms, df1, df2, df3, FILENAME, DATE, TIME, selected_subjects)
+            return send_file(FILENAME,as_attachment=True)
     cursor.execute("SELECT * FROM room")
     data = cursor.fetchall()
-
-    return render_template("generate.html", data=data, total_strengths=total_strengths,df1=df1,df2=df2,df3=df3,selected_subjects=selected_subjects)
+    # # Clear the 'selected_subjects' session variable on page refresh
+    # session.pop('selected_subjects', None)
+    # Clear all session variables on page refresh
+    session.clear()
+    return render_template("generate.html", data=data, total_strengths=total_strengths, df1=df1, df2=df2, df3=df3, selected_subjects=selected_subjects)
 
 def get_room_data(room_no):
     # This function retrieves the data for the specified room from the database.
