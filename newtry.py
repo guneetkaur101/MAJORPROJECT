@@ -2,63 +2,79 @@ import sqlite3
 import pandas as pd
 import os
 from collections import deque
-import proj
+
 MAX_COLS = 6
-MAX_SUBJECTS=3
+DATE = "26-10-2023"
+TIME = "10:00 AM"
+FILENAME = f'{DATE}.xlsx'
+
 def load_subject_data():
     
-    # Load subject data from Excel filesdf
-    df1 = pd.DataFrame()
-    df2 = pd.DataFrame()
-    df3 = pd.DataFrame()
-    if os.path.exists('uploads/2nd_year.xlsx'):
-        df1 = pd.read_excel('uploads/2nd_year.xlsx')
-    if os.path.exists('uploads/3rd_year.xlsx'):
-        df2 = pd.read_excel('uploads/3rd_year.xlsx')
-    if os.path.exists('uploads/4th_year.xlsx'):
-        df3 = pd.read_excel('uploads/4th_year.xlsx')
-    print('files read')
-    return df1, df2, df3
-# selected_subjects=proj.selected_subjects
-def main(selected_rooms,df1,df2,df3, FILENAME,DATE,TIME,selected_subjects):
-    # if os.path.exists(FILENAME):
-    #         os.remove(FILENAME)
+    df1 = pd.read_excel('uploads/2nd_year.xlsx')
+    df1 = df1.dropna()
 
-    # Filter rooms based on user selection
-    print("generation started")
-    
+    df2 = pd.read_excel('uploads/3rd_year.xlsx')
+    df2 = df2.dropna()
+
+    df3 = pd.read_excel('uploads/4th_year.xlsx')
+    print (df3)
+
+    return df1, df2, df3
+
+def get_selected_subjects(subject_headings):
+    print("Select the subjects you want to include:")
+    for i, heading in enumerate(subject_headings):
+        print(f"{i + 1}. {heading}")
+
+    selected_subjects = []
+    while True:
+        subject_choice = int(input("Enter the number of the subject (0 to finish): "))
+        if subject_choice == 0:
+            break
+        elif 1 <= subject_choice <= len(subject_headings):
+            selected_subjects.append(subject_headings[subject_choice - 1])
+        else:
+            print("Invalid choice. Please enter a valid number.")
+    return selected_subjects
+
+# Load subject data
+df1, df2, df3 = load_subject_data()
+subject_headings = list(df1.columns) + list(df2.columns) + list(df3.columns)
+
+# Get selected subjects from the user
+selected_subjects = get_selected_subjects(subject_headings)
 
     # Create a deque with a maximum length of 3 for rotating subjects
-    rotating_subjects = deque(selected_subjects[:3])
+rotating_subjects = deque(selected_subjects[:3])
 
     # Create a list to store subjects that are waiting
-    waiting_subjects = selected_subjects[3:]
+waiting_subjects = selected_subjects[3:]
 
     # Sort the selected subjects
     # selected_subjects.sort()
-    first_check=True
-    column_odd_flag= True
+first_check=True
+column_odd_flag= True
     # Create a dictionary to store the subject data and the current roll number position
-    subject_data = {subject: df1[subject] if subject in df1.columns else
+subject_data = {subject: df1[subject] if subject in df1.columns else
                 df2[subject] if subject in df2.columns else
                 df3[subject]
                 for subject in selected_subjects}
 
-    subject_positions = {subject: 0 for subject in selected_subjects}
-    myconn = sqlite3.connect("room_details.db")
-    with myconn:
+subject_positions = {subject: 0 for subject in selected_subjects}
+myconn = sqlite3.connect("room_details.db")
+with myconn:
         cursor = myconn.cursor()
         cursor.execute("SELECT room_no, u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6 from room")
         rooms = cursor.fetchall()
     # Create Excel writer
-    os.makedirs("generated", exist_ok=True)
-    writer = pd.ExcelWriter(os.path.join("generated", FILENAME), engine='xlsxwriter')
+os.makedirs("generated", exist_ok=True)
+writer = pd.ExcelWriter(os.path.join("generated", FILENAME), engine='xlsxwriter')
     # Open the generated path
-    os.startfile("generated")
-    workbook = writer.book
-    rooms = [room for room in rooms if room[0] in selected_rooms]
+os.startfile("generated")
+workbook = writer.book
 
-    for room in rooms:
+
+for room in rooms:
         room_no = room[0]
         room_name = str(room_no)
         max_rows = room[1:]  # Extract maximum row counts for each column
@@ -141,7 +157,5 @@ def main(selected_rooms,df1,df2,df3, FILENAME,DATE,TIME,selected_subjects):
                 worksheet.write(row+3, col, student)
 
     # Save the Excel file
-    writer._save()
+writer._save()
 
-if __name__ == "__main__":
-    main()
