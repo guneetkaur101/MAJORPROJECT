@@ -1,16 +1,14 @@
-from flask import Flask , render_template , request, redirect, url_for, flash, session,send_file
+from flask import Flask , render_template , request, redirect, url_for, session,send_file
 from flask import request, Response,redirect, url_for
 import json
-import time
 import webbrowser
 import sqlite3
-import csv
 import os
+import time
 import pandas as pd
 from collections import deque
 import datetime
 import fullfinalized as ff
-from flask import jsonify
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -18,7 +16,10 @@ app.config['GENERATE_FOLDER'] = 'generated'
 
 
 
-webbrowser.open_new("http://localhost:5000")
+
+
+webbrowser.open("http://localhost:5000")
+
 
 
 @app.route("/")
@@ -165,7 +166,7 @@ def upload_form():
     uploaded_files = []
     for year in available_years:
         filename = f'{year}_year.xlsx'
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file_path = ("uploads/"+ filename)
         if os.path.exists(file_path):
             timestamp = os.path.getmtime(file_path)
             formatted_timestamp = datetime.datetime.fromtimestamp(timestamp).strftime('%d:%m:%Y %H:%M')
@@ -184,10 +185,11 @@ def upload_form():
                 continue  # Skip this year if the file is missing
 
             filename = f'{year}_year.xlsx'
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            os.makedirs("uploads", exist_ok=True)
+            file_path = os.path.join("uploads", filename)
             xlsx_file.save(file_path)
             print("File saved")
-            return redirect('/generate')
+        return redirect('/generate')
 
     return render_template('upload_form.html', uploaded_files=uploaded_files)
 
@@ -265,7 +267,8 @@ def generate():
             print(subject_headings)
 
             ff.main(selected_rooms, df1, df2, df3, FILENAME, DATE, TIME, selected_subjects)
-            return send_file(app.config['GENERATE_FOLDER'] + FILENAME,as_attachment=True)
+            
+            return send_file(os.path.join("generated", FILENAME), as_attachment=True)
     cursor.execute("SELECT * FROM room")
     data = cursor.fetchall()
     # # Clear the 'selected_subjects' session variable on page refresh

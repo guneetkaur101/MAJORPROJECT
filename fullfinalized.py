@@ -25,6 +25,7 @@ def main(selected_rooms,df1,df2,df3, FILENAME,DATE,TIME,selected_subjects):
     #         os.remove(FILENAME)
 
     # Filter rooms based on user selection
+    print("generation started")
     
 
     # Create a deque with a maximum length of 3 for rotating subjects
@@ -50,7 +51,8 @@ def main(selected_rooms,df1,df2,df3, FILENAME,DATE,TIME,selected_subjects):
         cursor.execute("SELECT room_no, u_row_c1, u_row_c2, u_row_c3, u_row_c4, u_row_c5, u_row_c6 from room")
         rooms = cursor.fetchall()
     # Create Excel writer
-    writer = pd.ExcelWriter(proj.app.config['GENERATE_FOLDER'] + FILENAME, engine='xlsxwriter')
+    os.makedirs("generated", exist_ok=True)
+    writer = pd.ExcelWriter("generated\\"+ FILENAME, engine='xlsxwriter')
     workbook = writer.book
     rooms = [room for room in rooms if room[0] in selected_rooms]
 
