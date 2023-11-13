@@ -470,6 +470,12 @@ button {
   border-radius: 25px;
   font-family: 'Libre Baskerville', serif;
 }
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+
 .avatar {
 	position: absolute;
 	width: 80px;
