@@ -4,6 +4,7 @@ import json
 import webbrowser
 import sqlite3
 import os
+import socket
 import time
 import pandas as pd
 from collections import deque
@@ -14,7 +15,7 @@ app.secret_key = "your_secret_key"
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['GENERATE_FOLDER'] = 'generated'
 
-webbrowser.open("http://localhost:5000")
+
 
 @app.route("/")
 def home():
@@ -313,4 +314,23 @@ def edit_usable_rows(room_no):
 
     return render_template("edit_usable_rows.html", room_data=room_data)
 if __name__ == "__main__":
+    # Open localhost if not already active
+
+
+    def is_localhost_active():
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            result = sock.connect_ex(('localhost', 5000))
+            sock.close()
+            if result == 0:
+                return True
+            else:
+                return False
+        except socket.error as e:
+            print("Error checking localhost:", e)
+            return False
+
+    if not is_localhost_active():
+        webbrowser.open('http://localhost:5000')
+
     app.run(debug=True)
