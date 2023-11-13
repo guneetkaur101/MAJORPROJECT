@@ -4,7 +4,7 @@ import os
 from collections import deque
 import proj
 MAX_COLS = 6
-
+MAX_SUBJECTS=3
 def load_subject_data():
     
     # Load subject data from Excel filesdf
@@ -29,10 +29,10 @@ def main(selected_rooms,df1,df2,df3, FILENAME,DATE,TIME,selected_subjects):
     
 
     # Create a deque with a maximum length of 3 for rotating subjects
-    rotating_subjects = deque(selected_subjects[:3])
+    rotating_subjects = deque(selected_subjects[:MAX_SUBJECTS])
 
     # Create a list to store subjects that are waiting
-    waiting_subjects = selected_subjects[3:]
+    waiting_subjects = selected_subjects[MAX_SUBJECTS:]
 
     # Sort the selected subjects
     # selected_subjects.sort()
@@ -52,7 +52,9 @@ def main(selected_rooms,df1,df2,df3, FILENAME,DATE,TIME,selected_subjects):
         rooms = cursor.fetchall()
     # Create Excel writer
     os.makedirs("generated", exist_ok=True)
-    writer = pd.ExcelWriter("generated\\"+ FILENAME, engine='xlsxwriter')
+    writer = pd.ExcelWriter(os.path.join("generated", FILENAME), engine='xlsxwriter')
+    # Open the generated path
+    os.startfile("generated")
     workbook = writer.book
     rooms = [room for room in rooms if room[0] in selected_rooms]
 

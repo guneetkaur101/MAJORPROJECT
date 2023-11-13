@@ -14,13 +14,7 @@ app.secret_key = "your_secret_key"
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['GENERATE_FOLDER'] = 'generated'
 
-
-
-
-
 webbrowser.open("http://localhost:5000")
-
-
 
 @app.route("/")
 def home():
@@ -211,7 +205,6 @@ def generate():
     if request.method == 'POST':
         print("Processing started")
         
-        # Check if the request is an AJAX request
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             selected_subjects = request.form.getlist('select_subject')
             session['selected_subjects'] = selected_subjects  # Store in session
@@ -257,8 +250,8 @@ def generate():
             selected_rooms = request.form.getlist('selected_rooms')
             print(selected_rooms)
             MAX_COLS = 6
-            DATE = datetime.datetime.now().strftime('%d-%m-%Y')
-            TIME = datetime.datetime.now().strftime('%H-%M %p')
+            DATE = datetime.datetime.strptime(request.form.get('date'), '%Y-%m-%d').strftime('%d-%m-%Y')
+            TIME = datetime.datetime.strptime(request.form.get('time'), '%H:%M').strftime('%H-%M %p')
             FILENAME = f'{DATE}_{TIME}.xlsx'
 
             df1, df2, df3 = ff.load_subject_data()
@@ -267,13 +260,14 @@ def generate():
             print(subject_headings)
 
             ff.main(selected_rooms, df1, df2, df3, FILENAME, DATE, TIME, selected_subjects)
-            
-            return send_file(os.path.join("generated", FILENAME), as_attachment=True)
+            # Get the absolute path of the generated file
+            generated_file_path = os.path.abspath(os.path.join("generated", FILENAME))
+
+            # Download the generated file
+            return send_file(generated_file_path, as_attachment=True)
+
     cursor.execute("SELECT * FROM room")
     data = cursor.fetchall()
-    # # Clear the 'selected_subjects' session variable on page refresh
-    # session.pop('selected_subjects', None)
-    # Clear all session variables on page refresh
     session.clear()
     return render_template("generate.html", data=data, total_strengths=total_strengths, df1=df1, df2=df2, df3=df3, selected_subjects=selected_subjects)
 
