@@ -19,32 +19,33 @@ def load_subject_data():
         df3 = pd.read_excel('uploads/4th_year.xlsx')
     print('files read')
     return df1, df2, df3
-# selected_subjects=proj.selected_subjects
-def main(selected_rooms,df1,df2,df3, FILENAME,DATE,TIME,selected_subjects):
+# new_subjects=proj.new_subjects
+def main(selected_rooms,df1,df2,df3, FILENAME,DATE,TIME,new_subjects):
     # if os.path.exists(FILENAME):
     #         os.remove(FILENAME)
 
     # Filter rooms based on user selection
     print("generation started")
+    print(new_subjects)
     
 
     # Create a deque with a maximum length of 3 for rotating subjects
-    rotating_subjects = deque(selected_subjects[:3])
+    rotating_subjects = deque(new_subjects[:3])
 
     # Create a list to store subjects that are waiting
-    waiting_subjects = selected_subjects[3:]
+    waiting_subjects = new_subjects[3:]
 
     # Sort the selected subjects
-    # selected_subjects.sort()
+    # new_subjects.sort()
     first_check=True
     column_odd_flag= True
     # Create a dictionary to store the subject data and the current roll number position
     subject_data = {subject: df1[subject] if subject in df1.columns else
                 df2[subject] if subject in df2.columns else
                 df3[subject]
-                for subject in selected_subjects}
+                for subject in new_subjects}
 
-    subject_positions = {subject: 0 for subject in selected_subjects}
+    subject_positions = {subject: 0 for subject in new_subjects}
     myconn = sqlite3.connect("room_details.db")
     with myconn:
         cursor = myconn.cursor()
@@ -117,9 +118,10 @@ def main(selected_rooms,df1,df2,df3, FILENAME,DATE,TIME,selected_subjects):
                 if subject_positions[current_subject] >= len(subject_data[current_subject]) or pd.isna(subject_data[current_subject].iloc[subject_positions[current_subject]]):
                     rotating_subjects.popleft()
                     if waiting_subjects:
-                        rotating_subjects.append(waiting_subjects.pop(0))
+                        next_subject = waiting_subjects.pop(0)
+                        rotating_subjects.append(next_subject)
                         rotating_subjects.rotate(+1)
-
+                        room_schedule[current_col][0] += "/\n" + next_subject
                     elif not waiting_subjects:
                         rotating_subjects.rotate(+1)
                         break

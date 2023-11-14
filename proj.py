@@ -202,12 +202,21 @@ def generate():
 
     df1, df2, df3 = ff.load_subject_data()
     subject_headings = list(df1.columns) + list(df2.columns) + list(df3.columns)
+    if 'new_subjects' not in session:
+        session['new_subjects'] = []
+    new_subjects = session['new_subjects']
+
 
     if request.method == 'POST':
         print("Processing started")
-        
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             selected_subjects = request.form.getlist('select_subject')
+            
+            for subject in selected_subjects:
+                if subject not in new_subjects:
+                    new_subjects.append(subject)
+            new_subjects = [subject for subject in new_subjects if subject in selected_subjects]
+            print(new_subjects)
             session['selected_subjects'] = selected_subjects  # Store in session
             subject_lengths = {}
             file_strength_df1 = 0
@@ -247,8 +256,8 @@ def generate():
         else:
             selected_rooms = request.form.getlist('selected_rooms')
             selected_subjects = session.get('selected_subjects', [])
-            # This block will handle non-AJAX form submissions
-            selected_rooms = request.form.getlist('selected_rooms')
+            print(selected_subjects)
+            print(new_subjects)
             print(selected_rooms)
             MAX_COLS = 6
             DATE = datetime.datetime.strptime(request.form.get('date'), '%Y-%m-%d').strftime('%d-%m-%Y')
@@ -257,16 +266,13 @@ def generate():
 
             df1, df2, df3 = ff.load_subject_data()
             subject_headings = list(df1.columns) + list(df2.columns) + list(df3.columns)
-            print(selected_subjects)
-            print(subject_headings)
 
-            ff.main(selected_rooms, df1, df2, df3, FILENAME, DATE, TIME, selected_subjects)
+            ff.main(selected_rooms, df1, df2, df3, FILENAME, DATE, TIME, new_subjects)
             # Get the absolute path of the generated file
             generated_file_path = os.path.abspath(os.path.join("generated", FILENAME))
 
             # Download the generated file
             return send_file(generated_file_path, as_attachment=True)
-
     cursor.execute("SELECT * FROM room")
     data = cursor.fetchall()
     session.clear()
