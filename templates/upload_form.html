@@ -132,15 +132,25 @@
     <script>
         // responsive
         function myFunction() {
-            var x = document.getElementById("myTopnav");
-            if (x.className === "topnav") {
-                x.className += " responsive";
-            } else {
-                x.className = "topnav";
-            }
-
-        }
-
+    var x = document.getElementById("myTopnav");
+    var icon = document.querySelector(".icon");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+      icon.style.display = "none"; // Hide the icon
+    } else {
+      x.className = "topnav";
+      icon.style.display = "block"; // Show the icon
+    }
+  
+  }
+        // function validateForm() {
+        //   var selectedYears = document.querySelectorAll('input[name="select_year"]:checked');
+        //   if (selectedYears.length === 0) {
+        //     alert("Please select at least one year and upload files.");
+        //     return false;  // Prevent the form from submitting
+        //   }
+        //   return true;
+        // }
         function showUploadMessage() {
             alert("File uploaded successfully.");
         }

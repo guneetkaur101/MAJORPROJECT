@@ -6,9 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="/static/homee.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
+
     body {
       margin: 0;
       /* background: linear-gradient(rgba(0,0,0,0.4),(rgba(0,0,0, 0.4)),url(static/images/gne.png)); */
@@ -26,96 +27,219 @@
       margin: 0;
       padding: 0;
     }
-    .btn {
-  height: 40px;
-	padding: 30px;
-  font-family: 'Libre Baskerville', serif;
-	
-	color: white;
-  display: inline-block;
-	font-weight: bold;
-	margin: 100px 0;
-  background:transparent;
-	box-shadow: 0 5px 30px black;
-}
-.btn-area {
-	color: #fff;
-	justify-content: center;
-  text-align: center;
-  font-weight: bold;
-}
-  
-input[type="checkbox"] {
-    width: 5%;
-  }
-    
-    /* -----------------------------------------------login------------------------------------------------*/
-    
-    /* responsive navigation */
-    @media screen and (max-width: 650px) {
-      .topnav a:not(.active) {
-        display: none;
-      }
 
-      .topnav a.icon {
-        float: right;
-        display: block;
-      }
+
+    /* -----------------------------------------------login------------------------------------------------*/
+
+    
+
+    .contact-form {
+      position: absolute;
+      top: 400px;
+      left: 80%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      height: 500px;
+      padding: 80px 40px;
+      box-sizing: border-box;
+      background-color: rgba(37, 36, 36, 0.313);
+      box-shadow: 0 5px 30px black;
+      backdrop-filter: blur(5px);
+      border-radius: 25px;
+      font-family: 'Libre Baskerville', serif;
     }
-  
+
+    .avatar {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      overflow: hidden;
+      top: calc(-80px/2);
+      left: calc(50% - 40px);
+      border: 10px solid #fff;
+      box-shadow: 0 5px 30px black;
+    }
+
+    .contact-form h2 {
+      margin: 0;
+      padding: 0 0 30px;
+      font-size: 32px;
+      color: #fff;
+      text-align: center;
+      text-transform: uppercase;
+
+    }
+
+
+    .contact-form input {
+      border: none;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      box-sizing: border-box;
+      /* background-color: rgba(41, 39, 39, 0.3); */
+      box-shadow: 0 5px 30px black;
+      border-radius: 10px;
+    }
+
+    .contact-form input[type="text"],
+    .contact-form input[type="password"] {
+      background: transparent;
+      height: 40px;
+      color: #fff;
+      width: 250px;
+      font-size: 16px;
+    }
+
+    .btn {
+      height: 40px;
+      padding: 30px;
+      font-family: 'Libre Baskerville', serif;
+
+      color: white;
+      display: inline-block;
+      font-weight: bold;
+      margin: 100px 0;
+      background: transparent;
+      box-shadow: 0 5px 30px black;
+    }
+
+    .btn-area {
+      color: #fff;
+      justify-content: center;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .rem {
+      text-align: center;
+      color: rgb(199, 197, 197) !important;
+      font-size: 16px;
+    }
+
+    input[type="checkbox"] {
+      width: 5%;
+    }
+
+    ::placeholder {
+      color: white;
+      font-size: 18px;
+      font-family: 'Libre Baskerville', serif;
+    }
+
+    label {
+      display: inline-block;
+      text-align: left;
+      margin-right: 10px;
+      color: #fff;
+    }
+    /* Add these styles for the password toggle icon for half screen */
+/* .eye-icon {
+  position: absolute;
+  top: 40%;
+  right: 38px;
+  transform: translateY(-50%);
+  cursor: pointer;
+} */
+.eye-icon {
+  position: absolute;
+  top: 28%;
+  right: 38px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.eye-icon i {
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Adjust the styles as needed */
+
   </style>
 </head>
 
 
-  <body>
-    <div class="topnav" id="myTopnav">
-      <a href="/">Home</a>
-      <a class="active" href="/login">Login</a>
-      <a href="/contact">Contact</a>
-      <a href="/About">About</a>
-      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-        <i class="fa fa-bars"></i>
-      </a>
+<body>
+  <div class="topnav" id="myTopnav">
+    <a href="/">Home</a>
+    <a class="active" href="/login">Login</a>
+    <a href="/contact">Contact</a>
+    <a href="/About">About</a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i></a>
+  </div>
 
-    </div>
 
-   
-<!-- <!--    avatar valal -->
-        <div class="contact-form">
-            <img src="static/images/logo_gne.png" class="avatar">
-            <h2>Login Form</h2>
-            <form action="" class="container" method="POST">
-              <div>
-          <label for="email"><i class="fa-solid fa-user"></i></label>
+  <!-- <!--    avatar valal -->
+  <div class="contact-form">
+    <img src="static/images/logo_gne.png" class="avatar">
+    <h2>Login Form</h2>
+    <form action="" class="container" method="POST">
+      <div>
+        <label for="email"><i class="fa-solid fa-user"></i></label>
         <input type="text" placeholder="Enter Username" name="email" required>
       </div>
       <div>
         <label for="psw"><i class="fa-solid fa-lock"></i></label>
-        <input type="password" placeholder="Enter Your Password" name="psw" required>
+        <input type="password" placeholder="Enter Your Password" name="psw" id="passwordInput" required>
+        <span class="eye-icon" onclick="togglePasswordVisibility()">
+          <i class="fa fa-eye" id="eye"></i>
+        </span>
       </div>
-                <div class="btn-area">
-                  {% if error%}
-          <pre> {{error}}</pre>
+      <div class="btn-area">
+        <div id="errorContainer">
+          {% if error %}
+            <pre>{{ error }}</pre>
           {% endif %}
-        
-        <div>  <input type="submit" class="btn" value="LOGIN">
-              </div>
-              </div></div>
-            </form>
         </div>
+        <div>
+          <input type="submit" class="btn" value="LOGIN">
+        </div>
+      </div>
+      
+  </div>
+  </form>
+  </div>
 
-    <script>
-      // responsive
-      function myFunction() {
-        var x = document.getElementById("myTopnav");
-        if (x.className === "topnav") {
-          x.className += " responsive";
-        } else {
-          x.className = "topnav";
-        }
-
+  <script>
+    // responsive
+   function myFunction() {
+    var x = document.getElementById("myTopnav");
+    var icon = document.querySelector(".icon");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+      icon.style.display = "none"; // Hide the icon
+    } else {
+      x.className = "topnav";
+      icon.style.display = "block"; // Show the icon
+    }
+  
+  }
+   // Toggle password visibility
+   function togglePasswordVisibility() {
+      var passwordInput = document.getElementById("passwordInput");
+      var eyeIcon = document.getElementById("eye");
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        eyeIcon.classList.remove("fa-eye");
+        eyeIcon.classList.add("fa-eye-slash");
+      } else {
+        passwordInput.type = "password";
+        eyeIcon.classList.remove("fa-eye-slash");
+        eyeIcon.classList.add("fa-eye");
       }
-    </script>
-  </body>
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+    var errorContainer = document.getElementById('errorContainer');
+
+    // Hide the error container initially
+    if (errorContainer) {
+      errorContainer.style.display = 'none';
+    }
+  });
+  </script>
+</body>
 
 </html>

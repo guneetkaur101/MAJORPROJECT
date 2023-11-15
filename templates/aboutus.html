@@ -146,10 +146,13 @@ background: linear-gradient(180deg, rgba(243,244,239,1) 2%, rgba(235,255,236,1) 
 <script>
     function myFunction() {
     var x = document.getElementById("myTopnav");
+    var icon = document.querySelector(".icon");
     if (x.className === "topnav") {
       x.className += " responsive";
+      icon.style.display = "none"; // Hide the icon
     } else {
       x.className = "topnav";
+      icon.style.display = "block"; // Show the icon
     }
   
   }

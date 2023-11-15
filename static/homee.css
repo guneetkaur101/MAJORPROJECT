@@ -65,7 +65,8 @@ body {
  }
 
 @media screen and (max-width: 650px) {
-  .topnav.responsive {position: relative;}
+  .topnav.responsive {position: relative;
+    z-index: 2; /* Set a higher z-index value */}
   .topnav.responsive a.icon {
     position: absolute;
     right: 0;
@@ -75,6 +76,12 @@ body {
     float: none;
     display: block;
     text-align: left;
+    
+  }
+  
+  .contact-form {
+    z-index: 1; /* Set a lower z-index value */
+    /* other styles... */
   }
 }
 .mySlides {display: none}

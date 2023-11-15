@@ -265,11 +265,13 @@ textarea:focus {
 
 <body>
   <!-----------------------------------------NAVIGATION BARS--------------------------->
-  <div class="topnav">
+  <div class="topnav" id="myTopnav">
     <a href="/">Home</a>
     <a href="/login">Login</a>
     <a class="active" href="/contact">Contact</a>
     <a href="/About">About</a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i></a>
   </div>
   <!-----------------------------------------CONTACT FORM--------------------------->
 
@@ -313,12 +315,25 @@ textarea:focus {
   <div class="envelope back"></div>
 </div>
 <p class="result-message centered"><b>Thank you for your message</b></p>
-</body>
 <script>
   function addClass() {
-  document.body.classList.add("sent");
-}
-
-sendLetter.addEventListener("click", addClass);
+    document.body.classList.add("sent");
+  }
+  
+  sendLetter.addEventListener("click", addClass);
+  
+  function myFunction() {
+    var x = document.getElementById("myTopnav");
+    var icon = document.querySelector(".icon");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+      icon.style.display = "none"; // Hide the icon
+    } else {
+      x.className = "topnav";
+      icon.style.display = "block"; // Show the icon
+    }
+  
+  }
 </script>
+  </body>
 </html>

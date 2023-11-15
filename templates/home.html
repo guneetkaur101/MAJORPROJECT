@@ -6,17 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" type="text/css" href="/static/homee.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
   <style>
-   body {
-    height: 100vh;
-    margin: 0;
-    background: url('static/images/ROOM.avif') center/cover no-repeat;
-    /* display: flex; */
-    align-items: center;
-    justify-content: center;
-    user-select: none;
-}
+    body {
+      height: 100vh;
+      margin: 0;
+      background: url('static/images/ROOM.avif') center/cover no-repeat;
+      /* display: flex; */
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
 
 
     .group {
@@ -24,30 +25,38 @@
       white-space: nowrap;
       /* overflow: hidden; */
       display: flex;
-      flex-direction: row; /* Display items horizontally */
-      align-items: center; /* Center items horizontally */
-      justify-content: center; /* Center items vertically */
-      text-align: center; /* Align text to the center */
-      
+      flex-direction: row;
+      /* Display items horizontally */
+      align-items: center;
+      /* Center items horizontally */
+      justify-content: center;
+      /* Center items vertically */
+      text-align: center;
+      /* Align text to the center */
+
     }
 
-    .item{
+    .item {
       width: 15vw;
-            height: 50vh;
-            margin: 0.5vw;
-            border-radius: 3vw;
-            display: flex ;
-            align-items: center; /*Center text vertically */
-            justify-content: center; /* Center text horizontally */
-          
-            backdrop-filter: blur(4px);
-            font-size: 15rem; /* Make the text huge */
-            font-weight: bold;
-            font-family: 'Libre Baskerville', serif;
-            text-align: center; /* Align text to the center */
-            box-shadow: 0 5px 30px black;
-            padding: 50px 0px;
-            color: white;
+      height: 50vh;
+      margin: 0.5vw;
+      border-radius: 3vw;
+      display: flex;
+      align-items: center;
+      /*Center text vertically */
+      justify-content: center;
+      /* Center text horizontally */
+
+      backdrop-filter: blur(4px);
+      font-size: 15rem;
+      /* Make the text huge */
+      font-weight: bold;
+      font-family: 'Libre Baskerville', serif;
+      text-align: center;
+      /* Align text to the center */
+      box-shadow: 0 5px 30px black;
+      padding: 50px 0px;
+      color: white;
     }
 
     .container1 {
@@ -61,13 +70,14 @@
       margin-left: 500px;
       padding: 15px;
       border-radius: 20px;
-    
+
     }
+
     /* .container1 .content{
       bottom: 0;
       
     } */
-    a{
+    a {
       text-decoration: none;
       color: black;
     }
@@ -75,11 +85,13 @@
 </head>
 
 <body>
-  <div class="topnav">
+  <div class="topnav" id="myTopnav">
     <a class="active" href="/">Home</a>
     <a href="/login">Login</a>
     <a href="/contact">Contact</a>
     <a href="/About">About</a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i></a>
   </div>
   <div class="group">
     <div class="item">G</div>
@@ -92,7 +104,9 @@
   <div class="container1">
 
     <div class="content">
-      <a href="/login"><h1>EXAM VENUE ALLOCATOR</h1></a>
+      <a href="/login">
+        <h1>EXAM VENUE ALLOCATOR</h1>
+      </a>
 
     </div>
 
@@ -125,8 +139,19 @@
         item.addEventListener('click', () => expand(item, i))
       })
 
+      function myFunction() {
+    var x = document.getElementById("myTopnav");
+    var icon = document.querySelector(".icon");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+      icon.style.display = "none"; // Hide the icon
+    } else {
+      x.className = "topnav";
+      icon.style.display = "block"; // Show the icon
+    }
+  
+  }
     </script>
 </body>
 
 </html>
-
