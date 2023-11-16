@@ -536,12 +536,12 @@ input[type="checkbox"] {
   }
 
   
-  ::placeholder {
+  /* ::placeholder {
     color: white;
     font-size: 18px;
     font-family: 'Libre Baskerville', serif;
   }
-  
+   */
   label {
     display: inline-block;
     text-align: left;
