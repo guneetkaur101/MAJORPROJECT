@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Generate arrangement</title>
   <link rel="stylesheet" type="text/css" href="/static/homee.css">
+  <link rel="stylesheet" type="text/css" href="/static/Table.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
  
@@ -66,14 +67,17 @@ table.dataTable {
       });
     });
     function myFunction() {
-      var x = document.getElementById("myTopnav");
-      if (x.className === "topnav") {
-        x.className += " responsive";
-      } else {
-        x.className = "topnav";
-      }
-
+    var x = document.getElementById("myTopnav");
+    var icon = document.querySelector(".icon");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+      icon.style.display = "none"; // Hide the icon
+    } else {
+      x.className = "topnav";
+      icon.style.display = "block"; // Show the icon
     }
+  
+  }
     window.addEventListener("DOMContentLoaded", () => {
   const btn = document.querySelector("button");
   var doneTimeout = null;
@@ -177,7 +181,7 @@ table.dataTable {
       </div>
   
     </div>
-     <div id="strength_display"> 
+    <div id="strength_display"> 
       <!-- The strength content will be updated dynamically here -->
       <h2 id="strengthHeading" class="hidden">Total Strength of Selected Subjects</h2> 
       <ul>
@@ -185,6 +189,7 @@ table.dataTable {
         <!-- Strength data will be appended dynamically here -->
       </ul>
    </div> 
+  
    
       <table id="example" class="display" cellspacing="0" width="100%" style="margin-top: 10px;">
         <thead>
@@ -222,10 +227,11 @@ table.dataTable {
           {% endfor %}
         </tbody>
       </table>
+      
       <div style="display: flex;  
      justify-content: center;  
      align-items: center; margin-top: 20px;" >
-      <button class="btn" type="button"  >
+      <button class="btn" type="button" id="generateButton">
         <span class="btn__text">Generate</span>
         <svg class="btn__progress" viewBox="0 0 48 48" width="48px" height="48px">
             <circle class="btn__progress-track" r="20" cx="24" cy="24" fill="none" stroke="#c7cad1" stroke-width="8" />
@@ -236,8 +242,25 @@ table.dataTable {
     </div>
       <!-- <input type="submit" value="Generate Report"> Add a submit button to send selected rooms to the server -->
     </form>
+    <script>
+      // Client-side validation for date and time fields
+      const form = document.querySelector('generateForm');
+      const dateInput = document.getElementById('date');
+      const timeInput = document.getElementById('time');
+      const generateButton = document.getElementById('generateButton');
+    
+     generateButton.addEventListener('click', function(event) {
+      if (!dateInput.value || !timeInput.value) {
+        event.preventDefault();
+        alert('Please select a date and time before submitting the form.');
+      }
+     });
+    </script>
+
+    
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+    
     <script>
       // Function to update strength using AJAX
       function updateStrength() {

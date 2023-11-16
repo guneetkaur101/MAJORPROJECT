@@ -1,17 +1,21 @@
-from flask import Flask , render_template , request, redirect, url_for, flash, session,send_file
-from flask import request, Response
+from flask import Flask , render_template , request, redirect, url_for, session,send_file
+from flask import request, Response,redirect, url_for
 import json
+import webbrowser
 import sqlite3
-import csv
 import os
+import socket
+import time
 import pandas as pd
 from collections import deque
 import datetime
 import fullfinalized as ff
-from flask import jsonify
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
 app.config['UPLOAD_FOLDER'] = 'uploads'
+app.config['GENERATE_FOLDER'] = 'generated'
+
+
 
 @app.route("/")
 def home():
@@ -157,7 +161,7 @@ def upload_form():
     uploaded_files = []
     for year in available_years:
         filename = f'{year}_year.xlsx'
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file_path = ("uploads/"+ filename)
         if os.path.exists(file_path):
             timestamp = os.path.getmtime(file_path)
             formatted_timestamp = datetime.datetime.fromtimestamp(timestamp).strftime('%d:%m:%Y %H:%M')
@@ -176,9 +180,11 @@ def upload_form():
                 continue  # Skip this year if the file is missing
 
             filename = f'{year}_year.xlsx'
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            os.makedirs("uploads", exist_ok=True)
+            file_path = os.path.join("uploads", filename)
             xlsx_file.save(file_path)
-            print("File saved") 
+            print("File saved")
+        return redirect('/generate')
 
     return render_template('upload_form.html', uploaded_files=uploaded_files)
 
@@ -196,13 +202,21 @@ def generate():
 
     df1, df2, df3 = ff.load_subject_data()
     subject_headings = list(df1.columns) + list(df2.columns) + list(df3.columns)
+    if 'new_subjects' not in session:
+        session['new_subjects'] = []
+    new_subjects = session['new_subjects']
+
 
     if request.method == 'POST':
         print("Processing started")
-        
-        # Check if the request is an AJAX request
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             selected_subjects = request.form.getlist('select_subject')
+            
+            for subject in selected_subjects:
+                if subject not in new_subjects:
+                    new_subjects.append(subject)
+            new_subjects = [subject for subject in new_subjects if subject in selected_subjects]
+            print(new_subjects)
             session['selected_subjects'] = selected_subjects  # Store in session
             subject_lengths = {}
             file_strength_df1 = 0
@@ -242,26 +256,31 @@ def generate():
         else:
             selected_rooms = request.form.getlist('selected_rooms')
             selected_subjects = session.get('selected_subjects', [])
-            # This block will handle non-AJAX form submissions
-            selected_rooms = request.form.getlist('selected_rooms')
+            print(selected_subjects)
+            print(new_subjects)
             print(selected_rooms)
             MAX_COLS = 6
-            DATE = datetime.datetime.now().strftime('%d-%m-%Y')
-            TIME = datetime.datetime.now().strftime('%H-%M %p')
+            date = request.form.get('date')
+            if not date:
+                    # Handle the case when the date field is empty
+                    # Redirect the user to the same page with an alert dialog box
+             return redirect(url_for('generate'))
+
+            DATE = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%d-%m-%Y')
+            TIME = datetime.datetime.strptime(request.form.get('time'), '%H:%M').strftime('%H-%M %p')
             FILENAME = f'{DATE}_{TIME}.xlsx'
 
             df1, df2, df3 = ff.load_subject_data()
             subject_headings = list(df1.columns) + list(df2.columns) + list(df3.columns)
-            print(selected_subjects)
-            print(subject_headings)
 
-            ff.main(selected_rooms, df1, df2, df3, FILENAME, DATE, TIME, selected_subjects)
-            return send_file(FILENAME,as_attachment=True)
+            ff.main(selected_rooms, df1, df2, df3, FILENAME, DATE, TIME, new_subjects)
+            # Get the absolute path of the generated file
+            generated_file_path = os.path.abspath(os.path.join("generated", FILENAME))
+
+            # Download the generated file
+            return send_file(generated_file_path, as_attachment=True)
     cursor.execute("SELECT * FROM room")
     data = cursor.fetchall()
-    # # Clear the 'selected_subjects' session variable on page refresh
-    # session.pop('selected_subjects', None)
-    # Clear all session variables on page refresh
     session.clear()
     return render_template("generate.html", data=data, total_strengths=total_strengths, df1=df1, df2=df2, df3=df3, selected_subjects=selected_subjects)
 
@@ -271,6 +290,7 @@ def get_room_data(room_no):
     cursor = myconn.cursor()
     cursor.execute("SELECT * FROM room WHERE room_no=?", (room_no,))
     room_data = cursor.fetchone()
+    
     myconn.close()
     return room_data
 @app.route("/edit-usable-rows/<room_no>", methods=['GET', 'POST'])
@@ -307,4 +327,23 @@ def edit_usable_rows(room_no):
 
     return render_template("edit_usable_rows.html", room_data=room_data)
 if __name__ == "__main__":
+    # Open localhost if not already active
+
+
+    def is_localhost_active():
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            result = sock.connect_ex(('localhost', 5000))
+            sock.close()
+            if result == 0:
+                return True
+            else:
+                return False
+        except socket.error as e:
+            print("Error checking localhost:", e)
+            return False
+
+    if not is_localhost_active():
+        webbrowser.open('http://localhost:5000')
+
     app.run(debug=True)
