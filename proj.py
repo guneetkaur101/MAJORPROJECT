@@ -260,7 +260,13 @@ def generate():
             print(new_subjects)
             print(selected_rooms)
             MAX_COLS = 6
-            DATE = datetime.datetime.strptime(request.form.get('date'), '%Y-%m-%d').strftime('%d-%m-%Y')
+            date = request.form.get('date')
+            if not date:
+                    # Handle the case when the date field is empty
+                    # Redirect the user to the same page with an alert dialog box
+             return redirect(url_for('generate'))
+
+            DATE = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%d-%m-%Y')
             TIME = datetime.datetime.strptime(request.form.get('time'), '%H:%M').strftime('%H-%M %p')
             FILENAME = f'{DATE}_{TIME}.xlsx'
 
@@ -284,6 +290,7 @@ def get_room_data(room_no):
     cursor = myconn.cursor()
     cursor.execute("SELECT * FROM room WHERE room_no=?", (room_no,))
     room_data = cursor.fetchone()
+    
     myconn.close()
     return room_data
 @app.route("/edit-usable-rows/<room_no>", methods=['GET', 'POST'])
